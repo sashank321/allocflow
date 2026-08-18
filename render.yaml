@@ -49,10 +49,10 @@ services:
 
 databases:
   # -------------------------------------------------------------
-  # PostgreSQL Database (Neon / Render Managed)
+  # PostgreSQL Database (Render Managed)
   # -------------------------------------------------------------
   - name: allocflow-db
     plan: free
     region: oregon
     databaseName: allocflow_db
-    user: postgres
+    user: allocflow_user
