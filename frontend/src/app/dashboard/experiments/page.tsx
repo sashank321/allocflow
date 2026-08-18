@@ -89,9 +89,9 @@ export default function ScalabilityExperimentsPage() {
       p.totalVertices,
       p.totalEdges,
       p.maxFlow,
-      p.fordFulkersonMedianMs.toFixed(3),
-      p.edmondsKarpMedianMs.toFixed(3),
-      p.dinicMedianMs.toFixed(3),
+      Number(p.fordFulkersonMedianMs || 0).toFixed(3),
+      Number(p.edmondsKarpMedianMs || 0).toFixed(3),
+      Number(p.dinicMedianMs || 0).toFixed(3),
       p.fordFulkersonAugmentations,
       p.edmondsKarpAugmentations,
       p.dinicAugmentations,
@@ -462,8 +462,11 @@ export default function ScalabilityExperimentsPage() {
                     <td className="py-2 px-3 text-muted-foreground">V={rec.totalVertices}, E={rec.totalEdges}</td>
                     <td className="py-2 px-3 font-bold text-emerald-700">{rec.maxFlow}</td>
                     <td className="py-2 px-3">
-                      {rec.fordFulkersonMedianMs.toFixed(2)} / {rec.edmondsKarpMedianMs.toFixed(2)} /{" "}
-                      <span className="font-bold text-purple-700">{rec.dinicMedianMs.toFixed(2)}</span>
+                      {Number(rec.fordFulkersonMedianMs || 0).toFixed(2)} /{" "}
+                      {Number(rec.edmondsKarpMedianMs || 0).toFixed(2)} /{" "}
+                      <span className="font-bold text-purple-700">
+                        {Number(rec.dinicMedianMs || 0).toFixed(2)}
+                      </span>
                     </td>
                     <td className="py-2 px-3">
                       <span className="rounded bg-emerald-100 px-1.5 py-0.2 text-[9px] font-bold text-emerald-800">

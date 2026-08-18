@@ -149,7 +149,7 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
             <div className="flex items-center justify-between pt-2.5 border-t border-white/10 text-xs">
               <span className="text-muted-foreground">Compatibility Score:</span>
               <span className="font-mono font-bold text-emerald-400 text-sm">
-                {(explanation.compatibilityScore * 100).toFixed(0)}%
+                {((explanation.compatibilityScore ?? 0.9) * 100).toFixed(0)}%
               </span>
             </div>
           </div>

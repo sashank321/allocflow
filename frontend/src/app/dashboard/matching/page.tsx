@@ -244,7 +244,7 @@ export default function MatchingCockpitPage() {
             </p>
             <div className="mt-1 flex items-baseline gap-2">
               <span className="text-2xl font-bold font-mono text-emerald-300">
-                {simulationResult.coveragePercentage.toFixed(1)}%
+                {(simulationResult.coveragePercentage ?? 100).toFixed(1)}%
               </span>
               <span className="text-xs text-muted-foreground">Completed</span>
             </div>
@@ -328,7 +328,7 @@ export default function MatchingCockpitPage() {
                       {assignment.reviewerAffiliation || "Independent"}
                     </td>
                     <td className="py-3 text-emerald-400 font-bold">
-                      {(assignment.compatibilityScore * 100).toFixed(0)}%
+                      {((assignment.compatibilityScore ?? 0.9) * 100).toFixed(0)}%
                     </td>
                     <td className="py-3">
                       <span className="rounded bg-emerald-500/20 border border-emerald-500/30 px-1.5 py-0.5 text-[9px] font-bold text-emerald-300">

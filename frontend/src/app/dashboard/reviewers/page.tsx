@@ -67,7 +67,8 @@ export default function ReviewersRosterPage() {
           </div>
         ) : filteredReviewers.length > 0 ? (
           filteredReviewers.map((r) => {
-            const utilizationPct = (r.currentWorkload / (r.maxCapacity || 1)) * 100;
+            const utilizationPct =
+              ((r.currentWorkload ?? 0) / (r.maxCapacity || 1)) * 100;
             return (
               <Card3D
                 key={r.id}

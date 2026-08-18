@@ -177,7 +177,7 @@ export default function DashboardOverviewPage() {
             <span className="text-xs text-emerald-400 font-medium">Pairs</span>
           </div>
           <p className="mt-1.5 text-[11px] text-muted-foreground">
-            {stats.averageCoveragePercentage.toFixed(1)}% review requirement fulfilled
+            {(stats.averageCoveragePercentage ?? 0).toFixed(1)}% review requirement fulfilled
           </p>
         </Card3D>
 
