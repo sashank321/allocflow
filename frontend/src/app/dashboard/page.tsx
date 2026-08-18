@@ -32,6 +32,12 @@ import {
 import { Card3D } from "@/components/ui/Card3D";
 
 export default function DashboardOverviewPage() {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const { data: stats, isLoading } = useQuery({
     queryKey: ["dashboard-stats"],
     queryFn: () => api.getDashboardStats(),
@@ -42,7 +48,7 @@ export default function DashboardOverviewPage() {
     queryFn: () => api.getRecentAuditLogs(),
   });
 
-  if (isLoading || !stats) {
+  if (!mounted || isLoading || !stats) {
     return (
       <div className="flex h-96 items-center justify-center">
         <div className="flex flex-col items-center gap-3 text-muted-foreground">

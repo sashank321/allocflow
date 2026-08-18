@@ -28,6 +28,7 @@ import { formatMs } from "@/lib/utils";
 import { Card3D } from "@/components/ui/Card3D";
 
 export default function ScalabilityExperimentsPage() {
+  const [mounted, setMounted] = useState(false);
   const [startN, setStartN] = useState(10);
   const [endN, setEndN] = useState(100);
   const [step, setStep] = useState(15);
@@ -37,6 +38,10 @@ export default function ScalabilityExperimentsPage() {
   const [seed, setSeed] = useState(482917);
 
   const [sweepResult, setSweepResult] = useState<ScalabilitySweepResponse | null>(null);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { data: history, refetch: refetchHistory } = useQuery({
     queryKey: ["benchmark-history"],

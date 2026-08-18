@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Color,
   Mesh,
@@ -53,7 +53,7 @@ uniform float uDirection;
 #define hash(n) (n * (n ^ (n >> 15)))
 #define coord3(p) (uvec3(p).x * M1 ^ uvec3(p).y * M2 ^ uvec3(p).z * M3)
 
-// Precomputed camera basis vectors (normalized vec3(1,1,1), vec3(1,0,-1))
+// Precomputed camera basis vectors
 const vec3 camK = vec3(0.57735027, 0.57735027, 0.57735027);
 const vec3 camI = vec3(0.70710678, 0.0, -0.70710678);
 const vec3 camJ = vec3(-0.40824829, 0.81649658, -0.40824829);
@@ -80,41 +80,37 @@ float snowflakeDist(vec2 p) {
 }
 
 void main() {
-  // Precompute reciprocals to avoid division
-  float invPixelRes = 1.0 / uPixelResolution;
+  float invPixelRes = 1.0 / max(uPixelResolution, 1.0);
   float pixelSize = max(1.0, floor(0.5 + uResolution.x * invPixelRes));
   float invPixelSize = 1.0 / pixelSize;
   
   vec2 fragCoord = floor(gl_FragCoord.xy * invPixelSize);
-  vec2 res = uResolution * invPixelSize;
+  vec2 res = max(uResolution * invPixelSize, vec2(1.0));
   float invResX = 1.0 / res.x;
 
   vec3 ray = normalize(vec3((fragCoord - res * 0.5) * invResX, 1.0));
   ray = ray.x * camI + ray.y * camJ + ray.z * camK;
 
-  // Precompute time-based values
   float timeSpeed = uTime * uSpeed;
   float windX = cos(uDirection) * 0.4;
   float windY = sin(uDirection) * 0.4;
   vec3 camPos = (windX * camI + windY * camJ + 0.1 * camK) * timeSpeed;
   vec3 pos = camPos;
 
-  // Precompute ray reciprocal for strides
   vec3 absRay = max(abs(ray), vec3(0.001));
   vec3 strides = 1.0 / absRay;
   vec3 raySign = step(ray, vec3(0.0));
   vec3 phase = fract(pos) * strides;
   phase = mix(strides - phase, phase, raySign);
 
-  // Precompute for intersection test
   float rayDotCamK = dot(ray, camK);
-  float invRayDotCamK = 1.0 / rayDotCamK;
-  float invDepthFade = 1.0 / uDepthFade;
+  float invRayDotCamK = 1.0 / max(rayDotCamK, 0.001);
+  float invDepthFade = 1.0 / max(uDepthFade, 0.001);
   float halfInvResX = 0.5 * invResX;
   vec3 timeAnim = timeSpeed * 0.1 * vec3(7.0, 8.0, 5.0);
 
   float t = 0.0;
-  for (int i = 0; i < 128; i++) {
+  for (int i = 0; i < 64; i++) {
     if (t >= uFarPlane) break;
     
     vec3 fpos = floor(pos);
@@ -124,7 +120,6 @@ void main() {
     if (cellHash < uDensity) {
       vec3 h = hash3(cellCoord);
       
-      // Optimized flake position calculation
       vec3 sinArg1 = fpos.yzx * 0.073;
       vec3 sinArg2 = fpos.zxy * 0.27;
       vec3 flakePos = 0.5 - 0.5 * cos(4.0 * sin(sinArg1) + 4.0 * sin(sinArg2) + 2.0 * h + timeAnim);
@@ -141,19 +136,18 @@ void main() {
         float depth = dot(flakePos - camPos, camK);
         float flakeSize = max(uFlakeSize, uMinFlakeSize * depth * halfInvResX);
         
-        // Avoid branching with step functions where possible
         float dist;
         if (uVariant < 0.5) {
           dist = max(testUV.x, testUV.y);
         } else if (uVariant < 1.5) {
           dist = length(testUV);
         } else {
-          float invFlakeSize = 1.0 / flakeSize;
+          float invFlakeSize = 1.0 / max(flakeSize, 0.0001);
           dist = snowflakeDist(vec2(testX, testY) * invFlakeSize) * flakeSize;
         }
 
         if (dist < flakeSize) {
-          float flakeSizeRatio = uFlakeSize / flakeSize;
+          float flakeSizeRatio = uFlakeSize / max(flakeSize, 0.0001);
           float intensity = exp2(-(t + toIntersection) * invDepthFade) *
                            min(1.0, flakeSizeRatio * flakeSizeRatio) * uBrightness;
           gl_FragColor = vec4(uColor * pow(vec3(intensity), vec3(uGamma)), 1.0);
@@ -212,19 +206,25 @@ export default function PixelSnow({
   const rendererRef = useRef<WebGLRenderer | null>(null);
   const materialRef = useRef<ShaderMaterial | null>(null);
   const resizeTimeoutRef = useRef<number | null>(null);
+  const [isClient, setIsClient] = useState(false);
 
-  // Memoize shader variant value
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const variantValue = useMemo(() => {
     return variant === "round" ? 1.0 : variant === "snowflake" ? 2.0 : 0.0;
   }, [variant]);
 
-  // Memoize color conversion
   const colorVector = useMemo(() => {
-    const threeColor = new Color(color);
-    return new Vector3(threeColor.r, threeColor.g, threeColor.b);
+    try {
+      const threeColor = new Color(color);
+      return new Vector3(threeColor.r, threeColor.g, threeColor.b);
+    } catch {
+      return new Vector3(1, 1, 1);
+    }
   }, [color]);
 
-  // Debounced resize handler
   const handleResize = useCallback(() => {
     if (resizeTimeoutRef.current) {
       window.clearTimeout(resizeTimeoutRef.current);
@@ -235,92 +235,88 @@ export default function PixelSnow({
       const material = materialRef.current;
       if (!container || !renderer || !material) return;
 
-      const w = container.offsetWidth;
-      const h = container.offsetHeight;
+      const w = container.offsetWidth || window.innerWidth || 800;
+      const h = container.offsetHeight || window.innerHeight || 600;
       renderer.setSize(w, h);
-      material.uniforms.uResolution.value.set(w, h);
+      if (material.uniforms?.uResolution) {
+        material.uniforms.uResolution.value.set(w, h);
+      }
     }, 100);
   }, []);
 
-  // Visibility observer
   useEffect(() => {
+    if (!isClient) return;
     const container = containerRef.current;
     if (!container) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        isVisibleRef.current = entry.isIntersecting;
-      },
-      { threshold: 0 }
-    );
+    let scene: Scene | null = null;
+    let camera: OrthographicCamera | null = null;
+    let renderer: WebGLRenderer | null = null;
+    let material: ShaderMaterial | null = null;
+    let geometry: PlaneGeometry | null = null;
 
-    observer.observe(container);
-    return () => observer.disconnect();
-  }, []);
+    try {
+      scene = new Scene();
+      camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
-  // Main Three.js setup
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+      const w = container.offsetWidth || window.innerWidth || 800;
+      const h = container.offsetHeight || window.innerHeight || 600;
 
-    const scene = new Scene();
-    const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const renderer = new WebGLRenderer({
-      antialias: false,
-      alpha: true,
-      premultipliedAlpha: false,
-      powerPreference: "high-performance",
-      stencil: false,
-      depth: false,
-    });
+      renderer = new WebGLRenderer({
+        antialias: false,
+        alpha: true,
+        premultipliedAlpha: false,
+        powerPreference: "high-performance",
+        stencil: false,
+        depth: false,
+      });
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(container.offsetWidth, container.offsetHeight);
-    renderer.setClearColor(0x000000, 0);
-    container.appendChild(renderer.domElement);
-    rendererRef.current = renderer;
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(w, h);
+      renderer.setClearColor(0x000000, 0);
+      container.appendChild(renderer.domElement);
+      rendererRef.current = renderer;
 
-    const material = new ShaderMaterial({
-      vertexShader,
-      fragmentShader,
-      uniforms: {
-        uTime: { value: 0 },
-        uResolution: {
-          value: new Vector2(container.offsetWidth, container.offsetHeight),
+      material = new ShaderMaterial({
+        vertexShader,
+        fragmentShader,
+        uniforms: {
+          uTime: { value: 0 },
+          uResolution: { value: new Vector2(w, h) },
+          uFlakeSize: { value: flakeSize },
+          uMinFlakeSize: { value: minFlakeSize },
+          uPixelResolution: { value: pixelResolution },
+          uSpeed: { value: speed },
+          uDepthFade: { value: depthFade },
+          uFarPlane: { value: farPlane },
+          uColor: { value: colorVector.clone() },
+          uBrightness: { value: brightness },
+          uGamma: { value: gamma },
+          uDensity: { value: density },
+          uVariant: { value: variantValue },
+          uDirection: { value: (direction * Math.PI) / 180 },
         },
-        uFlakeSize: { value: flakeSize },
-        uMinFlakeSize: { value: minFlakeSize },
-        uPixelResolution: { value: pixelResolution },
-        uSpeed: { value: speed },
-        uDepthFade: { value: depthFade },
-        uFarPlane: { value: farPlane },
-        uColor: { value: colorVector.clone() },
-        uBrightness: { value: brightness },
-        uGamma: { value: gamma },
-        uDensity: { value: density },
-        uVariant: { value: variantValue },
-        uDirection: { value: (direction * Math.PI) / 180 },
-      },
-      transparent: true,
-    });
-    materialRef.current = material;
+        transparent: true,
+      });
+      materialRef.current = material;
 
-    const geometry = new PlaneGeometry(2, 2);
-    scene.add(new Mesh(geometry, material));
+      geometry = new PlaneGeometry(2, 2);
+      scene.add(new Mesh(geometry, material));
 
-    window.addEventListener("resize", handleResize);
+      window.addEventListener("resize", handleResize);
 
-    const startTime = performance.now();
-    const animate = () => {
-      animationRef.current = requestAnimationFrame(animate);
-
-      // Only render if visible
-      if (isVisibleRef.current) {
-        material.uniforms.uTime.value = (performance.now() - startTime) * 0.001;
-        renderer.render(scene, camera);
-      }
-    };
-    animate();
+      const startTime = performance.now();
+      const animate = () => {
+        animationRef.current = requestAnimationFrame(animate);
+        if (isVisibleRef.current && renderer && scene && camera && material) {
+          material.uniforms.uTime.value = (performance.now() - startTime) * 0.001;
+          renderer.render(scene, camera);
+        }
+      };
+      animate();
+    } catch (err) {
+      console.warn("PixelSnow WebGL initialized safely in fallback mode:", err);
+    }
 
     return () => {
       cancelAnimationFrame(animationRef.current);
@@ -328,49 +324,18 @@ export default function PixelSnow({
       if (resizeTimeoutRef.current) {
         window.clearTimeout(resizeTimeoutRef.current);
       }
-      if (container && renderer.domElement && container.contains(renderer.domElement)) {
-        container.removeChild(renderer.domElement);
-      }
-      renderer.dispose();
-      renderer.forceContextLoss();
-      geometry.dispose();
-      material.dispose();
+      try {
+        if (container && renderer?.domElement && container.contains(renderer.domElement)) {
+          container.removeChild(renderer.domElement);
+        }
+        renderer?.dispose();
+        geometry?.dispose();
+        material?.dispose();
+      } catch {}
       rendererRef.current = null;
       materialRef.current = null;
     };
-  }, [handleResize, colorVector, variantValue, flakeSize, minFlakeSize, pixelResolution, speed, depthFade, farPlane, brightness, gamma, density, direction]);
-
-  // Update material uniforms when props change
-  useEffect(() => {
-    const material = materialRef.current;
-    if (!material) return;
-
-    material.uniforms.uFlakeSize.value = flakeSize;
-    material.uniforms.uMinFlakeSize.value = minFlakeSize;
-    material.uniforms.uPixelResolution.value = pixelResolution;
-    material.uniforms.uSpeed.value = speed;
-    material.uniforms.uDepthFade.value = depthFade;
-    material.uniforms.uFarPlane.value = farPlane;
-    material.uniforms.uBrightness.value = brightness;
-    material.uniforms.uGamma.value = gamma;
-    material.uniforms.uDensity.value = density;
-    material.uniforms.uVariant.value = variantValue;
-    material.uniforms.uDirection.value = (direction * Math.PI) / 180;
-    material.uniforms.uColor.value.copy(colorVector);
-  }, [
-    flakeSize,
-    minFlakeSize,
-    pixelResolution,
-    speed,
-    depthFade,
-    farPlane,
-    brightness,
-    gamma,
-    density,
-    variantValue,
-    direction,
-    colorVector,
-  ]);
+  }, [isClient, handleResize, colorVector, variantValue, flakeSize, minFlakeSize, pixelResolution, speed, depthFade, farPlane, brightness, gamma, density, direction]);
 
   return (
     <div

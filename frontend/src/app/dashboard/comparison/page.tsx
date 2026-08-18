@@ -32,6 +32,7 @@ import { formatMs } from "@/lib/utils";
 import { Card3D } from "@/components/ui/Card3D";
 
 export default function AlgorithmComparisonPage() {
+  const [mounted, setMounted] = useState(false);
   const [manuscripts, setManuscripts] = useState(30);
   const [reviewers, setReviewers] = useState(15);
   const [reviewsPerPaper, setReviewsPerPaper] = useState(2);
@@ -41,6 +42,10 @@ export default function AlgorithmComparisonPage() {
   const [trials, setTrials] = useState(10);
 
   const [benchmarkResult, setBenchmarkResult] = useState<BenchmarkComparisonResponse | null>(null);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const compareMutation = useMutation({
     mutationFn: () =>
