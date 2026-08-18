@@ -1,0 +1,115 @@
+"use client";
+
+import React, { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
+import { Network, RefreshCw, Layers, Sliders } from "lucide-react";
+import { BipartiteFlowGraph } from "@/components/graph/BipartiteFlowGraph";
+import { ExplainDrawer } from "@/components/matching/ExplainDrawer";
+import type { AlgorithmType, SimulationResponse, AssignmentExplanation } from "@/types";
+
+export default function GraphViewPage() {
+  const [algorithm, setAlgorithm] = useState<AlgorithmType>("DINIC");
+  const [selectedExplanation, setSelectedExplanation] = useState<AssignmentExplanation | null>(null);
+  const [isExplainOpen, setIsExplainOpen] = useState(false);
+
+  const { data: conferences } = useQuery({
+    queryKey: ["conferences"],
+    queryFn: () => api.getConferences(),
+  });
+
+  const activeConfId = conferences?.[0]?.id;
+
+  const { data: simulationResult, isLoading, refetch } = useQuery({
+    queryKey: ["live-graph-simulation", activeConfId, algorithm],
+    queryFn: () =>
+      api.simulateMatching({
+        conferenceId: activeConfId!,
+        algorithm,
+        requiredReviewsPerPaper: 2,
+        defaultReviewerCapacity: 4,
+        excludeConflicts: true,
+      }),
+    enabled: !!activeConfId,
+  });
+
+  const handleExplain = async (manuscriptId: string, reviewerId: string) => {
+    try {
+      const explanation = await api.explainAssignment(
+        manuscriptId,
+        reviewerId,
+        simulationResult?.runId
+      );
+      setSelectedExplanation(explanation);
+      setIsExplainOpen(true);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-4">
+        <div>
+          <div className="flex items-center gap-2">
+            <h1 className="text-xl font-bold tracking-tight text-foreground">
+              Bipartite Flow Network Visualizer
+            </h1>
+            <span className="rounded bg-blue-50 border border-blue-200 px-2 py-0.5 text-[11px] font-semibold text-blue-700">
+              Interactive S → P → R → T
+            </span>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Explore bipartite node partitions, residual flow capacities, and augmenting path iterations
+          </p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <select
+            value={algorithm}
+            onChange={(e) => setAlgorithm(e.target.value as AlgorithmType)}
+            className="rounded-md border bg-card px-3 py-1.5 text-xs text-foreground focus:outline-none"
+          >
+            <option value="DINIC">Dinic Algorithm</option>
+            <option value="EDMONDS_KARP">Edmonds-Karp Algorithm</option>
+            <option value="FORD_FULKERSON">Ford-Fulkerson Algorithm</option>
+          </select>
+
+          <button
+            onClick={() => refetch()}
+            className="flex items-center gap-1.5 rounded-md border bg-card px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary transition-colors"
+          >
+            <RefreshCw className="h-3.5 w-3.5" />
+            <span>Re-solve Network</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Main Visualizer Area */}
+      {isLoading ? (
+        <div className="flex h-96 items-center justify-center">
+          <div className="flex flex-col items-center gap-2 text-muted-foreground">
+            <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
+            <p className="text-xs">Constructing canonical bipartite flow graph...</p>
+          </div>
+        </div>
+      ) : simulationResult ? (
+        <div className="space-y-4">
+          <BipartiteFlowGraph
+            data={simulationResult.graphVisualization}
+            traces={simulationResult.executionTraceSummary}
+            algorithmName={simulationResult.algorithmName}
+            onEdgeClick={handleExplain}
+          />
+        </div>
+      ) : null}
+
+      <ExplainDrawer
+        explanation={selectedExplanation}
+        isOpen={isExplainOpen}
+        onClose={() => setIsExplainOpen(false)}
+      />
+    </div>
+  );
+}

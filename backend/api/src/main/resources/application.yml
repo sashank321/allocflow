@@ -1,0 +1,58 @@
+server:
+  port: ${PORT:8080}
+  shutdown: graceful
+
+spring:
+  application:
+    name: allocflow-api
+
+  datasource:
+    url: ${DATABASE_URL:${SPRING_DATASOURCE_URL:jdbc:h2:mem:allocflow_db;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1}}
+    username: ${DATABASE_USERNAME:${SPRING_DATASOURCE_USERNAME:sa}}
+    password: ${DATABASE_PASSWORD:${SPRING_DATASOURCE_PASSWORD:}}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME:org.h2.Driver}
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          batch_size: 25
+          order_inserts: true
+          order_updates: true
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    validate-on-migrate: false
+    locations: classpath:db/migration
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when_authorized
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:v7Q4sE9yW2zA8uK1pM5rT0hN3bV6cX8dF2gJ4lK9qZ1xV3mB7eP0sD4fG6hJ8kL2}
+    expiration-ms: 86400000 # 24 hours
