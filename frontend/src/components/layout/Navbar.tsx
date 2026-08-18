@@ -7,9 +7,7 @@ import { useAuth } from "@/lib/auth";
 import {
   Layers,
   Sparkles,
-  UserCheck,
   LogOut,
-  ChevronDown,
   Building2,
   Cpu,
   FlaskConical,
@@ -32,27 +30,25 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
     pathname.includes("/graph-view");
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b bg-card/80 px-6 backdrop-blur-md">
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-white/10 bg-black/60 px-6 backdrop-blur-md text-white">
       {/* Brand & Conference Badge */}
       <div className="flex items-center gap-6">
-        <Link href="/dashboard" className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 text-white shadow-sm shadow-blue-500/20">
-            <Layers className="h-5 w-5" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-bold tracking-tight text-foreground">AllocFlow</span>
-              <span className="rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-semibold text-blue-700">
-                DSA Engine
-              </span>
-            </div>
-            <p className="text-[11px] text-muted-foreground">Manuscript Allocation System</p>
-          </div>
+        <Link href="/dashboard" className="flex items-center gap-2.5 group">
+          <span
+            className="text-2xl tracking-tight text-white transition-opacity group-hover:opacity-90"
+            style={{ fontFamily: "'Instrument Serif', serif" }}
+          >
+            AllocFlow
+          </span>
+          <sup className="text-xs text-muted-foreground">®</sup>
+          <span className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] font-bold text-white/80 border border-white/10">
+            DSA Engine
+          </span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-2 rounded-md border bg-secondary/50 px-3 py-1.5 text-xs text-secondary-foreground">
-          <Building2 className="h-3.5 w-3.5 text-blue-600" />
-          <span className="font-medium text-foreground">{activeConferenceCode}</span>
+        <div className="hidden md:flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-muted-foreground">
+          <Building2 className="h-3.5 w-3.5 text-blue-400" />
+          <span className="font-medium text-white">{activeConferenceCode}</span>
           <span className="text-[10px] text-muted-foreground">(Active Cycle)</span>
         </div>
       </div>
@@ -61,10 +57,10 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
       <div className="flex items-center gap-4">
         {/* Mode Badge */}
         <div
-          className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ${
+          className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold backdrop-blur-md ${
             isResearchMode
-              ? "bg-purple-50 text-purple-700 border border-purple-200"
-              : "bg-blue-50 text-blue-700 border border-blue-200"
+              ? "bg-purple-500/20 text-purple-200 border border-purple-500/30"
+              : "bg-blue-500/20 text-blue-200 border border-blue-500/30"
           }`}
         >
           {isResearchMode ? (
@@ -81,16 +77,16 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
         </div>
 
         {/* Demo Role Switcher */}
-        <div className="hidden lg:flex items-center gap-1 rounded-lg border bg-secondary/30 p-1 text-xs">
-          <span className="px-2 text-[11px] font-medium text-muted-foreground">Demo Role:</span>
+        <div className="hidden lg:flex items-center gap-1 rounded-lg border border-white/10 bg-white/[0.03] p-1 text-xs">
+          <span className="px-2 text-[11px] font-medium text-muted-foreground">Demo:</span>
           {(["SUPER_ADMIN", "CONFERENCE_ADMIN", "REVIEWER", "AUTHOR"] as UserRole[]).map((role) => (
             <button
               key={role}
               onClick={() => quickLogin(role)}
-              className={`rounded px-2 py-0.5 text-[11px] transition-colors ${
+              className={`rounded px-2 py-0.5 text-[11px] transition-all ${
                 user?.role === role
-                  ? "bg-card font-semibold text-blue-600 shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
+                  ? "bg-white/20 font-semibold text-white shadow-sm border border-white/20"
+                  : "text-muted-foreground hover:text-white"
               }`}
             >
               {role === "SUPER_ADMIN"
@@ -108,12 +104,12 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
         {isAuthenticated ? (
           <div className="flex items-center gap-3">
             <div className="text-right">
-              <p className="text-xs font-medium leading-none text-foreground">{user?.fullName}</p>
+              <p className="text-xs font-medium leading-none text-white">{user?.fullName}</p>
               <p className="text-[10px] text-muted-foreground">{user?.email}</p>
             </div>
             <button
               onClick={logout}
-              className="flex h-8 w-8 items-center justify-center rounded-md border text-muted-foreground hover:bg-secondary hover:text-foreground"
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-muted-foreground hover:bg-white/10 hover:text-white transition-colors"
               title="Sign Out"
             >
               <LogOut className="h-4 w-4" />
@@ -122,7 +118,7 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
         ) : (
           <Link
             href="/login"
-            className="rounded-md bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-blue-700"
+            className="liquid-glass rounded-full px-4 py-1.5 text-xs font-semibold text-white hover:scale-105 transition-all"
           >
             Sign In
           </Link>

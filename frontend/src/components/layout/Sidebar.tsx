@@ -35,11 +35,11 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 border-r bg-card flex flex-col justify-between p-4 h-[calc(100vh-4rem)] sticky top-16 select-none">
+    <aside className="w-64 border-r border-white/10 bg-black/50 backdrop-blur-md flex flex-col justify-between p-4 h-[calc(100vh-4rem)] sticky top-16 select-none text-white">
       <div className="space-y-6">
         {/* OPERATIONS SECTION */}
         <div>
-          <p className="px-3 text-[11px] font-bold uppercase tracking-wider text-muted-foreground/70">
+          <p className="px-3 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
             Operations
           </p>
           <nav className="mt-2 space-y-1">
@@ -50,17 +50,17 @@ export function Sidebar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+                  className={`flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition-all ${
                     active
-                      ? "bg-blue-50 text-blue-700 font-semibold"
-                      : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                      ? "bg-white/10 text-white font-semibold border border-white/20 shadow-sm"
+                      : "text-muted-foreground hover:bg-white/[0.05] hover:text-white"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <Icon className={`h-4 w-4 ${active ? "text-blue-600" : "text-muted-foreground"}`} />
+                    <Icon className={`h-4 w-4 ${active ? "text-blue-400" : "text-muted-foreground"}`} />
                     <span>{item.label}</span>
                   </div>
-                  {active && <ChevronRight className="h-3.5 w-3.5 text-blue-600" />}
+                  {active && <ChevronRight className="h-3.5 w-3.5 text-blue-400" />}
                 </Link>
               );
             })}
@@ -70,10 +70,10 @@ export function Sidebar() {
         {/* RESEARCH LAB SECTION */}
         <div>
           <div className="flex items-center justify-between px-3">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-purple-700">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-purple-300">
               Research Lab
             </p>
-            <span className="rounded bg-purple-100 px-1.5 py-0.2 text-[9px] font-bold text-purple-800">
+            <span className="rounded bg-purple-500/20 border border-purple-500/30 px-1.5 py-0.2 text-[9px] font-bold text-purple-200">
               DSA Suite
             </span>
           </div>
@@ -85,18 +85,18 @@ export function Sidebar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition-colors ${
+                  className={`flex items-center justify-between rounded-lg px-3 py-2 text-xs font-medium transition-all ${
                     active
-                      ? "bg-purple-50 text-purple-800 font-semibold border border-purple-200/60"
-                      : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                      ? "bg-purple-500/20 text-white font-semibold border border-purple-500/40 shadow-sm"
+                      : "text-muted-foreground hover:bg-white/[0.05] hover:text-white"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <Icon className={`h-4 w-4 ${active ? "text-purple-700" : "text-muted-foreground"}`} />
+                    <Icon className={`h-4 w-4 ${active ? "text-purple-300" : "text-muted-foreground"}`} />
                     <span>{item.label}</span>
                   </div>
                   {item.badge && (
-                    <span className="rounded bg-secondary px-1.5 py-0.5 text-[9px] font-medium text-muted-foreground">
+                    <span className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] font-medium text-muted-foreground">
                       {item.badge}
                     </span>
                   )}
@@ -108,10 +108,10 @@ export function Sidebar() {
       </div>
 
       {/* System Invariant Status Footer */}
-      <div className="rounded-lg border bg-secondary/30 p-3 text-[11px]">
+      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 text-[11px]">
         <div className="flex items-center justify-between">
-          <span className="font-semibold text-foreground">Graph Invariant</span>
-          <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold text-emerald-800">
+          <span className="font-semibold text-white">Graph Invariant</span>
+          <span className="rounded bg-emerald-500/20 border border-emerald-500/30 px-1.5 py-0.5 text-[9px] font-bold text-emerald-300">
             ACTIVE
           </span>
         </div>
