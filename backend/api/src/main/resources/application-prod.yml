@@ -1,0 +1,39 @@
+server:
+  port: ${PORT:8080}
+  shutdown: graceful
+
+spring:
+  application:
+    name: allocflow-api
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          batch_size: 25
+          order_inserts: true
+          order_updates: true
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    validate-on-migrate: false
+    locations: classpath:db/migration
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:v7Q4sE9yW2zA8uK1pM5rT0hN3bV6cX8dF2gJ4lK9qZ1xV3mB7eP0sD4fG6hJ8kL2}
+    expiration-ms: 86400000 # 24 hours
