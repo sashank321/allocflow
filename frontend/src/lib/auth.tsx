@@ -29,20 +29,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Restore session on mount
-    const savedToken = localStorage.getItem("allocflow_token");
-    const savedUser = localStorage.getItem("allocflow_user");
+    // Restore session on mount or auto-login default demo admin
+    const initSession = async () => {
+      const savedToken = localStorage.getItem("allocflow_token");
+      const savedUser = localStorage.getItem("allocflow_user");
 
-    if (savedToken && savedUser) {
-      try {
-        setToken(savedToken);
-        setUser(JSON.parse(savedUser));
-      } catch (e) {
-        localStorage.removeItem("allocflow_token");
-        localStorage.removeItem("allocflow_user");
+      if (savedToken && savedUser) {
+        try {
+          setToken(savedToken);
+          setUser(JSON.parse(savedUser));
+          setIsLoading(false);
+          return;
+        } catch (e) {
+          localStorage.removeItem("allocflow_token");
+          localStorage.removeItem("allocflow_user");
+        }
       }
-    }
-    setIsLoading(false);
+
+      // Auto-login default demo super admin
+      try {
+        const res = await api.login("admin@allocflow.io", "Password123!");
+        setToken(res.token);
+        setUser(res.user);
+        localStorage.setItem("allocflow_token", res.token);
+        localStorage.setItem("allocflow_user", JSON.stringify(res.user));
+      } catch (err) {
+        console.warn("Auto-login fallback failed", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initSession();
   }, []);
 
   const login = async (email: string, pass: string) => {

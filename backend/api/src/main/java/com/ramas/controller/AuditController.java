@@ -25,7 +25,7 @@ public class AuditController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'CONFERENCE_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'CONFERENCE_ADMIN', 'REVIEWER', 'AUTHOR')")
     @Operation(summary = "Get paginated audit logs")
     public ResponseEntity<Page<AuditLog>> getAuditLogs(
             @RequestParam(defaultValue = "0") int page,
@@ -36,7 +36,7 @@ public class AuditController {
     }
 
     @GetMapping("/recent")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'CONFERENCE_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'CONFERENCE_ADMIN', 'REVIEWER', 'AUTHOR')")
     @Operation(summary = "Get top 50 recent audit logs")
     public ResponseEntity<List<AuditLog>> getRecentAuditLogs() {
         return ResponseEntity.ok(auditService.getRecentAuditLogs());

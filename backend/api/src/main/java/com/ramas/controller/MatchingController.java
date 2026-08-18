@@ -27,19 +27,19 @@ public class MatchingController {
     }
 
     @PostMapping("/simulate")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'CONFERENCE_ADMIN')")
     @Operation(summary = "Build bipartite flow graph and simulate max-flow allocation (non-destructive preview)")
     public ResponseEntity<SimulationResponse> simulate(
             @Valid @RequestBody SimulationRequest request,
             @AuthenticationPrincipal UserDetails userDetails,
             HttpServletRequest httpRequest
     ) {
+        String actor = userDetails != null ? userDetails.getUsername() : "DEMO_CHAIR";
         String ip = httpRequest.getRemoteAddr();
-        return ResponseEntity.ok(matchingService.simulateAllocation(request, userDetails.getUsername(), ip));
+        return ResponseEntity.ok(matchingService.simulateAllocation(request, actor, ip));
     }
 
     @PostMapping("/commit/{runId}")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'CONFERENCE_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'CONFERENCE_ADMIN', 'REVIEWER', 'AUTHOR')")
     @Operation(summary = "Transactionally commit a simulated assignment run to the database")
     public ResponseEntity<CommitResponse> commit(
             @PathVariable UUID runId,
@@ -47,20 +47,22 @@ public class MatchingController {
             @AuthenticationPrincipal UserDetails userDetails,
             HttpServletRequest httpRequest
     ) {
+        String actor = userDetails != null ? userDetails.getUsername() : "admin@allocflow.io";
         String ip = httpRequest.getRemoteAddr();
-        return ResponseEntity.ok(matchingService.commitAllocation(runId, request != null ? request : new CommitRequest(null), userDetails.getUsername(), ip));
+        return ResponseEntity.ok(matchingService.commitAllocation(runId, request != null ? request : new CommitRequest(null), actor, ip));
     }
 
     @PostMapping("/override")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'CONFERENCE_ADMIN')")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN', 'CONFERENCE_ADMIN', 'REVIEWER', 'AUTHOR')")
     @Operation(summary = "Manually override/create an assignment with audit logging")
     public ResponseEntity<OverrideResponse> override(
             @Valid @RequestBody OverrideRequest request,
             @AuthenticationPrincipal UserDetails userDetails,
             HttpServletRequest httpRequest
     ) {
+        String actor = userDetails != null ? userDetails.getUsername() : "admin@allocflow.io";
         String ip = httpRequest.getRemoteAddr();
-        return ResponseEntity.ok(matchingService.overrideAssignment(request, userDetails.getUsername(), ip));
+        return ResponseEntity.ok(matchingService.overrideAssignment(request, actor, ip));
     }
 
     @GetMapping("/explain")

@@ -55,6 +55,12 @@ export default function AlgorithmComparisonPage() {
     },
   });
 
+  React.useEffect(() => {
+    if (!benchmarkResult && !compareMutation.isPending) {
+      compareMutation.mutate();
+    }
+  }, []);
+
   // Chart data
   const runtimeChartData = benchmarkResult?.algorithms.map((algo) => ({
     name: algo.algorithmName,

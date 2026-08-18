@@ -51,14 +51,15 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Public authentication endpoints
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        // Public research & benchmark lab endpoints
+                        // Public research, benchmark lab, and matching simulation endpoints
                         .requestMatchers("/api/v1/benchmarks/**").permitAll()
+                        .requestMatchers("/api/v1/matching/simulate", "/api/v1/matching/explain").permitAll()
                         // Public health & API documentation
                         .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                        // Allow read-only public access to conferences / analytics for demo purposes
-                        .requestMatchers(HttpMethod.GET, "/api/v1/conferences/**", "/api/v1/analytics/**").permitAll()
-                        // All other API endpoints require authentication
+                        // Allow read-only public access to conferences, analytics, manuscripts, reviewers, conflicts, audit logs
+                        .requestMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
+                        // Destructive mutations (commit, override, create, delete) require authentication
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

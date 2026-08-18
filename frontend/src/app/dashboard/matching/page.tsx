@@ -59,6 +59,13 @@ export default function MatchingCockpitPage() {
     },
   });
 
+  // Auto-simulate on mount when active conference loads
+  React.useEffect(() => {
+    if (activeConfId && !simulationResult && !simulateMutation.isPending) {
+      simulateMutation.mutate();
+    }
+  }, [activeConfId]);
+
   const commitMutation = useMutation({
     mutationFn: () => api.commitMatching(simulationResult!.runId, "Committed via Matching Cockpit"),
     onSuccess: () => {
