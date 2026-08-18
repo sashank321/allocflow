@@ -170,20 +170,12 @@ export function BipartiteFlowGraph({
         </div>
       </div>
 
-      {/* 3D Isometric Graph Stage */}
-      <div
-        className={`glass-panel p-4 overflow-x-auto relative min-h-[500px] flex items-center justify-center border border-white/10 transition-transform duration-700 ${
-          is3DMode ? "isometric-stage" : ""
-        }`}
-      >
-        <div
-          className={`w-full flex justify-center transition-all duration-700 ${
-            is3DMode ? "isometric-layer" : ""
-          }`}
-        >
+      {/* Graph Visualizer Stage */}
+      <div className="glass-panel p-6 overflow-x-auto relative min-h-[500px] flex items-center justify-center border border-white/10">
+        <div className="w-full flex justify-center">
           <svg
             viewBox={`0 0 ${width} ${height}`}
-            className="w-full max-w-[960px] h-auto drop-shadow-2xl"
+            className="w-full max-w-[960px] h-auto"
           >
             <defs>
               {/* Monochromatic & Emerald Glow Filters */}
