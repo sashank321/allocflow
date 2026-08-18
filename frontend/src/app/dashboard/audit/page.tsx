@@ -25,21 +25,24 @@ export default function AuditLogsPage() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 select-none text-white">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-4">
+      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-white/10">
         <div>
-          <h1 className="text-xl font-bold tracking-tight text-foreground">
+          <h1
+            className="text-3xl tracking-tight text-white"
+            style={{ fontFamily: "'Instrument Serif', serif" }}
+          >
             Immutable Audit Trail
           </h1>
-          <p className="text-xs text-muted-foreground">
+          <p className="mt-1 text-xs text-muted-foreground">
             Verifiable compliance log for reviewer assignments, overrides, and security events
           </p>
         </div>
 
         <button
           onClick={() => refetch()}
-          className="flex items-center gap-1.5 rounded-md border bg-card px-3 py-1.5 text-xs font-semibold text-foreground hover:bg-secondary transition-colors"
+          className="btn-3d flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-semibold text-white transition-colors"
         >
           <RefreshCw className="h-3.5 w-3.5" />
           <span>Refresh Logs</span>
@@ -54,16 +57,16 @@ export default function AuditLogsPage() {
           placeholder="Filter by actor, action, or details..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full rounded-md border bg-card py-2 pl-9 pr-4 text-xs text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:outline-none"
+          className="w-full rounded-xl border border-white/10 bg-black/60 py-2.5 pl-9 pr-4 text-xs text-white placeholder:text-muted-foreground focus:border-white/30 focus:outline-none"
         />
       </div>
 
       {/* Audit Log Table */}
-      <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
+      <div className="glass-panel overflow-hidden border border-white/10">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b bg-secondary/30 text-muted-foreground font-semibold">
-              <tr>
+            <thead>
+              <tr className="border-b border-white/10 bg-white/[0.02] text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                 <th className="py-3 px-4">Timestamp (UTC)</th>
                 <th className="py-3 px-4">Actor</th>
                 <th className="py-3 px-4">Action</th>
@@ -72,7 +75,7 @@ export default function AuditLogsPage() {
                 <th className="py-3 px-4">Audit Details</th>
               </tr>
             </thead>
-            <tbody className="divide-y font-mono">
+            <tbody className="divide-y divide-white/5 font-mono">
               {isLoading ? (
                 <tr>
                   <td colSpan={6} className="py-8 text-center text-muted-foreground font-sans">
@@ -81,15 +84,15 @@ export default function AuditLogsPage() {
                 </tr>
               ) : filteredLogs.length > 0 ? (
                 filteredLogs.map((log) => (
-                  <tr key={log.id} className="hover:bg-secondary/20 transition-colors">
+                  <tr key={log.id} className="hover:bg-white/[0.03] transition-colors">
                     <td className="py-3 px-4 text-muted-foreground text-[11px]">
                       {new Date(log.timestamp).toISOString().replace("T", " ").substring(0, 19)}
                     </td>
-                    <td className="py-3 px-4 font-sans font-medium text-foreground">
+                    <td className="py-3 px-4 font-sans font-medium text-white">
                       {log.actorEmail || "ANONYMOUS"}
                     </td>
                     <td className="py-3 px-4">
-                      <span className="rounded bg-secondary px-2 py-0.5 text-[10px] font-bold text-foreground">
+                      <span className="rounded-md bg-white/10 border border-white/15 px-2 py-0.5 text-[10px] font-bold text-white">
                         {log.action}
                       </span>
                     </td>

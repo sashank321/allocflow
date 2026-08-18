@@ -13,7 +13,7 @@ export default function DashboardLayout({
   const [conferenceCode, setConferenceCode] = useState("ICDCS-2026");
 
   return (
-    <div className="relative min-h-screen bg-black text-white flex flex-col selection:bg-blue-500/30 selection:text-white">
+    <div className="relative min-h-screen bg-black text-white flex flex-col selection:bg-white/20 selection:text-white">
       {/* Background Pixel Snow Canvas */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <PixelSnow

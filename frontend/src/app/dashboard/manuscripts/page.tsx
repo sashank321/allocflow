@@ -104,9 +104,9 @@ export default function ManuscriptsPage() {
 
         <button
           onClick={() => setIsSubmitModalOpen(true)}
-          className="flex items-center gap-1.5 rounded-md bg-blue-600 px-3.5 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 transition-colors"
+          className="liquid-glass rounded-xl px-4 py-2 text-xs font-semibold text-white flex items-center gap-2"
         >
-          <Plus className="h-4 w-4" />
+          <Plus className="h-4 w-4 text-white" />
           <span>Submit Manuscript</span>
         </button>
       </div>
@@ -120,7 +120,7 @@ export default function ManuscriptsPage() {
             placeholder="Search by title, author, topic..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-md border bg-card py-2 pl-9 pr-4 text-xs text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:outline-none"
+            className="w-full rounded-xl border border-white/10 bg-black/60 py-2.5 pl-9 pr-4 text-xs text-white placeholder:text-muted-foreground focus:border-white/30 focus:outline-none"
           />
         </div>
 
@@ -130,7 +130,7 @@ export default function ManuscriptsPage() {
           <select
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
-            className="rounded-md border bg-card px-2.5 py-1.5 text-xs text-foreground focus:outline-none"
+            className="rounded-xl border border-white/10 bg-black/60 px-3 py-2 text-xs text-white focus:outline-none"
           >
             <option value="ALL">All Statuses</option>
             <option value="SUBMITTED">SUBMITTED</option>
@@ -143,11 +143,11 @@ export default function ManuscriptsPage() {
       </div>
 
       {/* Manuscripts Table */}
-      <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
+      <div className="glass-panel overflow-hidden border border-white/10 rounded-xl bg-card shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b bg-secondary/30 text-muted-foreground font-semibold">
-              <tr>
+            <thead>
+              <tr className="border-b border-white/10 bg-white/[0.02] text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                 <th className="py-3 px-4">Title &amp; Track</th>
                 <th className="py-3 px-4">Author &amp; Affiliation</th>
                 <th className="py-3 px-4">Topics &amp; Keywords</th>
@@ -156,7 +156,7 @@ export default function ManuscriptsPage() {
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y">
+            <tbody className="divide-y divide-white/5">
               {isLoading ? (
                 <tr>
                   <td colSpan={6} className="py-8 text-center text-muted-foreground">
@@ -165,21 +165,21 @@ export default function ManuscriptsPage() {
                 </tr>
               ) : filteredManuscripts.length > 0 ? (
                 filteredManuscripts.map((m) => (
-                  <tr key={m.id} className="hover:bg-secondary/20 transition-colors">
+                  <tr key={m.id} className="hover:bg-white/[0.03] transition-colors">
                     <td className="py-3 px-4 max-w-xs">
-                      <p className="font-bold text-foreground line-clamp-1">{m.title}</p>
+                      <p className="font-bold text-white line-clamp-1">{m.title}</p>
                       <p className="text-[11px] text-muted-foreground line-clamp-1 mt-0.5">
                         {m.abstractText || "No abstract provided"}
                       </p>
                       {m.trackName && (
-                        <span className="inline-block rounded bg-secondary px-1.5 py-0.5 text-[9px] font-medium text-muted-foreground mt-1">
+                        <span className="inline-block rounded bg-white/10 border border-white/15 px-1.5 py-0.5 text-[9px] font-medium text-white/90 mt-1">
                           {m.trackName}
                         </span>
                       )}
                     </td>
 
                     <td className="py-3 px-4">
-                      <p className="font-medium text-foreground">{m.authorName}</p>
+                      <p className="font-medium text-white">{m.authorName}</p>
                       <p className="text-[11px] text-muted-foreground">{m.authorEmail}</p>
                       {m.authorAffiliations && m.authorAffiliations.length > 0 && (
                         <p className="text-[10px] text-muted-foreground/80 mt-0.5">
@@ -193,7 +193,7 @@ export default function ManuscriptsPage() {
                         {m.topics.map((t, idx) => (
                           <span
                             key={idx}
-                            className="rounded bg-blue-50 border border-blue-200/60 px-1.5 py-0.5 text-[10px] font-medium text-blue-700"
+                            className="rounded bg-white/10 border border-white/15 px-1.5 py-0.5 text-[10px] font-medium text-white/90"
                           >
                             {t}
                           </span>
@@ -203,7 +203,7 @@ export default function ManuscriptsPage() {
                         {m.keywords.map((k, idx) => (
                           <span
                             key={idx}
-                            className="rounded bg-secondary px-1.5 py-0.5 text-[9px] text-muted-foreground"
+                            className="rounded bg-white/5 px-1.5 py-0.5 text-[9px] text-muted-foreground"
                           >
                             #{k}
                           </span>
@@ -211,20 +211,20 @@ export default function ManuscriptsPage() {
                       </div>
                     </td>
 
-                    <td className="py-3 px-4 text-center font-mono font-bold text-foreground">
+                    <td className="py-3 px-4 text-center font-mono font-bold text-white">
                       {m.requiredReviews}
                     </td>
 
                     <td className="py-3 px-4">
                       <span
-                        className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-bold ${
+                        className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-semibold border ${
                           m.status === "SUBMITTED"
-                            ? "bg-blue-100 text-blue-800"
+                            ? "bg-white/10 text-white border-white/20"
                             : m.status === "UNDER_REVIEW"
-                            ? "bg-purple-100 text-purple-800"
+                            ? "bg-purple-500/20 text-purple-300 border-purple-500/40"
                             : m.status === "ACCEPTED"
-                            ? "bg-emerald-100 text-emerald-800"
-                            : "bg-secondary text-muted-foreground"
+                            ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
+                            : "bg-white/5 text-muted-foreground border-white/10"
                         }`}
                       >
                         {m.status}

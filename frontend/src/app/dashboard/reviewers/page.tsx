@@ -9,67 +9,53 @@ import {
   CheckCircle2,
   XCircle,
   Building2,
-  Mail,
   Tag,
-  Hash,
-  Activity,
-  Plus,
+  ShieldAlert,
 } from "lucide-react";
-import type { Reviewer } from "@/types";
+import { Card3D } from "@/components/ui/Card3D";
 
-export default function ReviewersPage() {
+export default function ReviewersRosterPage() {
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data: conferences } = useQuery({
-    queryKey: ["conferences"],
-    queryFn: () => api.getConferences(),
-  });
-
-  const activeConfId = conferences?.[0]?.id;
-
   const { data: reviewers, isLoading } = useQuery({
-    queryKey: ["reviewers", activeConfId],
-    queryFn: () => api.getReviewers(activeConfId),
-    enabled: !!activeConfId,
+    queryKey: ["reviewers"],
+    queryFn: () => api.getReviewers(),
   });
 
   const filteredReviewers = (reviewers || []).filter((r) => {
-    return (
+    const matchesSearch =
       r.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (r.affiliation && r.affiliation.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      r.topics.some((t) => t.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
+      r.userEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      r.topics.some((t) => t.toLowerCase().includes(searchTerm.toLowerCase()));
+    return matchesSearch;
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 select-none text-white">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-4">
+      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-white/10">
         <div>
-          <h1 className="text-xl font-bold tracking-tight text-foreground">
-            Reviewers &amp; Program Committee
+          <h1
+            className="text-3xl tracking-tight text-white"
+            style={{ fontFamily: "'Instrument Serif', serif" }}
+          >
+            Program Committee Reviewer Roster
           </h1>
-          <p className="text-xs text-muted-foreground">
-            Reviewer capacity headroom, topic expertise, and workload saturation
+          <p className="mt-1 text-xs text-muted-foreground">
+            Reviewer capacities, research subject domain overlap, and active load saturation
           </p>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <span className="rounded bg-purple-50 border border-purple-200 px-2.5 py-1 text-xs font-semibold text-purple-700">
-            {reviewers?.length || 0} Registered Reviewers
-          </span>
         </div>
       </div>
 
-      {/* Search Input */}
+      {/* Search Bar */}
       <div className="relative w-full max-w-sm">
         <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
         <input
           type="text"
-          placeholder="Search reviewers by name, affiliation, topic..."
+          placeholder="Search by reviewer name, email, topic..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full rounded-md border bg-card py-2 pl-9 pr-4 text-xs text-foreground placeholder:text-muted-foreground focus:border-blue-500 focus:outline-none"
+          className="w-full rounded-xl border border-white/10 bg-black/60 py-2.5 pl-9 pr-4 text-xs text-white placeholder:text-muted-foreground focus:border-white/30 focus:outline-none"
         />
       </div>
 
@@ -83,13 +69,14 @@ export default function ReviewersPage() {
           filteredReviewers.map((r) => {
             const utilizationPct = (r.currentWorkload / (r.maxCapacity || 1)) * 100;
             return (
-              <div
+              <Card3D
                 key={r.id}
-                className="rounded-xl border bg-card p-4 shadow-sm hover:border-blue-300 transition-all space-y-3"
+                glowColor={r.active && r.available ? "emerald" : "none"}
+                className="p-5 space-y-3"
               >
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-bold text-sm text-foreground">{r.userName}</h3>
+                    <h3 className="font-bold text-sm text-white">{r.userName}</h3>
                     <p className="text-[11px] text-muted-foreground flex items-center gap-1 mt-0.5">
                       <Building2 className="h-3 w-3" />
                       {r.affiliation || "Independent Scholar"}
@@ -97,11 +84,11 @@ export default function ReviewersPage() {
                   </div>
                   <div className="flex items-center gap-1">
                     {r.active && r.available ? (
-                      <span className="flex items-center gap-1 rounded bg-emerald-50 px-1.5 py-0.5 text-[9px] font-semibold text-emerald-700">
+                      <span className="flex items-center gap-1 rounded bg-emerald-500/20 border border-emerald-500/40 px-2 py-0.5 text-[9px] font-semibold text-emerald-300">
                         <CheckCircle2 className="h-3 w-3" /> Available
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1 rounded bg-rose-50 px-1.5 py-0.5 text-[9px] font-semibold text-rose-700">
+                      <span className="flex items-center gap-1 rounded bg-rose-500/20 border border-rose-500/40 px-2 py-0.5 text-[9px] font-semibold text-rose-300">
                         <XCircle className="h-3 w-3" /> Inactive
                       </span>
                     )}
@@ -109,21 +96,21 @@ export default function ReviewersPage() {
                 </div>
 
                 {/* Capacity & Workload Bar */}
-                <div className="space-y-1 text-xs">
+                <div className="space-y-1.5 text-xs">
                   <div className="flex justify-between text-[11px]">
                     <span className="text-muted-foreground">Workload Saturation:</span>
-                    <span className="font-mono font-bold text-foreground">
+                    <span className="font-mono font-bold text-white">
                       {r.currentWorkload} / {r.maxCapacity} slots ({utilizationPct.toFixed(0)}%)
                     </span>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-secondary overflow-hidden">
+                  <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all ${
                         utilizationPct >= 100
                           ? "bg-rose-500"
                           : utilizationPct >= 50
                           ? "bg-amber-500"
-                          : "bg-blue-600"
+                          : "bg-emerald-400"
                       }`}
                       style={{ width: `${Math.min(100, utilizationPct)}%` }}
                     />
@@ -131,7 +118,7 @@ export default function ReviewersPage() {
                 </div>
 
                 {/* Topic Expertise Badges */}
-                <div className="space-y-1.5 pt-2 border-t text-xs">
+                <div className="space-y-1.5 pt-2 border-t border-white/10 text-xs">
                   <span className="text-[10px] font-semibold uppercase text-muted-foreground">
                     Topic Expertise:
                   </span>
@@ -139,7 +126,7 @@ export default function ReviewersPage() {
                     {r.topics.map((t, idx) => (
                       <span
                         key={idx}
-                        className="rounded bg-purple-50 border border-purple-200/60 px-1.5 py-0.5 text-[10px] font-medium text-purple-800"
+                        className="rounded bg-purple-500/10 border border-purple-500/30 px-2 py-0.5 text-[10px] font-medium text-purple-300"
                       >
                         {t}
                       </span>
@@ -147,25 +134,16 @@ export default function ReviewersPage() {
                   </div>
                 </div>
 
-                {/* Keywords */}
-                {r.keywords && r.keywords.length > 0 && (
-                  <div className="flex flex-wrap gap-1 pt-1">
-                    {r.keywords.map((k, idx) => (
-                      <span
-                        key={idx}
-                        className="rounded bg-secondary px-1.5 py-0.5 text-[9px] text-muted-foreground"
-                      >
-                        #{k}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
+                {/* Email Footer */}
+                <div className="pt-2 border-t border-white/10 text-[10px] text-muted-foreground truncate">
+                  {r.userEmail}
+                </div>
+              </Card3D>
             );
           })
         ) : (
           <div className="col-span-full py-12 text-center text-xs text-muted-foreground">
-            No reviewers found matching your query.
+            No reviewers found matching &quot;{searchTerm}&quot;
           </div>
         )}
       </div>

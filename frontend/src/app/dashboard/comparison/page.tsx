@@ -86,7 +86,7 @@ export default function AlgorithmComparisonPage() {
             >
               Tri-Algorithm Max-Flow Comparison
             </h1>
-            <span className="rounded-full bg-purple-500/20 border border-purple-500/40 px-3 py-0.5 text-[11px] font-bold text-purple-300 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
+            <span className="rounded-full bg-purple-500/20 border border-purple-500/40 px-3 py-0.5 text-[11px] font-bold text-purple-300 shadow-[0_0_15px_rgba(168,85,247,0.25)]">
               Rigorous Research Protocol
             </span>
           </div>
@@ -103,7 +103,7 @@ export default function AlgorithmComparisonPage() {
           {compareMutation.isPending ? (
             <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
           ) : (
-            <Play className="h-4 w-4 text-cyan-400" />
+            <Play className="h-4 w-4 text-white" />
           )}
           <span>
             {compareMutation.isPending
@@ -119,8 +119,8 @@ export default function AlgorithmComparisonPage() {
           <h2 className="text-xs font-bold uppercase tracking-wider text-white">
             Synthetic Benchmark Parameters
           </h2>
-          <span className="text-[11px] font-mono text-cyan-300">
-            Seed: <strong>{seed}</strong> • {warmups} Warmups • {trials} Measured Trials
+          <span className="text-[11px] font-mono text-muted-foreground">
+            Seed: <strong className="text-white">{seed}</strong> • {warmups} Warmups • {trials} Measured Trials
           </span>
         </div>
 
@@ -133,7 +133,7 @@ export default function AlgorithmComparisonPage() {
               max="200"
               value={manuscripts}
               onChange={(e) => setManuscripts(parseInt(e.target.value) || 30)}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/60 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/80 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
@@ -145,7 +145,7 @@ export default function AlgorithmComparisonPage() {
               max="100"
               value={reviewers}
               onChange={(e) => setReviewers(parseInt(e.target.value) || 15)}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/60 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/80 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
@@ -157,7 +157,7 @@ export default function AlgorithmComparisonPage() {
               max="5"
               value={reviewsPerPaper}
               onChange={(e) => setReviewsPerPaper(parseInt(e.target.value) || 2)}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/60 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/80 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
@@ -169,7 +169,7 @@ export default function AlgorithmComparisonPage() {
               max="10"
               value={capacity}
               onChange={(e) => setCapacity(parseInt(e.target.value) || 4)}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/60 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/80 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
@@ -181,7 +181,7 @@ export default function AlgorithmComparisonPage() {
               max="10"
               value={warmups}
               onChange={(e) => setWarmups(parseInt(e.target.value) || 3)}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/60 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/80 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
@@ -193,7 +193,7 @@ export default function AlgorithmComparisonPage() {
               max="50"
               value={trials}
               onChange={(e) => setTrials(parseInt(e.target.value) || 10)}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/60 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/80 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
             />
           </div>
         </div>
@@ -234,7 +234,7 @@ export default function AlgorithmComparisonPage() {
           </div>
 
           <div className="hidden sm:flex items-center gap-2 font-mono text-xs text-muted-foreground bg-black/60 px-3 py-1.5 rounded-xl border border-white/10">
-            <Fingerprint className="h-4 w-4 text-cyan-400" />
+            <Fingerprint className="h-4 w-4 text-white/80" />
             <span>Fingerprint: {benchmarkResult.graphFingerprint ? benchmarkResult.graphFingerprint.substring(0, 16) : ""}…</span>
           </div>
         </div>
@@ -246,10 +246,10 @@ export default function AlgorithmComparisonPage() {
           {benchmarkResult.algorithms.map((algo, index) => {
             const glow =
               algo.algorithmName === "Dinic"
-                ? "cyan"
+                ? "white"
                 : algo.algorithmName === "Edmonds-Karp"
                 ? "purple"
-                : "blue";
+                : "amber";
 
             return (
               <Card3D key={algo.algorithmName} glowColor={glow} className="p-5 space-y-4">
@@ -278,7 +278,7 @@ export default function AlgorithmComparisonPage() {
 
                   <div className="flex justify-between items-baseline">
                     <span className="text-muted-foreground">Median Runtime:</span>
-                    <span className="font-mono font-bold text-cyan-300 text-sm">
+                    <span className="font-mono font-bold text-white text-sm">
                       {formatMs(algo.medianDurationMs)}
                     </span>
                   </div>
@@ -309,7 +309,7 @@ export default function AlgorithmComparisonPage() {
                 </div>
 
                 {/* Graph Specs */}
-                <div className="rounded-xl border border-white/10 bg-black/50 p-3 text-[11px] font-mono text-muted-foreground space-y-1">
+                <div className="rounded-xl border border-white/10 bg-black/60 p-3 text-[11px] font-mono text-muted-foreground space-y-1">
                   <div>Vertices: {benchmarkResult.vertexCount}</div>
                   <div>Edges: {benchmarkResult.edgeCount}</div>
                   <div>Trials: {algo.measuredTrials} runs (Sequential isolated)</div>
@@ -348,17 +348,17 @@ export default function AlgorithmComparisonPage() {
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "rgba(10, 10, 15, 0.9)",
+                    backgroundColor: "rgba(10, 10, 10, 0.95)",
                     backdropFilter: "blur(12px)",
                     borderColor: "rgba(255, 255, 255, 0.15)",
                     borderRadius: "12px",
                     color: "#FFFFFF",
                     fontSize: "12px",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.8)",
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.9)",
                   }}
                 />
                 <Legend />
-                <Bar dataKey="Median Runtime (ms)" fill="#06B6D4" radius={[6, 6, 0, 0]} barSize={32} />
+                <Bar dataKey="Median Runtime (ms)" fill="#FFFFFF" radius={[6, 6, 0, 0]} barSize={32} />
                 <Bar dataKey="p95 Runtime (ms)" fill="#8B5CF6" radius={[6, 6, 0, 0]} barSize={32} />
               </BarChart>
             </ResponsiveContainer>

@@ -26,13 +26,13 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
   if (!isOpen || !explanation) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/70 backdrop-blur-md transition-opacity">
-      <div className="flex h-full w-full max-w-lg flex-col border-l border-white/10 bg-black/90 p-6 shadow-2xl backdrop-blur-2xl animate-in slide-in-from-right duration-300 text-white">
+    <div className="fixed inset-0 z-50 flex justify-end bg-black/80 backdrop-blur-md transition-opacity">
+      <div className="flex h-full w-full max-w-lg flex-col border-l border-white/10 bg-black/95 p-6 shadow-2xl backdrop-blur-2xl animate-in slide-in-from-right duration-300 text-white">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/10 pb-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/20 text-cyan-300 shadow-md">
-              <Sparkles className="h-5 w-5" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 border border-white/20 text-white shadow-md">
+              <Sparkles className="h-5 w-5 text-white" />
             </div>
             <div>
               <h2 className="text-base font-bold tracking-tight text-white">Assignment Explanation</h2>
@@ -50,7 +50,7 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
         {/* Content Body */}
         <div className="flex-1 overflow-y-auto py-5 space-y-4">
           {/* Plain English Summary Pill */}
-          <div className="glass-panel p-4 rounded-xl border border-emerald-500/30 bg-emerald-950/30 text-xs">
+          <div className="glass-panel p-4 rounded-xl border border-emerald-500/30 bg-emerald-950/20 text-xs">
             <div className="flex items-center gap-2 font-bold text-emerald-300">
               <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
               <span>Valid Match Verified</span>
@@ -64,13 +64,13 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
           <div className="grid grid-cols-2 gap-3">
             {/* Manuscript Card */}
             <div className="glass-panel p-3.5 space-y-1.5 rounded-xl border border-white/10">
-              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-cyan-300">
-                <FileText className="h-3.5 w-3.5" />
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-white">
+                <FileText className="h-3.5 w-3.5 text-white/80" />
                 <span>Manuscript</span>
               </div>
               <p className="font-bold text-xs text-white line-clamp-2">{explanation.manuscriptTitle}</p>
               {explanation.manuscriptTrack && (
-                <span className="inline-block rounded-md bg-cyan-500/10 border border-cyan-500/30 px-2 py-0.5 text-[9px] font-medium text-cyan-300">
+                <span className="inline-block rounded-md bg-white/10 border border-white/20 px-2 py-0.5 text-[9px] font-medium text-white/90">
                   {explanation.manuscriptTrack}
                 </span>
               )}
@@ -97,7 +97,7 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
                 <span className="flex items-center gap-1.5 text-muted-foreground">
-                  <Tag className="h-3.5 w-3.5 text-cyan-400" /> Topic Overlap:
+                  <Tag className="h-3.5 w-3.5 text-white/80" /> Topic Overlap:
                 </span>
                 <span className="font-semibold text-white">
                   {explanation.topicOverlapCount} matches
@@ -108,7 +108,7 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
                   explanation.matchingTopics.map((topic, i) => (
                     <span
                       key={i}
-                      className="rounded-md bg-cyan-500/10 border border-cyan-500/30 px-2 py-0.5 text-[10px] font-medium text-cyan-300"
+                      className="rounded-md bg-white/10 border border-white/20 px-2 py-0.5 text-[10px] font-medium text-white"
                     >
                       {topic}
                     </span>
@@ -169,7 +169,7 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
               </div>
               <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full transition-all"
+                  className="h-full bg-gradient-to-r from-white to-emerald-400 rounded-full transition-all"
                   style={{
                     width: `${Math.min(
                       100,
@@ -207,7 +207,7 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
             </div>
             <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[10px] text-muted-foreground">
               <span className="flex items-center gap-1">
-                <Fingerprint className="h-3.5 w-3.5 text-cyan-400" /> Graph Fingerprint:
+                <Fingerprint className="h-3.5 w-3.5 text-white/80" /> Graph Fingerprint:
               </span>
               <span className="font-mono truncate max-w-[160px] text-white/80">{explanation.graphFingerprint}</span>
             </div>

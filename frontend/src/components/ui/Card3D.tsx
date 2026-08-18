@@ -5,7 +5,7 @@ import React, { useRef, useState } from "react";
 interface Card3DProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
-  glowColor?: "cyan" | "purple" | "emerald" | "blue" | "none";
+  glowColor?: "white" | "purple" | "emerald" | "amber" | "none";
 }
 
 export function Card3D({
@@ -52,16 +52,16 @@ export function Card3D({
 
   const getGlowStyle = () => {
     switch (glowColor) {
-      case "cyan":
-        return "hover:border-cyan-500/40 hover:shadow-[0_20px_50px_-10px_rgba(6,182,212,0.3)]";
+      case "white":
+        return "hover:border-white/40 hover:shadow-[0_20px_50px_-10px_rgba(255,255,255,0.15)]";
       case "purple":
-        return "hover:border-purple-500/40 hover:shadow-[0_20px_50px_-10px_rgba(168,85,247,0.3)]";
+        return "hover:border-purple-500/40 hover:shadow-[0_20px_50px_-10px_rgba(168,85,247,0.25)]";
       case "emerald":
-        return "hover:border-emerald-500/40 hover:shadow-[0_20px_50px_-10px_rgba(16,185,129,0.3)]";
-      case "blue":
-        return "hover:border-blue-500/40 hover:shadow-[0_20px_50px_-10px_rgba(59,130,246,0.3)]";
+        return "hover:border-emerald-500/40 hover:shadow-[0_20px_50px_-10px_rgba(16,185,129,0.25)]";
+      case "amber":
+        return "hover:border-amber-500/40 hover:shadow-[0_20px_50px_-10px_rgba(245,158,11,0.25)]";
       default:
-        return "hover:border-white/30 hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.8)]";
+        return "hover:border-white/30 hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.9)]";
     }
   };
 

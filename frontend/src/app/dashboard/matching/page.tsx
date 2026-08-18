@@ -104,7 +104,7 @@ export default function MatchingCockpitPage() {
             >
               Matching Engine Cockpit
             </h1>
-            <span className="rounded-full bg-cyan-500/20 border border-cyan-500/40 px-3 py-0.5 text-[11px] font-bold text-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.3)]">
+            <span className="rounded-full bg-white/10 border border-white/20 px-3 py-0.5 text-[11px] font-bold text-white shadow-[0_0_15px_rgba(255,255,255,0.15)]">
               Deterministic Maximum Flow
             </span>
           </div>
@@ -120,7 +120,7 @@ export default function MatchingCockpitPage() {
             disabled={simulateMutation.isPending || !activeConfId}
             className="liquid-glass rounded-xl px-5 py-2.5 text-xs font-semibold text-white flex items-center gap-2 disabled:opacity-50"
           >
-            <Play className={`h-4 w-4 text-cyan-400 ${simulateMutation.isPending ? "animate-spin" : ""}`} />
+            <Play className={`h-4 w-4 text-white ${simulateMutation.isPending ? "animate-spin" : ""}`} />
             <span>{simulateMutation.isPending ? "Computing Flow..." : "Simulate Allocation"}</span>
           </button>
 
@@ -148,7 +148,7 @@ export default function MatchingCockpitPage() {
       <Card3D glowColor="purple" className="p-5">
         <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
           <div className="flex items-center gap-2">
-            <Sliders className="h-4 w-4 text-purple-400" />
+            <Sliders className="h-4 w-4 text-purple-300" />
             <h2 className="text-xs font-bold uppercase tracking-wider text-white">
               Flow Model Constraint Controls
             </h2>
@@ -165,7 +165,7 @@ export default function MatchingCockpitPage() {
             <select
               value={algorithm}
               onChange={(e) => setAlgorithm(e.target.value as AlgorithmType)}
-              className="w-full rounded-xl border border-white/10 bg-black/60 py-2.5 px-3 text-xs text-white focus:border-white/30 focus:outline-none backdrop-blur-md"
+              className="w-full rounded-xl border border-white/10 bg-black/80 py-2.5 px-3 text-xs text-white focus:border-white/30 focus:outline-none backdrop-blur-md"
             >
               <option value="DINIC">Dinic&apos;s Algorithm (Layered BFS/DFS)</option>
               <option value="EDMONDS_KARP">Edmonds-Karp (Shortest BFS)</option>
@@ -177,7 +177,7 @@ export default function MatchingCockpitPage() {
           <div className="space-y-1.5">
             <div className="flex justify-between">
               <label className="font-semibold text-muted-foreground">Reviews Required / Paper</label>
-              <span className="font-mono font-bold text-cyan-300">{reviewsPerPaper}</span>
+              <span className="font-mono font-bold text-white">{reviewsPerPaper}</span>
             </div>
             <input
               type="range"
@@ -186,7 +186,7 @@ export default function MatchingCockpitPage() {
               step="1"
               value={reviewsPerPaper}
               onChange={(e) => setReviewsPerPaper(parseInt(e.target.value))}
-              className="w-full accent-cyan-400"
+              className="w-full accent-white"
             />
           </div>
 
@@ -217,7 +217,7 @@ export default function MatchingCockpitPage() {
               type="checkbox"
               checked={excludeConflicts}
               onChange={(e) => setExcludeConflicts(e.target.checked)}
-              className="h-4 w-4 rounded border-white/20 bg-white/10 text-cyan-400 focus:ring-0"
+              className="h-4 w-4 rounded border-white/20 bg-white/10 text-white focus:ring-0"
             />
           </div>
         </div>
@@ -226,12 +226,12 @@ export default function MatchingCockpitPage() {
       {/* SIMULATION METRICS BAR */}
       {simulationResult && (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Card3D glowColor="cyan" className="p-4">
+          <Card3D glowColor="white" className="p-4">
             <p className="text-[11px] font-medium text-muted-foreground uppercase">
               Achieved Flow Capacity
             </p>
             <div className="mt-1 flex items-baseline gap-2">
-              <span className="text-2xl font-bold font-mono text-cyan-300">
+              <span className="text-2xl font-bold font-mono text-white">
                 {simulationResult.achievedFlow} / {simulationResult.totalRequiredFlow}
               </span>
               <span className="text-xs text-muted-foreground">Units</span>
@@ -264,12 +264,12 @@ export default function MatchingCockpitPage() {
             </div>
           </Card3D>
 
-          <Card3D glowColor="blue" className="p-4">
+          <Card3D glowColor="white" className="p-4">
             <p className="text-[11px] font-medium text-muted-foreground uppercase">
               SHA-256 Fingerprint
             </p>
             <div className="mt-1 flex items-center gap-1 font-mono text-xs text-muted-foreground truncate">
-              <Fingerprint className="h-3.5 w-3.5 text-blue-400 shrink-0" />
+              <Fingerprint className="h-3.5 w-3.5 text-white shrink-0" />
               <span className="truncate">{simulationResult.graphFingerprint}</span>
             </div>
           </Card3D>
@@ -291,7 +291,7 @@ export default function MatchingCockpitPage() {
         <Card3D glowColor="none" className="p-5 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <GitMerge className="h-4 w-4 text-cyan-400" />
+              <GitMerge className="h-4 w-4 text-white" />
               <h2 className="text-sm font-bold text-white">
                 Assigned Reviewer Pairs ({simulationResult.assignments.length})
               </h2>
@@ -323,7 +323,7 @@ export default function MatchingCockpitPage() {
                     <td className="py-3 font-sans font-medium text-white max-w-[240px] truncate">
                       {assignment.manuscriptTitle}
                     </td>
-                    <td className="py-3 font-sans text-cyan-300">{assignment.reviewerName}</td>
+                    <td className="py-3 font-sans text-white">{assignment.reviewerName}</td>
                     <td className="py-3 font-sans text-muted-foreground">
                       {assignment.reviewerAffiliation || "Independent"}
                     </td>
@@ -336,7 +336,7 @@ export default function MatchingCockpitPage() {
                       </span>
                     </td>
                     <td className="py-3 text-right">
-                      <button className="text-xs text-cyan-400 hover:text-cyan-300 font-sans underline transition-colors">
+                      <button className="text-xs text-white hover:underline font-sans transition-colors">
                         Explain Proof →
                       </button>
                     </td>

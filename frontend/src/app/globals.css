@@ -10,25 +10,26 @@
     --font-body: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
 
-    --background: 0 0% 0%; /* Pure black */
+    /* Pure pitch-black obsidian palette (Zero blue tint) */
+    --background: 0 0% 0%;
     --foreground: 0 0% 100%;
-    --muted-foreground: 240 4% 68%;
+    --muted-foreground: 0 0% 65%;
 
     --primary: 0 0% 100%;
-    --primary-foreground: 0 0% 4%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 240 4% 12%;
+    --secondary: 0 0% 12%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 240 4% 14%;
-    --accent: 217 91% 60%;
-    --accent-foreground: 0 0% 100%;
+    --muted: 0 0% 12%;
+    --accent: 0 0% 100%;
+    --accent-foreground: 0 0% 0%;
 
     --border: 0 0% 100% / 0.12;
     --input: 0 0% 100% / 0.15;
-    --ring: 217 91% 60%;
+    --ring: 0 0% 100%;
 
-    --card: 0 0% 5% / 0.75;
+    --card: 0 0% 4% / 0.85;
     --card-foreground: 0 0% 100%;
 
     --radius: 1rem;
@@ -54,20 +55,20 @@
 }
 
 /* =========================================================
-   3D GLASSMORPHISM & DEPTH DESIGN SYSTEM
+   PURE OBSIDIAN 3D GLASSMORPHISM (ZERO BLUE TINT)
    ========================================================= */
 
-/* Premium Frosted Glass Panel */
+/* Premium Frosted Obsidian Glass Panel */
 .glass-panel {
-  background: rgba(18, 18, 22, 0.65);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  background: rgba(14, 14, 14, 0.75);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 
-    0 10px 30px -10px rgba(0, 0, 0, 0.8),
-    0 20px 40px -15px rgba(0, 0, 0, 0.6),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
-    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4);
+    0 12px 36px -8px rgba(0, 0, 0, 0.9),
+    0 24px 48px -12px rgba(0, 0, 0, 0.8),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.6);
   border-radius: 1rem;
   position: relative;
 }
@@ -75,12 +76,12 @@
 /* 3D Floating Glass Card */
 .glass-card-3d {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 1rem;
   box-shadow: 
-    0 12px 36px -8px rgba(0, 0, 0, 0.7),
+    0 12px 36px -8px rgba(0, 0, 0, 0.8),
     inset 0 1px 2px rgba(255, 255, 255, 0.25);
   transform-style: preserve-3d;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -89,69 +90,69 @@
 
 .glass-card-3d:hover {
   transform: translateY(-5px) rotateX(2deg) rotateY(-1deg) scale(1.015);
-  border-color: rgba(255, 255, 255, 0.28);
+  border-color: rgba(255, 255, 255, 0.35);
   box-shadow: 
-    0 24px 60px -12px rgba(0, 0, 0, 0.9),
-    0 0 35px -5px rgba(99, 102, 241, 0.2),
-    inset 0 1px 3px rgba(255, 255, 255, 0.4);
+    0 24px 60px -12px rgba(0, 0, 0, 0.95),
+    0 0 35px -5px rgba(255, 255, 255, 0.15),
+    inset 0 1px 3px rgba(255, 255, 255, 0.5);
 }
 
 /* Liquid Glass Interactive Element */
 .liquid-glass {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   box-shadow: 
-    0 8px 24px -4px rgba(0, 0, 0, 0.5),
-    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    0 8px 24px -4px rgba(0, 0, 0, 0.6),
+    inset 0 1px 2px rgba(255, 255, 255, 0.25);
   position: relative;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .liquid-glass:hover {
   transform: translateY(-2px) scale(1.02);
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
   box-shadow: 
-    0 16px 36px -6px rgba(0, 0, 0, 0.7),
-    0 0 20px rgba(255, 255, 255, 0.15),
-    inset 0 1px 3px rgba(255, 255, 255, 0.4);
+    0 16px 36px -6px rgba(0, 0, 0, 0.8),
+    0 0 25px rgba(255, 255, 255, 0.2),
+    inset 0 1px 3px rgba(255, 255, 255, 0.5);
 }
 
-/* 3D Glass Button */
+/* 3D Monochrome Glass Button */
 .btn-3d {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.04) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(12px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(14px);
   box-shadow: 
-    0 4px 14px rgba(0, 0, 0, 0.4),
-    inset 0 1px 1px rgba(255, 255, 255, 0.4),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+    0 4px 14px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.5);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-3d:hover {
   transform: translateY(-2px);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
   border-color: rgba(255, 255, 255, 0.4);
   box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.6),
-    0 0 15px rgba(255, 255, 255, 0.25),
+    0 8px 25px rgba(0, 0, 0, 0.7),
+    0 0 18px rgba(255, 255, 255, 0.2),
     inset 0 1px 2px rgba(255, 255, 255, 0.5);
 }
 
 .btn-3d:active {
   transform: translateY(1px);
   box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.5),
-    inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    0 2px 8px rgba(0, 0, 0, 0.6),
+    inset 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 /* 3D Isometric View Container */
 .isometric-stage {
-  perspective: 1000px;
+  perspective: 1100px;
   transform-style: preserve-3d;
 }
 
@@ -162,19 +163,6 @@
 
 .isometric-stage:hover .isometric-layer {
   transform: rotateX(4deg) rotateY(-1deg) rotateZ(0deg);
-}
-
-/* Ambient Neon Glow Helpers */
-.glow-cyan {
-  box-shadow: 0 0 25px -4px rgba(6, 182, 212, 0.45);
-}
-
-.glow-purple {
-  box-shadow: 0 0 25px -4px rgba(168, 85, 247, 0.45);
-}
-
-.glow-emerald {
-  box-shadow: 0 0 25px -4px rgba(16, 185, 129, 0.45);
 }
 
 /* Keyframe Animations */
@@ -196,13 +184,4 @@
 .flow-animate {
   stroke-dasharray: 6 6;
   animation: flowDash 1s linear infinite;
-}
-
-@keyframes float3D {
-  0%, 100% { transform: translateY(0px) rotateX(0deg); }
-  50% { transform: translateY(-8px) rotateX(2deg); }
-}
-
-.animate-float-3d {
-  animation: float3D 6s ease-in-out infinite;
 }

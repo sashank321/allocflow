@@ -30,7 +30,7 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
     pathname.includes("/graph-view");
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-white/10 bg-black/60 px-6 backdrop-blur-md text-white">
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-white/10 bg-black/80 px-6 backdrop-blur-xl text-white">
       {/* Brand & Conference Badge */}
       <div className="flex items-center gap-6">
         <Link href="/dashboard" className="flex items-center gap-2.5 group">
@@ -41,13 +41,13 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
             AllocFlow
           </span>
           <sup className="text-xs text-muted-foreground">®</sup>
-          <span className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] font-bold text-white/80 border border-white/10">
+          <span className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] font-bold text-white/90 border border-white/15">
             DSA Engine
           </span>
         </Link>
 
         <div className="hidden md:flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-muted-foreground">
-          <Building2 className="h-3.5 w-3.5 text-blue-400" />
+          <Building2 className="h-3.5 w-3.5 text-white/80" />
           <span className="font-medium text-white">{activeConferenceCode}</span>
           <span className="text-[10px] text-muted-foreground">(Active Cycle)</span>
         </div>
@@ -59,18 +59,18 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
         <div
           className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold backdrop-blur-md ${
             isResearchMode
-              ? "bg-purple-500/20 text-purple-200 border border-purple-500/30"
-              : "bg-blue-500/20 text-blue-200 border border-blue-500/30"
+              ? "bg-purple-500/20 text-purple-200 border border-purple-500/40"
+              : "bg-white/10 text-white border border-white/20"
           }`}
         >
           {isResearchMode ? (
             <>
-              <FlaskConical className="h-3.5 w-3.5" />
+              <FlaskConical className="h-3.5 w-3.5 text-purple-300" />
               <span>RESEARCH MODE</span>
             </>
           ) : (
             <>
-              <Cpu className="h-3.5 w-3.5" />
+              <Cpu className="h-3.5 w-3.5 text-white" />
               <span>OPERATIONS MODE</span>
             </>
           )}
@@ -85,7 +85,7 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
               onClick={() => quickLogin(role)}
               className={`rounded px-2 py-0.5 text-[11px] transition-all ${
                 user?.role === role
-                  ? "bg-white/20 font-semibold text-white shadow-sm border border-white/20"
+                  ? "bg-white/20 font-semibold text-white shadow-sm border border-white/25"
                   : "text-muted-foreground hover:text-white"
               }`}
             >

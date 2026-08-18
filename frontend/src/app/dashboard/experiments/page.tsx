@@ -25,6 +25,7 @@ import {
   CartesianGrid,
 } from "recharts";
 import { formatMs } from "@/lib/utils";
+import { Card3D } from "@/components/ui/Card3D";
 
 export default function ScalabilityExperimentsPage() {
   const [startN, setStartN] = useState(10);
@@ -150,85 +151,85 @@ export default function ScalabilityExperimentsPage() {
       </div>
 
       {/* Sweep Configuration */}
-      <div className="rounded-xl border bg-card p-5 shadow-sm space-y-4">
+      <Card3D glowColor="purple" className="p-5 space-y-4">
         <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-          <FlaskConical className="h-4 w-4 text-purple-600" />
+          <FlaskConical className="h-4 w-4 text-purple-400" />
           <span>Configurable Sweep Range &amp; Repetition Parameters</span>
         </div>
 
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-7 text-xs">
           <div>
-            <label className="font-semibold text-foreground">Start Papers (N_start)</label>
+            <label className="font-semibold text-muted-foreground">Start Papers (N_start)</label>
             <input
               type="number"
               value={startN}
               onChange={(e) => setStartN(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border bg-background p-1.5 text-xs focus:border-blue-500 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-white/10 bg-black/80 p-2 text-xs text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="font-semibold text-foreground">End Papers (N_end)</label>
+            <label className="font-semibold text-muted-foreground">End Papers (N_end)</label>
             <input
               type="number"
               value={endN}
               onChange={(e) => setEndN(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border bg-background p-1.5 text-xs focus:border-blue-500 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-white/10 bg-black/80 p-2 text-xs text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="font-semibold text-foreground">Step Size (ΔN)</label>
+            <label className="font-semibold text-muted-foreground">Step Size (ΔN)</label>
             <input
               type="number"
               value={step}
               onChange={(e) => setStep(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border bg-background p-1.5 text-xs focus:border-blue-500 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-white/10 bg-black/80 p-2 text-xs text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="font-semibold text-foreground">Reviewer Ratio (M/N)</label>
+            <label className="font-semibold text-muted-foreground">Reviewer Ratio (M/N)</label>
             <input
               type="number"
               step="0.05"
               value={ratio}
               onChange={(e) => setRatio(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border bg-background p-1.5 text-xs focus:border-blue-500 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-white/10 bg-black/80 p-2 text-xs text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="font-semibold text-foreground">Warmup Trials</label>
+            <label className="font-semibold text-muted-foreground">Warmup Trials</label>
             <input
               type="number"
               value={warmups}
               onChange={(e) => setWarmups(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border bg-background p-1.5 text-xs focus:border-blue-500 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-white/10 bg-black/80 p-2 text-xs text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="font-semibold text-foreground">Measured Trials</label>
+            <label className="font-semibold text-muted-foreground">Measured Trials</label>
             <input
               type="number"
               value={trials}
               onChange={(e) => setTrials(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border bg-background p-1.5 text-xs focus:border-blue-500 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-white/10 bg-black/80 p-2 text-xs text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="font-semibold text-foreground">Deterministic Seed</label>
+            <label className="font-semibold text-muted-foreground">Deterministic Seed</label>
             <input
               type="number"
               value={seed}
               onChange={(e) => setSeed(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border bg-background p-1.5 text-xs font-mono focus:border-blue-500 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-white/10 bg-black/80 p-2 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
             />
           </div>
         </div>
-      </div>
+      </Card3D>
 
       {/* Sweep Curves & Charts */}
       {sweepResult ? (

@@ -46,8 +46,8 @@ export default function DashboardOverviewPage() {
     return (
       <div className="flex h-96 items-center justify-center">
         <div className="flex flex-col items-center gap-3 text-muted-foreground">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-cyan-400 border-t-transparent shadow-[0_0_15px_rgba(6,182,212,0.5)]" />
-          <p className="text-xs text-white/80">Loading 3D conference analytics...</p>
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-white border-t-transparent shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
+          <p className="text-xs text-white/80">Loading conference analytics...</p>
         </div>
       </div>
     );
@@ -69,7 +69,7 @@ export default function DashboardOverviewPage() {
     })
   );
 
-  const STATUS_COLORS = ["#06B6D4", "#10B981", "#8B5CF6", "#F59E0B", "#EC4899"];
+  const STATUS_COLORS = ["#FFFFFF", "#10B981", "#8B5CF6", "#F59E0B", "#94A3B8"];
 
   return (
     <div className="space-y-6 select-none text-white">
@@ -83,7 +83,7 @@ export default function DashboardOverviewPage() {
             >
               Conference Operations Overview
             </h1>
-            <span className="rounded-full bg-emerald-500/20 border border-emerald-500/40 px-3 py-0.5 text-[11px] font-bold text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+            <span className="rounded-full bg-emerald-500/20 border border-emerald-500/40 px-3 py-0.5 text-[11px] font-bold text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
               Live Allocation
             </span>
           </div>
@@ -97,14 +97,14 @@ export default function DashboardOverviewPage() {
             href="/dashboard/matching"
             className="liquid-glass rounded-xl px-4 py-2 text-xs font-semibold text-white flex items-center gap-2"
           >
-            <GitMerge className="h-4 w-4 text-cyan-400" />
+            <GitMerge className="h-4 w-4 text-white" />
             <span>Launch Matching Cockpit</span>
           </Link>
           <Link
             href="/dashboard/comparison"
             className="btn-3d rounded-xl px-4 py-2 text-xs font-semibold text-white flex items-center gap-2"
           >
-            <Sparkles className="h-4 w-4 text-purple-400" />
+            <Sparkles className="h-4 w-4 text-purple-300" />
             <span>Tri-Algorithm Lab</span>
           </Link>
         </div>
@@ -113,12 +113,12 @@ export default function DashboardOverviewPage() {
       {/* 3D KPI STATS GRID */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Total Manuscripts */}
-        <Card3D glowColor="cyan" className="p-5">
+        <Card3D glowColor="white" className="p-5">
           <div className="flex items-center justify-between">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Total Manuscripts
             </p>
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 shadow-md">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 border border-white/15 text-white shadow-md">
               <FileText className="h-5 w-5" />
             </div>
           </div>
@@ -126,7 +126,7 @@ export default function DashboardOverviewPage() {
             <span className="text-3xl font-bold tracking-tight text-white">
               {stats.totalManuscripts}
             </span>
-            <span className="text-xs text-cyan-400 font-medium">Papers</span>
+            <span className="text-xs text-muted-foreground font-medium">Papers</span>
           </div>
           <p className="mt-1.5 text-[11px] text-muted-foreground">
             Requiring {stats.totalRequiredReviews} total assigned reviews
@@ -139,7 +139,7 @@ export default function DashboardOverviewPage() {
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
               PC Reviewers
             </p>
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-500/20 border border-purple-500/30 text-purple-300 shadow-md">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-purple-500/20 border border-purple-500/40 text-purple-300 shadow-md">
               <Users className="h-5 w-5" />
             </div>
           </div>
@@ -147,7 +147,7 @@ export default function DashboardOverviewPage() {
             <span className="text-3xl font-bold tracking-tight text-white">
               {stats.totalReviewers}
             </span>
-            <span className="text-xs text-purple-400 font-medium">Experts</span>
+            <span className="text-xs text-purple-300 font-medium">Experts</span>
           </div>
           <p className="mt-1.5 text-[11px] text-muted-foreground">
             Aggregate capacity: {stats.totalReviewerCapacity} slots available
@@ -160,7 +160,7 @@ export default function DashboardOverviewPage() {
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Committed Matches
             </p>
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 shadow-md">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 shadow-md">
               <GitMerge className="h-5 w-5" />
             </div>
           </div>
@@ -176,12 +176,12 @@ export default function DashboardOverviewPage() {
         </Card3D>
 
         {/* COI Safeguards */}
-        <Card3D glowColor="blue" className="p-5">
+        <Card3D glowColor="amber" className="p-5">
           <div className="flex items-center justify-between">
             <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Conflict Rules
             </p>
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500/20 border border-blue-500/30 text-blue-300 shadow-md">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 shadow-md">
               <ShieldCheck className="h-5 w-5" />
             </div>
           </div>
@@ -189,7 +189,7 @@ export default function DashboardOverviewPage() {
             <span className="text-3xl font-bold tracking-tight text-white">
               {stats.totalConflicts}
             </span>
-            <span className="text-xs text-blue-400 font-medium">COIs Enforced</span>
+            <span className="text-xs text-amber-300 font-medium">COIs Enforced</span>
           </div>
           <p className="mt-1.5 text-[11px] text-muted-foreground">
             Zero conflict violations across flow graph
@@ -206,7 +206,7 @@ export default function DashboardOverviewPage() {
               <h2 className="text-sm font-bold text-white">Reviewer Workload Saturation</h2>
               <p className="text-xs text-muted-foreground">Assigned papers per committee member</p>
             </div>
-            <span className="rounded-md bg-white/10 px-2 py-0.5 text-[10px] font-medium text-purple-300 border border-purple-500/30">
+            <span className="rounded-md bg-white/10 px-2 py-0.5 text-[10px] font-medium text-white border border-white/20">
               Max Cap: 4
             </span>
           </div>
@@ -228,13 +228,13 @@ export default function DashboardOverviewPage() {
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "rgba(10, 10, 15, 0.9)",
+                    backgroundColor: "rgba(10, 10, 10, 0.95)",
                     backdropFilter: "blur(12px)",
                     borderColor: "rgba(255, 255, 255, 0.15)",
                     borderRadius: "12px",
                     color: "#FFFFFF",
                     fontSize: "12px",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.8)",
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.9)",
                   }}
                 />
                 <Bar dataKey="count" fill="#8B5CF6" radius={[6, 6, 0, 0]} barSize={28} />
@@ -244,7 +244,7 @@ export default function DashboardOverviewPage() {
         </Card3D>
 
         {/* Pipeline Distribution Pie */}
-        <Card3D glowColor="cyan" className="p-5 space-y-4">
+        <Card3D glowColor="white" className="p-5 space-y-4">
           <div>
             <h2 className="text-sm font-bold text-white">Manuscript Pipeline</h2>
             <p className="text-xs text-muted-foreground">Current status distribution</p>
@@ -266,20 +266,20 @@ export default function DashboardOverviewPage() {
                     <Cell
                       key={`cell-${index}`}
                       fill={STATUS_COLORS[index % STATUS_COLORS.length]}
-                      stroke="rgba(0,0,0,0.5)"
+                      stroke="rgba(0,0,0,0.7)"
                       strokeWidth={2}
                     />
                   ))}
                 </Pie>
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "rgba(10, 10, 15, 0.9)",
+                    backgroundColor: "rgba(10, 10, 10, 0.95)",
                     backdropFilter: "blur(12px)",
                     borderColor: "rgba(255, 255, 255, 0.15)",
                     borderRadius: "12px",
                     color: "#FFFFFF",
                     fontSize: "12px",
-                    boxShadow: "0 10px 30px rgba(0,0,0,0.8)",
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.9)",
                   }}
                 />
               </PieChart>
@@ -306,12 +306,12 @@ export default function DashboardOverviewPage() {
       <Card3D glowColor="none" className="p-5 space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-cyan-400" />
+            <Clock className="h-4 w-4 text-white" />
             <h2 className="text-sm font-bold text-white">Immutable Audit Trail</h2>
           </div>
           <Link
             href="/dashboard/audit"
-            className="text-xs text-cyan-400 hover:text-cyan-300 flex items-center gap-1 transition-colors"
+            className="text-xs text-white hover:underline flex items-center gap-1 transition-colors"
           >
             <span>View Full Audit Log</span>
             <ArrowUpRight className="h-3.5 w-3.5" />
@@ -335,7 +335,7 @@ export default function DashboardOverviewPage() {
                   <td className="py-2.5 text-muted-foreground">
                     {new Date(log.timestamp).toLocaleTimeString()}
                   </td>
-                  <td className="py-2.5 text-cyan-300 font-sans">{log.actorEmail}</td>
+                  <td className="py-2.5 text-white font-sans">{log.actorEmail}</td>
                   <td className="py-2.5">
                     <span className="rounded-md bg-white/10 px-2 py-0.5 text-[10px] text-white border border-white/10">
                       {log.action}

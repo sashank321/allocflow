@@ -56,7 +56,7 @@ export function BipartiteFlowGraph({
   if (!data || !data.nodes || data.nodes.length === 0) {
     return (
       <div className="flex h-80 w-full flex-col items-center justify-center rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl text-muted-foreground">
-        <Box className="h-10 w-10 mb-2 text-blue-400 opacity-60 animate-pulse-glow" />
+        <Box className="h-10 w-10 mb-2 text-white/80 opacity-60 animate-pulse-glow" />
         <p className="text-sm font-semibold text-white">Flow Network Awaiting Simulation</p>
         <p className="text-xs text-muted-foreground mt-1 max-w-sm text-center">
           Execute a matching run or benchmark sweep to render the multi-stage 3D bipartite graph.
@@ -123,15 +123,15 @@ export function BipartiteFlowGraph({
       {/* 3D HUD Controls Header */}
       <div className="glass-panel p-4 flex flex-wrap items-center justify-between gap-4 border border-white/10">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500/30 to-purple-500/30 border border-white/20 text-white shadow-lg">
-            <Box className="h-5 w-5 text-cyan-300" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 border border-white/20 text-white shadow-lg">
+            <Box className="h-5 w-5 text-white" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <span className="text-sm font-bold text-white tracking-wide">
                 Bipartite Flow Topology
               </span>
-              <span className="rounded-md bg-white/10 px-2 py-0.5 text-[10px] font-mono text-cyan-300 border border-cyan-500/30">
+              <span className="rounded-md bg-white/10 px-2 py-0.5 text-[10px] font-mono text-white/90 border border-white/20">
                 S → P → R → T
               </span>
             </div>
@@ -148,11 +148,11 @@ export function BipartiteFlowGraph({
             onClick={() => setIs3DMode(!is3DMode)}
             className={`btn-3d flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
               is3DMode
-                ? "bg-cyan-500/20 text-cyan-200 border-cyan-500/40 shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+                ? "bg-white/20 text-white border-white/40 shadow-[0_0_20px_rgba(255,255,255,0.15)]"
                 : "text-muted-foreground hover:text-white"
             }`}
           >
-            <Layers className="h-3.5 w-3.5 text-cyan-400" />
+            <Layers className="h-3.5 w-3.5 text-white" />
             <span>{is3DMode ? "3D Isometric View" : "2D Ortho View"}</span>
           </button>
 
@@ -176,9 +176,6 @@ export function BipartiteFlowGraph({
           is3DMode ? "isometric-stage" : ""
         }`}
       >
-        {/* Stage background glow */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.06)_0%,transparent_70%)]" />
-
         <div
           className={`w-full flex justify-center transition-all duration-700 ${
             is3DMode ? "isometric-layer" : ""
@@ -189,8 +186,8 @@ export function BipartiteFlowGraph({
             className="w-full max-w-[960px] h-auto drop-shadow-2xl"
           >
             <defs>
-              {/* Neon Glow Filters */}
-              <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+              {/* Monochromatic & Emerald Glow Filters */}
+              <filter id="glow-white" x="-20%" y="-20%" width="140%" height="140%">
                 <feGaussianBlur stdDeviation="4" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
@@ -236,14 +233,14 @@ export function BipartiteFlowGraph({
                 markerHeight="4"
                 orient="auto-start-reverse"
               >
-                <path d="M 0 2 L 6 5 L 0 8 z" fill="#334155" />
+                <path d="M 0 2 L 6 5 L 0 8 z" fill="#4B5563" />
               </marker>
 
               {/* Laser Beam Gradients */}
               <linearGradient id="laser-flow" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#06B6D4" stopOpacity="0.8" />
+                <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.8" />
                 <stop offset="50%" stopColor="#10B981" stopOpacity="1" />
-                <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#A855F7" stopOpacity="0.9" />
               </linearGradient>
             </defs>
 
@@ -294,13 +291,13 @@ export function BipartiteFlowGraph({
                       fill="none"
                       stroke={
                         isHovered
-                          ? "#38BDF8"
+                          ? "#FFFFFF"
                           : isSaturated
                           ? "url(#laser-flow)"
-                          : "#1E293B"
+                          : "#262626"
                       }
                       strokeWidth={isHovered ? 3.5 : isSaturated ? 2.5 : 1.2}
-                      strokeOpacity={isHovered ? 1 : isSaturated ? 0.9 : 0.3}
+                      strokeOpacity={isHovered ? 1 : isSaturated ? 0.9 : 0.4}
                       markerEnd={isSaturated ? "url(#arrow-saturated)" : "url(#arrow-dim)"}
                     />
 
@@ -337,12 +334,12 @@ export function BipartiteFlowGraph({
                   >
                     {/* Node 3D Glass Badge Container */}
                     {isSource || isSink ? (
-                      <g filter="url(#glow-cyan)">
+                      <g filter="url(#glow-white)">
                         <circle
                           cx={x}
                           cy={y}
                           r={isSelected ? 26 : 22}
-                          fill={isSource ? "#0284C7" : "#0D9488"}
+                          fill={isSource ? "#262626" : "#065F46"}
                           stroke="#FFFFFF"
                           strokeWidth="2"
                           className="transition-all"
@@ -367,12 +364,12 @@ export function BipartiteFlowGraph({
                           width="170"
                           height="36"
                           rx="10"
-                          fill={isSelected ? "rgba(59, 130, 246, 0.4)" : "rgba(15, 23, 42, 0.85)"}
-                          stroke={isSelected ? "#60A5FA" : "rgba(255, 255, 255, 0.2)"}
+                          fill={isSelected ? "rgba(255, 255, 255, 0.25)" : "rgba(20, 20, 20, 0.85)"}
+                          stroke={isSelected ? "#FFFFFF" : "rgba(255, 255, 255, 0.2)"}
                           strokeWidth={isSelected ? 2 : 1}
                           style={{ backdropFilter: "blur(10px)" }}
                         />
-                        <circle cx={x - 70} cy={y} r="4" fill="#38BDF8" />
+                        <circle cx={x - 70} cy={y} r="4" fill="#FFFFFF" />
                         <text
                           x={x - 58}
                           y={y - 2}
@@ -385,7 +382,7 @@ export function BipartiteFlowGraph({
                         <text
                           x={x - 58}
                           y={y + 11}
-                          fill="#94A3B8"
+                          fill="#9CA3AF"
                           fontSize="9"
                           fontFamily="monospace"
                         >
@@ -400,7 +397,7 @@ export function BipartiteFlowGraph({
                           width="170"
                           height="36"
                           rx="10"
-                          fill={isSelected ? "rgba(168, 85, 247, 0.4)" : "rgba(15, 23, 42, 0.85)"}
+                          fill={isSelected ? "rgba(168, 85, 247, 0.4)" : "rgba(20, 20, 20, 0.85)"}
                           stroke={isSelected ? "#C084FC" : "rgba(255, 255, 255, 0.2)"}
                           strokeWidth={isSelected ? 2 : 1}
                           style={{ backdropFilter: "blur(10px)" }}
@@ -418,7 +415,7 @@ export function BipartiteFlowGraph({
                         <text
                           x={x - 58}
                           y={y + 11}
-                          fill="#94A3B8"
+                          fill="#9CA3AF"
                           fontSize="9"
                           fontFamily="monospace"
                         >
@@ -481,7 +478,7 @@ export function BipartiteFlowGraph({
             </div>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-black/60 p-3 font-mono text-xs text-emerald-300">
+          <div className="rounded-xl border border-white/10 bg-black/80 p-3 font-mono text-xs text-emerald-300">
             {traces[currentStep]}
           </div>
         </div>
