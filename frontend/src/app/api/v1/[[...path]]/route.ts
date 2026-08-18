@@ -271,7 +271,12 @@ export async function GET(req: NextRequest, { params }: { params: { path?: strin
     return NextResponse.json([mockConference]);
   }
 
-  if (pathStr === "analytics/dashboard-stats" || pathStr === "dashboard-stats") {
+  if (
+    pathStr === "analytics/dashboard-stats" ||
+    pathStr === "dashboard-stats" ||
+    pathStr === "analytics/dashboard" ||
+    pathStr === "dashboard"
+  ) {
     return NextResponse.json({
       activeConferenceId: mockConference.id,
       activeConferenceName: mockConference.name,
@@ -305,8 +310,17 @@ export async function GET(req: NextRequest, { params }: { params: { path?: strin
     return NextResponse.json(mockReviewers);
   }
 
-  if (pathStr === "audit/recent" || pathStr === "audit/logs") {
+  if (
+    pathStr === "audit/recent" ||
+    pathStr === "audit/logs" ||
+    pathStr === "audit-logs/recent" ||
+    pathStr === "audit-logs"
+  ) {
     return NextResponse.json(mockAuditLogs);
+  }
+
+  if (pathStr === "benchmarks/history") {
+    return NextResponse.json([]);
   }
 
   if (pathStr === "matching/explain") {
@@ -587,7 +601,10 @@ export async function POST(req: NextRequest, { params }: { params: { path?: stri
     });
   }
 
-  if (pathStr === "benchmarks/scalability-sweep") {
+  if (
+    pathStr === "benchmarks/scalability-sweep" ||
+    pathStr === "benchmarks/scalability"
+  ) {
     const curve = [10, 25, 50, 75, 100, 150, 200].map((n) => ({
       n,
       dinicMedianMs: (0.0005 * n * Math.log2(n)).toFixed(3),

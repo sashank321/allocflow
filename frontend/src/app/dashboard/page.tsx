@@ -336,7 +336,7 @@ export default function DashboardOverviewPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5 font-mono text-[11px]">
-              {(auditLogs || []).slice(0, 5).map((log) => (
+              {(Array.isArray(auditLogs) ? auditLogs : []).slice(0, 5).map((log) => (
                 <tr key={log.id} className="hover:bg-white/[0.03] transition-colors">
                   <td className="py-2.5 text-muted-foreground">
                     {new Date(log.timestamp).toLocaleTimeString()}

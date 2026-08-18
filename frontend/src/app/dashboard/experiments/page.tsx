@@ -455,7 +455,7 @@ export default function ScalabilityExperimentsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y font-mono text-[11px]">
-                {history.slice(0, 5).map((rec: any) => (
+                {(Array.isArray(history) ? history : []).slice(0, 5).map((rec: any) => (
                   <tr key={rec.id} className="hover:bg-secondary/20">
                     <td className="py-2 px-3 font-sans font-medium text-foreground">{rec.datasetId}</td>
                     <td className="py-2 px-3">{rec.manuscriptCount} × {rec.reviewerCount}</td>
