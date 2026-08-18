@@ -1,5 +1,7 @@
 services:
-  # Backend API Web Service
+  # -------------------------------------------------------------
+  # Backend API Service (Spring Boot 3 + Java 21)
+  # -------------------------------------------------------------
   - type: web
     name: allocflow-backend
     env: docker
@@ -20,7 +22,9 @@ services:
       - key: JWT_SECRET
         generateValue: true
 
-  # Frontend Next.js Web Service
+  # -------------------------------------------------------------
+  # Frontend Service (Next.js 14 App Router)
+  # -------------------------------------------------------------
   - type: web
     name: allocflow-frontend
     env: docker
@@ -31,6 +35,11 @@ services:
     envVars:
       - key: PORT
         value: 3000
+      - key: BACKEND_INTERNAL_URL
+        fromService:
+          type: web
+          name: allocflow-backend
+          property: host
       - key: NEXT_PUBLIC_API_URL
         fromService:
           type: web
@@ -39,6 +48,9 @@ services:
           path: /api/v1
 
 databases:
+  # -------------------------------------------------------------
+  # PostgreSQL Database (Neon / Render Managed)
+  # -------------------------------------------------------------
   - name: allocflow-db
     plan: free
     region: oregon
