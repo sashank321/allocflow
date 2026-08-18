@@ -13,6 +13,7 @@ import {
   FlaskConical,
 } from "lucide-react";
 import type { UserRole } from "@/types";
+import { BackendStatusPill } from "./BackendStatusPill";
 
 interface NavbarProps {
   activeConferenceCode?: string;
@@ -54,7 +55,10 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
       </div>
 
       {/* Mode Indicator & Quick Action Pills */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3.5">
+        {/* Backend Live Status Pill */}
+        <BackendStatusPill />
+
         {/* Mode Badge */}
         <div
           className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold backdrop-blur-md ${
