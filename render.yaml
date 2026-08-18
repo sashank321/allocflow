@@ -40,12 +40,6 @@ services:
           type: web
           name: allocflow-backend
           property: host
-      - key: NEXT_PUBLIC_API_URL
-        fromService:
-          type: web
-          name: allocflow-backend
-          property: host
-          path: /api/v1
 
 databases:
   # -------------------------------------------------------------
