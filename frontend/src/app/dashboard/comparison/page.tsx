@@ -15,6 +15,8 @@ import {
   Clock,
   ShieldCheck,
   TrendingDown,
+  Cpu,
+  Zap,
 } from "lucide-react";
 import type { BenchmarkComparisonResponse } from "@/types";
 import {
@@ -27,6 +29,7 @@ import {
   Legend,
 } from "recharts";
 import { formatMs } from "@/lib/utils";
+import { Card3D } from "@/components/ui/Card3D";
 
 export default function AlgorithmComparisonPage() {
   const [manuscripts, setManuscripts] = useState(30);
@@ -59,304 +62,308 @@ export default function AlgorithmComparisonPage() {
     if (!benchmarkResult && !compareMutation.isPending) {
       compareMutation.mutate();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Chart data
-  const runtimeChartData = benchmarkResult?.algorithms.map((algo) => ({
-    name: algo.algorithmName,
-    "Median Runtime (ms)": algo.medianDurationMs,
-    "p95 Runtime (ms)": algo.p95DurationMs,
-    "Augmentations / Paths": algo.augmentations,
-  })) || [];
+  const runtimeChartData =
+    benchmarkResult?.algorithms.map((algo) => ({
+      name: algo.algorithmName,
+      "Median Runtime (ms)": algo.medianDurationMs,
+      "p95 Runtime (ms)": algo.p95DurationMs,
+      "Augmentations / Paths": algo.augmentations,
+    })) || [];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 select-none text-white">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-4">
+      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-white/10">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold tracking-tight text-foreground">
+          <div className="flex items-center gap-3">
+            <h1
+              className="text-3xl tracking-tight text-white"
+              style={{ fontFamily: "'Instrument Serif', serif" }}
+            >
               Tri-Algorithm Max-Flow Comparison
             </h1>
-            <span className="rounded bg-purple-50 border border-purple-200 px-2 py-0.5 text-[11px] font-semibold text-purple-700">
+            <span className="rounded-full bg-purple-500/20 border border-purple-500/40 px-3 py-0.5 text-[11px] font-bold text-purple-300 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
               Rigorous Research Protocol
             </span>
           </div>
-          <p className="text-xs text-muted-foreground">
-            Sequential evaluation (same graph → clone → FF → clone → EK → clone → Dinic) with median/p95 latency &amp; SHA-256 fingerprint
+          <p className="mt-1 text-xs text-muted-foreground">
+            Sequential evaluation (same graph → clone → FF → clone → EK → clone → Dinic) with median/p95 latency &amp; SHA-256 fingerprint.
           </p>
         </div>
 
         <button
           onClick={() => compareMutation.mutate()}
           disabled={compareMutation.isPending}
-          className="flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 disabled:opacity-50 transition-colors"
+          className="liquid-glass rounded-xl px-5 py-2.5 text-xs font-semibold text-white flex items-center gap-2 disabled:opacity-50"
         >
           {compareMutation.isPending ? (
             <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
           ) : (
-            <Play className="h-4 w-4" />
+            <Play className="h-4 w-4 text-cyan-400" />
           )}
-          <span>{compareMutation.isPending ? "Executing Sequential Trials..." : "Run Tri-Algorithm Benchmark"}</span>
+          <span>
+            {compareMutation.isPending
+              ? "Executing Sequential Trials..."
+              : "Run Tri-Algorithm Benchmark"}
+          </span>
         </button>
       </div>
 
-      {/* Benchmark Control Panel */}
-      <div className="rounded-xl border bg-card p-5 shadow-sm space-y-4">
-        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-          <Scale className="h-4 w-4 text-purple-600" />
-          <span>Configurable Experiment Parameters</span>
+      {/* BENCHMARK PARAMETERS CONTROLS */}
+      <Card3D glowColor="purple" className="p-5">
+        <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-white">
+            Synthetic Benchmark Parameters
+          </h2>
+          <span className="text-[11px] font-mono text-cyan-300">
+            Seed: <strong>{seed}</strong> • {warmups} Warmups • {trials} Measured Trials
+          </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-7 text-xs">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6 text-xs">
           <div>
-            <label className="font-semibold text-foreground">Manuscripts (V_P)</label>
+            <label className="text-muted-foreground font-medium">Manuscripts (|P|)</label>
             <input
               type="number"
+              min="5"
+              max="200"
               value={manuscripts}
-              onChange={(e) => setManuscripts(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border bg-background p-1.5 text-xs focus:border-blue-500 focus:outline-none"
+              onChange={(e) => setManuscripts(parseInt(e.target.value) || 30)}
+              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/60 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="font-semibold text-foreground">Reviewers (V_R)</label>
+            <label className="text-muted-foreground font-medium">Reviewers (|R|)</label>
             <input
               type="number"
+              min="5"
+              max="100"
               value={reviewers}
-              onChange={(e) => setReviewers(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border bg-background p-1.5 text-xs focus:border-blue-500 focus:outline-none"
+              onChange={(e) => setReviewers(parseInt(e.target.value) || 15)}
+              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/60 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="font-semibold text-foreground">Req. Reviews</label>
+            <label className="text-muted-foreground font-medium">Reviews / Paper (k)</label>
             <input
               type="number"
+              min="1"
+              max="5"
               value={reviewsPerPaper}
-              onChange={(e) => setReviewsPerPaper(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border bg-background p-1.5 text-xs focus:border-blue-500 focus:outline-none"
+              onChange={(e) => setReviewsPerPaper(parseInt(e.target.value) || 2)}
+              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/60 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="font-semibold text-foreground">Capacity / Rev</label>
+            <label className="text-muted-foreground font-medium">Reviewer Cap (C_r)</label>
             <input
               type="number"
+              min="1"
+              max="10"
               value={capacity}
-              onChange={(e) => setCapacity(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border bg-background p-1.5 text-xs focus:border-blue-500 focus:outline-none"
+              onChange={(e) => setCapacity(parseInt(e.target.value) || 4)}
+              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/60 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="font-semibold text-foreground">Random Seed</label>
+            <label className="text-muted-foreground font-medium">Warmup Trials</label>
             <input
               type="number"
-              value={seed}
-              onChange={(e) => setSeed(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border bg-background p-1.5 text-xs font-mono focus:border-blue-500 focus:outline-none"
-            />
-          </div>
-
-          <div>
-            <label className="font-semibold text-foreground">Warmups</label>
-            <input
-              type="number"
+              min="1"
+              max="10"
               value={warmups}
-              onChange={(e) => setWarmups(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border bg-background p-1.5 text-xs focus:border-blue-500 focus:outline-none"
+              onChange={(e) => setWarmups(parseInt(e.target.value) || 3)}
+              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/60 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
             />
           </div>
 
           <div>
-            <label className="font-semibold text-foreground">Measured Trials</label>
+            <label className="text-muted-foreground font-medium">Measured Trials</label>
             <input
               type="number"
+              min="3"
+              max="50"
               value={trials}
-              onChange={(e) => setTrials(Number(e.target.value))}
-              className="mt-1 w-full rounded-md border bg-background p-1.5 text-xs focus:border-blue-500 focus:outline-none"
+              onChange={(e) => setTrials(parseInt(e.target.value) || 10)}
+              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/60 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
             />
           </div>
         </div>
-      </div>
+      </Card3D>
 
-      {/* Results Section */}
-      {benchmarkResult ? (
-        <div className="space-y-6">
-          {/* Invariant & Fingerprint Banner */}
-          <div className="rounded-xl border border-emerald-200 bg-emerald-50/70 p-4 shadow-sm flex flex-wrap items-center justify-between gap-3 text-xs text-emerald-950">
-            <div className="flex items-center gap-3">
-              <CheckCircle2 className="h-6 w-6 text-emerald-600 shrink-0" />
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-sm text-emerald-900">
-                    Max-Flow Equivalence Invariant Verified
-                  </span>
-                  <span className="rounded bg-emerald-200/80 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-900">
-                    FF = EK = Dinic = {benchmarkResult.invariantMaxFlow} units
+      {/* MATHEMATICAL INVARIANT BADGE */}
+      {benchmarkResult && (
+        <div
+          className={`glass-panel p-5 flex items-center justify-between border ${
+            benchmarkResult.invariantSatisfied
+              ? "border-emerald-500/40 bg-emerald-950/20"
+              : "border-rose-500/40 bg-rose-950/20"
+          }`}
+        >
+          <div className="flex items-center gap-3">
+            {benchmarkResult.invariantSatisfied ? (
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                <CheckCircle2 className="h-6 w-6" />
+              </div>
+            ) : (
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-300">
+                <AlertCircle className="h-6 w-6" />
+              </div>
+            )}
+            <div>
+              <p className="text-sm font-bold text-white">
+                Mathematical Invariant Status:{" "}
+                {benchmarkResult.invariantSatisfied
+                  ? "VERIFIED & EQUIVALENT"
+                  : "VIOLATION DETECTED"}
+              </p>
+              <p className="text-xs text-muted-foreground font-mono mt-0.5">
+                Ford-Fulkerson (MaxFlow={benchmarkResult.invariantMaxFlow}) == Edmonds-Karp (MaxFlow=
+                {benchmarkResult.invariantMaxFlow}) == Dinic (MaxFlow=
+                {benchmarkResult.invariantMaxFlow})
+              </p>
+            </div>
+          </div>
+
+          <div className="hidden sm:flex items-center gap-2 font-mono text-xs text-muted-foreground bg-black/60 px-3 py-1.5 rounded-xl border border-white/10">
+            <Fingerprint className="h-4 w-4 text-cyan-400" />
+            <span>Fingerprint: {benchmarkResult.graphFingerprint ? benchmarkResult.graphFingerprint.substring(0, 16) : ""}…</span>
+          </div>
+        </div>
+      )}
+
+      {/* SIDE-BY-SIDE 3D ALGORITHM CARDS */}
+      {benchmarkResult && (
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {benchmarkResult.algorithms.map((algo, index) => {
+            const glow =
+              algo.algorithmName === "Dinic"
+                ? "cyan"
+                : algo.algorithmName === "Edmonds-Karp"
+                ? "purple"
+                : "blue";
+
+            return (
+              <Card3D key={algo.algorithmName} glowColor={glow} className="p-5 space-y-4">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <div>
+                    <h3 className="text-base font-bold text-white">{algo.algorithmName}</h3>
+                    <p className="text-[11px] text-muted-foreground font-mono">
+                      {algo.algorithmName === "Ford-Fulkerson"
+                        ? "O(E · |f*|) DFS Augmenting"
+                        : algo.algorithmName === "Edmonds-Karp"
+                        ? "O(V · E²) Shortest BFS Path"
+                        : "O(V² · E) Layered BFS/DFS"}
+                    </p>
+                  </div>
+                  <span className="rounded-full bg-white/10 border border-white/10 px-2.5 py-0.5 text-[10px] font-mono text-white">
+                    Rank #{index + 1}
                   </span>
                 </div>
-                <p className="text-[11px] text-emerald-800 mt-0.5">
-                  All 3 algorithms independently computed identical maximum flow on isolated deep clones of the canonical network.
-                </p>
-              </div>
-            </div>
 
-            <div className="flex items-center gap-2 font-mono text-[11px] bg-white/70 px-3 py-1.5 rounded-lg border border-emerald-200">
-              <Fingerprint className="h-4 w-4 text-emerald-700" />
-              <span className="text-muted-foreground">Fingerprint:</span>
-              <span className="font-bold text-emerald-900">{benchmarkResult.graphFingerprint}</span>
-            </div>
-          </div>
+                {/* Metrics */}
+                <div className="space-y-2.5 text-xs">
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-muted-foreground">Calculated Max Flow:</span>
+                    <span className="font-mono font-bold text-white text-sm">{algo.maxFlow} units</span>
+                  </div>
 
-          {/* Side-by-Side Algorithm Comparison Cards */}
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            {benchmarkResult.algorithms.map((algo) => {
-              const isDinic = algo.algorithmName === "Dinic";
-              return (
-                <div
-                  key={algo.algorithmName}
-                  className={`rounded-xl border bg-card p-5 shadow-sm space-y-4 ${
-                    isDinic ? "border-purple-300 ring-1 ring-purple-200" : ""
-                  }`}
-                >
-                  <div className="flex items-start justify-between border-b pb-3">
-                    <div>
-                      <div className="flex items-center gap-1.5">
-                        <h3 className="font-bold text-base text-foreground">{algo.algorithmName}</h3>
-                        {isDinic && (
-                          <span className="rounded bg-purple-100 px-1.5 py-0.2 text-[9px] font-bold text-purple-800">
-                            Fastest
-                          </span>
-                        )}
-                      </div>
-                      <p className="font-mono text-[11px] text-muted-foreground mt-0.5">
-                        {algo.theoreticalComplexity}
-                      </p>
-                    </div>
-                    <span className="rounded bg-emerald-50 px-2 py-0.5 font-mono text-xs font-bold text-emerald-700">
-                      Flow: {algo.maxFlow}
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-muted-foreground">Median Runtime:</span>
+                    <span className="font-mono font-bold text-cyan-300 text-sm">
+                      {formatMs(algo.medianDurationMs)}
                     </span>
                   </div>
 
-                  {/* Latency Metrics */}
-                  <div className="space-y-2 text-xs">
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-muted-foreground font-medium">Median Runtime:</span>
-                      <span className="font-mono text-base font-bold text-foreground">
-                        {formatMs(algo.medianDurationMs)}
-                      </span>
-                    </div>
-
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">p95 Runtime:</span>
-                      <span className="font-mono text-foreground">{formatMs(algo.p95DurationMs)}</span>
-                    </div>
-
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Min / Max:</span>
-                      <span className="font-mono text-muted-foreground">
-                        {formatMs(algo.minDurationMs)} / {formatMs(algo.maxDurationMs)}
-                      </span>
-                    </div>
-
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Std Deviation:</span>
-                      <span className="font-mono text-muted-foreground">
-                        ±{formatMs(algo.stdDevDurationMs)}
-                      </span>
-                    </div>
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-muted-foreground">p95 Tail Latency:</span>
+                    <span className="font-mono text-muted-foreground">{formatMs(algo.p95DurationMs)}</span>
                   </div>
 
-                  {/* Structural Metrics */}
-                  <div className="pt-2 border-t space-y-1.5 text-xs">
-                    <div className="flex justify-between">
-                      <span className="text-muted-foreground">Augmenting Paths:</span>
-                      <span className="font-mono font-bold text-foreground">{algo.augmentations}</span>
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-muted-foreground">Augmenting Iterations:</span>
+                    <span className="font-mono font-semibold text-purple-300">{algo.augmentations}</span>
+                  </div>
+
+                  {algo.phases > 0 && (
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-muted-foreground">Layered BFS Phases:</span>
+                      <span className="font-mono font-semibold text-emerald-300">{algo.phases}</span>
                     </div>
-                    {algo.phases > 0 && (
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Level Graph Phases:</span>
-                        <span className="font-mono font-bold text-purple-700">{algo.phases}</span>
-                      </div>
-                    )}
-                    <div className="flex justify-between text-[11px] text-muted-foreground">
-                      <span>Repeated Trials:</span>
-                      <span>{algo.warmupTrials} warmups + {algo.measuredTrials} trials</span>
-                    </div>
+                  )}
+
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-muted-foreground">Validity Check:</span>
+                    <span className="rounded bg-emerald-500/20 border border-emerald-500/30 px-1.5 py-0.5 text-[10px] font-bold text-emerald-300">
+                      {algo.validityStatus}
+                    </span>
                   </div>
                 </div>
-              );
-            })}
-          </div>
 
-          {/* Performance Comparison Charts */}
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            {/* Median Runtime Chart */}
-            <div className="rounded-xl border bg-card p-5 shadow-sm space-y-4">
-              <div>
-                <h3 className="text-sm font-bold text-foreground">Empirical Runtime Comparison (ms)</h3>
-                <p className="text-xs text-muted-foreground">Lower is faster (Median and p95 across trials)</p>
-              </div>
+                {/* Graph Specs */}
+                <div className="rounded-xl border border-white/10 bg-black/50 p-3 text-[11px] font-mono text-muted-foreground space-y-1">
+                  <div>Vertices: {benchmarkResult.vertexCount}</div>
+                  <div>Edges: {benchmarkResult.edgeCount}</div>
+                  <div>Trials: {algo.measuredTrials} runs (Sequential isolated)</div>
+                </div>
+              </Card3D>
+            );
+          })}
+        </div>
+      )}
 
-              <div className="h-64 w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={runtimeChartData}>
-                    <XAxis dataKey="name" tick={{ fontSize: 11 }} />
-                    <YAxis tick={{ fontSize: 11 }} />
-                    <Tooltip
-                      contentStyle={{
-                        backgroundColor: "hsl(var(--card))",
-                        borderColor: "hsl(var(--border))",
-                        fontSize: "12px",
-                        borderRadius: "6px",
-                      }}
-                    />
-                    <Legend wrapperStyle={{ fontSize: "11px" }} />
-                    <Bar dataKey="Median Runtime (ms)" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="p95 Runtime (ms)" fill="#c4b5fd" radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            {/* Augmentation Paths Discovered */}
-            <div className="rounded-xl border bg-card p-5 shadow-sm space-y-4">
-              <div>
-                <h3 className="text-sm font-bold text-foreground">Augmenting Paths Discovered</h3>
-                <p className="text-xs text-muted-foreground">Number of flow pushing operations to reach optimality</p>
-              </div>
-
-              <div className="h-64 w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={runtimeChartData}>
-                    <XAxis dataKey="name" tick={{ fontSize: 11 }} />
-                    <YAxis tick={{ fontSize: 11 }} />
-                    <Tooltip
-                      contentStyle={{
-                        backgroundColor: "hsl(var(--card))",
-                        borderColor: "hsl(var(--border))",
-                        fontSize: "12px",
-                        borderRadius: "6px",
-                      }}
-                    />
-                    <Legend wrapperStyle={{ fontSize: "11px" }} />
-                    <Bar dataKey="Augmentations / Paths" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
+      {/* 3D LATENCY COMPARISON CHART */}
+      {benchmarkResult && (
+        <Card3D glowColor="purple" className="p-5 space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-sm font-bold text-white">Runtime Latency Benchmarking (ms)</h2>
+              <p className="text-xs text-muted-foreground">
+                Sequential execution on identical cloned canonical graphs (Median vs p95)
+              </p>
             </div>
           </div>
-        </div>
-      ) : (
-        <div className="flex h-64 flex-col items-center justify-center rounded-xl border border-dashed bg-card/50 text-muted-foreground space-y-2">
-          <Scale className="h-8 w-8 opacity-40" />
-          <p className="text-xs font-medium">No Comparison Executed Yet</p>
-          <p className="text-[11px] text-muted-foreground/80">
-            Click &quot;Run Tri-Algorithm Benchmark&quot; above to execute the empirical comparison.
-          </p>
-        </div>
+
+          <div className="h-72 w-full pt-4">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={runtimeChartData} margin={{ top: 10, right: 20, left: -10, bottom: 20 }}>
+                <XAxis
+                  dataKey="name"
+                  tickLine={false}
+                  axisLine={{ stroke: "rgba(255,255,255,0.15)" }}
+                  tick={{ fontSize: 12, fill: "#94A3B8" }}
+                />
+                <YAxis
+                  tickLine={false}
+                  axisLine={{ stroke: "rgba(255,255,255,0.15)" }}
+                  tick={{ fontSize: 11, fill: "#94A3B8" }}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "rgba(10, 10, 15, 0.9)",
+                    backdropFilter: "blur(12px)",
+                    borderColor: "rgba(255, 255, 255, 0.15)",
+                    borderRadius: "12px",
+                    color: "#FFFFFF",
+                    fontSize: "12px",
+                    boxShadow: "0 10px 30px rgba(0,0,0,0.8)",
+                  }}
+                />
+                <Legend />
+                <Bar dataKey="Median Runtime (ms)" fill="#06B6D4" radius={[6, 6, 0, 0]} barSize={32} />
+                <Bar dataKey="p95 Runtime (ms)" fill="#8B5CF6" radius={[6, 6, 0, 0]} barSize={32} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </Card3D>
       )}
     </div>
   );

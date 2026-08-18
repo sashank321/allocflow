@@ -8,8 +8,11 @@ import {
   ChevronRight,
   ChevronLeft,
   Info,
-  Maximize2,
+  Layers,
+  Sparkles,
+  Eye,
   Filter,
+  Box,
 } from "lucide-react";
 import type { GraphVisualization, GraphNode, GraphEdge } from "@/types";
 
@@ -31,6 +34,7 @@ export function BipartiteFlowGraph({
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [showOnlySaturated, setShowOnlySaturated] = useState<boolean>(false);
+  const [is3DMode, setIs3DMode] = useState<boolean>(true);
 
   // Playback timer for execution trace player
   useEffect(() => {
@@ -51,11 +55,11 @@ export function BipartiteFlowGraph({
 
   if (!data || !data.nodes || data.nodes.length === 0) {
     return (
-      <div className="flex h-80 w-full flex-col items-center justify-center rounded-xl border border-dashed bg-card/50 text-muted-foreground">
-        <Info className="h-8 w-8 mb-2 opacity-50" />
-        <p className="text-sm font-medium">No Flow Network Generated</p>
-        <p className="text-xs text-muted-foreground/80">
-          Run a matching simulation or benchmark to inspect the canonical bipartite network.
+      <div className="flex h-80 w-full flex-col items-center justify-center rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl text-muted-foreground">
+        <Box className="h-10 w-10 mb-2 text-blue-400 opacity-60 animate-pulse-glow" />
+        <p className="text-sm font-semibold text-white">Flow Network Awaiting Simulation</p>
+        <p className="text-xs text-muted-foreground mt-1 max-w-sm text-center">
+          Execute a matching run or benchmark sweep to render the multi-stage 3D bipartite graph.
         </p>
       </div>
     );
@@ -67,14 +71,14 @@ export function BipartiteFlowGraph({
   const reviewerNodes = data.nodes.filter((n) => n.type === "REVIEWER");
   const sinkNode = data.nodes.find((n) => n.type === "SINK");
 
-  const width = 900;
-  const height = Math.max(480, Math.max(manuscriptNodes.length, reviewerNodes.length) * 55 + 60);
+  const width = 920;
+  const height = Math.max(500, Math.max(manuscriptNodes.length, reviewerNodes.length) * 62 + 70);
 
   const colX = {
-    source: 80,
-    manuscripts: 280,
+    source: 90,
+    manuscripts: 300,
     reviewers: 620,
-    sink: 820,
+    sink: 830,
   };
 
   // Compute node Y positions
@@ -84,20 +88,20 @@ export function BipartiteFlowGraph({
     nodePositions[sourceNode.id] = { x: colX.source, y: height / 2, node: sourceNode };
   }
 
-  const pGap = (height - 80) / Math.max(1, manuscriptNodes.length);
+  const pGap = (height - 90) / Math.max(1, manuscriptNodes.length);
   manuscriptNodes.forEach((node, i) => {
     nodePositions[node.id] = {
       x: colX.manuscripts,
-      y: 40 + i * pGap + pGap / 2,
+      y: 45 + i * pGap + pGap / 2,
       node,
     };
   });
 
-  const rGap = (height - 80) / Math.max(1, reviewerNodes.length);
+  const rGap = (height - 90) / Math.max(1, reviewerNodes.length);
   reviewerNodes.forEach((node, i) => {
     nodePositions[node.id] = {
       x: colX.reviewers,
-      y: 40 + i * rGap + rGap / 2,
+      y: 45 + i * rGap + rGap / 2,
       node,
     };
   });
@@ -106,282 +110,382 @@ export function BipartiteFlowGraph({
     nodePositions[sinkNode.id] = { x: colX.sink, y: height / 2, node: sinkNode };
   }
 
-  const filteredEdges = showOnlySaturated
-    ? data.edges.filter((e) => e.flow > 0)
-    : data.edges;
+  // Filter edges based on toggle
+  const visibleEdges = data.edges.filter((edge) => {
+    if (showOnlySaturated) {
+      return edge.flow > 0;
+    }
+    return true;
+  });
 
   return (
-    <div className="flex flex-col rounded-xl border bg-card shadow-sm overflow-hidden">
-      {/* Visualizer Top Bar & Controls */}
-      <div className="flex flex-wrap items-center justify-between border-b bg-secondary/30 px-4 py-2.5 gap-2 text-xs">
+    <div className="space-y-4 select-none">
+      {/* 3D HUD Controls Header */}
+      <div className="glass-panel p-4 flex flex-wrap items-center justify-between gap-4 border border-white/10">
         <div className="flex items-center gap-3">
-          <span className="font-bold text-foreground">Bipartite Flow Graph</span>
-          <span className="rounded bg-blue-100 px-2 py-0.5 font-mono text-[10px] font-semibold text-blue-800">
-            S → P → R → T
-          </span>
-          <span className="text-muted-foreground text-[11px]">
-            {data.nodes.length} Vertices · {data.edges.length} Edges
-          </span>
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500/30 to-purple-500/30 border border-white/20 text-white shadow-lg">
+            <Box className="h-5 w-5 text-cyan-300" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-bold text-white tracking-wide">
+                Bipartite Flow Topology
+              </span>
+              <span className="rounded-md bg-white/10 px-2 py-0.5 text-[10px] font-mono text-cyan-300 border border-cyan-500/30">
+                S → P → R → T
+              </span>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              {data.nodes.length} Vertices • {data.edges.length} Directed Capacities • Algorithm:{" "}
+              <span className="text-white font-medium">{algorithmName}</span>
+            </p>
+          </div>
         </div>
 
-        {/* Trace Player & Filter Toggles */}
-        <div className="flex items-center gap-3">
-          <label className="flex items-center gap-1.5 cursor-pointer text-[11px] text-muted-foreground select-none">
-            <input
-              type="checkbox"
-              checked={showOnlySaturated}
-              onChange={(e) => setShowOnlySaturated(e.target.checked)}
-              className="rounded text-blue-600 focus:ring-0"
-            />
-            <span>Saturated Edges Only</span>
-          </label>
+        {/* View & Filter Actions */}
+        <div className="flex items-center gap-2.5">
+          <button
+            onClick={() => setIs3DMode(!is3DMode)}
+            className={`btn-3d flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
+              is3DMode
+                ? "bg-cyan-500/20 text-cyan-200 border-cyan-500/40 shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+                : "text-muted-foreground hover:text-white"
+            }`}
+          >
+            <Layers className="h-3.5 w-3.5 text-cyan-400" />
+            <span>{is3DMode ? "3D Isometric View" : "2D Ortho View"}</span>
+          </button>
 
-          {traces.length > 0 && (
-            <div className="flex items-center gap-1 border-l pl-3">
+          <button
+            onClick={() => setShowOnlySaturated(!showOnlySaturated)}
+            className={`btn-3d flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
+              showOnlySaturated
+                ? "bg-emerald-500/20 text-emerald-200 border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.3)]"
+                : "text-muted-foreground hover:text-white"
+            }`}
+          >
+            <Filter className="h-3.5 w-3.5 text-emerald-400" />
+            <span>{showOnlySaturated ? "Saturated Flows Only" : "All Capacities"}</span>
+          </button>
+        </div>
+      </div>
+
+      {/* 3D Isometric Graph Stage */}
+      <div
+        className={`glass-panel p-4 overflow-x-auto relative min-h-[500px] flex items-center justify-center border border-white/10 transition-transform duration-700 ${
+          is3DMode ? "isometric-stage" : ""
+        }`}
+      >
+        {/* Stage background glow */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.06)_0%,transparent_70%)]" />
+
+        <div
+          className={`w-full flex justify-center transition-all duration-700 ${
+            is3DMode ? "isometric-layer" : ""
+          }`}
+        >
+          <svg
+            viewBox={`0 0 ${width} ${height}`}
+            className="w-full max-w-[960px] h-auto drop-shadow-2xl"
+          >
+            <defs>
+              {/* Neon Glow Filters */}
+              <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+
+              <filter id="glow-purple" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+
+              <filter id="glow-emerald" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+
+              {/* Edge Marker Arrowheads */}
+              <marker
+                id="arrow-saturated"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="5"
+                markerHeight="5"
+                orient="auto-start-reverse"
+              >
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10B981" />
+              </marker>
+
+              <marker
+                id="arrow-dim"
+                viewBox="0 0 10 10"
+                refX="8"
+                refY="5"
+                markerWidth="4"
+                markerHeight="4"
+                orient="auto-start-reverse"
+              >
+                <path d="M 0 2 L 6 5 L 0 8 z" fill="#334155" />
+              </marker>
+
+              {/* Laser Beam Gradients */}
+              <linearGradient id="laser-flow" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#06B6D4" stopOpacity="0.8" />
+                <stop offset="50%" stopColor="#10B981" stopOpacity="1" />
+                <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.9" />
+              </linearGradient>
+            </defs>
+
+            {/* Column Guide Track Lines */}
+            <g opacity="0.15" stroke="#ffffff" strokeDasharray="4 8">
+              <line x1={colX.source} y1="30" x2={colX.source} y2={height - 30} />
+              <line x1={colX.manuscripts} y1="30" x2={colX.manuscripts} y2={height - 30} />
+              <line x1={colX.reviewers} y1="30" x2={colX.reviewers} y2={height - 30} />
+              <line x1={colX.sink} y1="30" x2={colX.sink} y2={height - 30} />
+            </g>
+
+            {/* EDGES LAYER */}
+            <g>
+              {visibleEdges.map((edge, idx) => {
+                const uPos = nodePositions[edge.source];
+                const vPos = nodePositions[edge.target];
+                if (!uPos || !vPos) return null;
+
+                const isSaturated = edge.flow > 0;
+                const isHovered =
+                  hoveredEdge?.source === edge.source &&
+                  hoveredEdge?.target === edge.target;
+
+                // Curved cubic bezier path for smooth flow aesthetic
+                const dx = vPos.x - uPos.x;
+                const pathData = `M ${uPos.x} ${uPos.y} C ${uPos.x + dx * 0.45} ${uPos.y}, ${
+                  vPos.x - dx * 0.45
+                } ${vPos.y}, ${vPos.x} ${vPos.y}`;
+
+                return (
+                  <g
+                    key={`edge-${edge.source}-${edge.target}-${idx}`}
+                    className="cursor-pointer transition-opacity"
+                    onMouseEnter={() => setHoveredEdge(edge)}
+                    onMouseLeave={() => setHoveredEdge(null)}
+                    onClick={() => {
+                      if (onEdgeClick && uPos.node.type === "MANUSCRIPT" && vPos.node.type === "REVIEWER") {
+                        onEdgeClick(uPos.node.id, vPos.node.id);
+                      }
+                    }}
+                  >
+                    {/* Underlying Hover Hitbox */}
+                    <path d={pathData} fill="none" stroke="transparent" strokeWidth="18" />
+
+                    {/* Background Trace / Capacity Line */}
+                    <path
+                      d={pathData}
+                      fill="none"
+                      stroke={
+                        isHovered
+                          ? "#38BDF8"
+                          : isSaturated
+                          ? "url(#laser-flow)"
+                          : "#1E293B"
+                      }
+                      strokeWidth={isHovered ? 3.5 : isSaturated ? 2.5 : 1.2}
+                      strokeOpacity={isHovered ? 1 : isSaturated ? 0.9 : 0.3}
+                      markerEnd={isSaturated ? "url(#arrow-saturated)" : "url(#arrow-dim)"}
+                    />
+
+                    {/* Animated Flow Pulse on Saturated Edges */}
+                    {isSaturated && (
+                      <path
+                        d={pathData}
+                        fill="none"
+                        stroke="#A7F3D0"
+                        strokeWidth={isHovered ? 3 : 2}
+                        className="flow-animate"
+                        filter="url(#glow-emerald)"
+                      />
+                    )}
+                  </g>
+                );
+              })}
+            </g>
+
+            {/* NODES LAYER */}
+            <g>
+              {Object.values(nodePositions).map(({ x, y, node }) => {
+                const isSelected = selectedNode === node.id;
+                const isSource = node.type === "SOURCE";
+                const isSink = node.type === "SINK";
+                const isManuscript = node.type === "MANUSCRIPT";
+                const isReviewer = node.type === "REVIEWER";
+
+                return (
+                  <g
+                    key={`node-${node.id}`}
+                    className="cursor-pointer transition-transform duration-200 hover:scale-110"
+                    onClick={() => setSelectedNode(isSelected ? null : node.id)}
+                  >
+                    {/* Node 3D Glass Badge Container */}
+                    {isSource || isSink ? (
+                      <g filter="url(#glow-cyan)">
+                        <circle
+                          cx={x}
+                          cy={y}
+                          r={isSelected ? 26 : 22}
+                          fill={isSource ? "#0284C7" : "#0D9488"}
+                          stroke="#FFFFFF"
+                          strokeWidth="2"
+                          className="transition-all"
+                        />
+                        <text
+                          x={x}
+                          y={y + 4}
+                          textAnchor="middle"
+                          fill="#FFFFFF"
+                          fontSize="10"
+                          fontWeight="bold"
+                          fontFamily="sans-serif"
+                        >
+                          {isSource ? "SOURCE" : "SINK"}
+                        </text>
+                      </g>
+                    ) : isManuscript ? (
+                      <g>
+                        <rect
+                          x={x - 85}
+                          y={y - 18}
+                          width="170"
+                          height="36"
+                          rx="10"
+                          fill={isSelected ? "rgba(59, 130, 246, 0.4)" : "rgba(15, 23, 42, 0.85)"}
+                          stroke={isSelected ? "#60A5FA" : "rgba(255, 255, 255, 0.2)"}
+                          strokeWidth={isSelected ? 2 : 1}
+                          style={{ backdropFilter: "blur(10px)" }}
+                        />
+                        <circle cx={x - 70} cy={y} r="4" fill="#38BDF8" />
+                        <text
+                          x={x - 58}
+                          y={y - 2}
+                          fill="#FFFFFF"
+                          fontSize="10.5"
+                          fontWeight="600"
+                        >
+                          {node.label.length > 20 ? node.label.substring(0, 19) + "…" : node.label}
+                        </text>
+                        <text
+                          x={x - 58}
+                          y={y + 11}
+                          fill="#94A3B8"
+                          fontSize="9"
+                          fontFamily="monospace"
+                        >
+                          Flow: {node.currentFlow} / {node.capacity}
+                        </text>
+                      </g>
+                    ) : (
+                      <g>
+                        <rect
+                          x={x - 85}
+                          y={y - 18}
+                          width="170"
+                          height="36"
+                          rx="10"
+                          fill={isSelected ? "rgba(168, 85, 247, 0.4)" : "rgba(15, 23, 42, 0.85)"}
+                          stroke={isSelected ? "#C084FC" : "rgba(255, 255, 255, 0.2)"}
+                          strokeWidth={isSelected ? 2 : 1}
+                          style={{ backdropFilter: "blur(10px)" }}
+                        />
+                        <circle cx={x - 70} cy={y} r="4" fill="#C084FC" />
+                        <text
+                          x={x - 58}
+                          y={y - 2}
+                          fill="#FFFFFF"
+                          fontSize="10.5"
+                          fontWeight="600"
+                        >
+                          {node.label.length > 20 ? node.label.substring(0, 19) + "…" : node.label}
+                        </text>
+                        <text
+                          x={x - 58}
+                          y={y + 11}
+                          fill="#94A3B8"
+                          fontSize="9"
+                          fontFamily="monospace"
+                        >
+                          Cap: {node.currentFlow} / {node.capacity}
+                        </text>
+                      </g>
+                    )}
+                  </g>
+                );
+              })}
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      {/* Execution Trace Timeline Player */}
+      {traces.length > 0 && (
+        <div className="glass-panel p-4 space-y-3 border border-white/10">
+          <div className="flex items-center justify-between text-xs">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-purple-400" />
+              <span className="font-semibold text-white">Augmentation Step Tracer</span>
+              <span className="rounded bg-white/10 px-2 py-0.5 text-[10px] text-muted-foreground">
+                Step {currentStep + 1} of {traces.length}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2">
               <button
-                onClick={() => setCurrentStep((p) => Math.max(0, p - 1))}
+                onClick={() => setCurrentStep((prev) => Math.max(0, prev - 1))}
                 disabled={currentStep === 0}
-                className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30"
+                className="btn-3d rounded-lg p-1 text-muted-foreground hover:text-white disabled:opacity-30"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="flex items-center gap-1 rounded bg-secondary px-2 py-1 text-[11px] font-semibold hover:bg-secondary/80"
+                className="btn-3d flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold text-white"
               >
-                {isPlaying ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
-                <span>{isPlaying ? "Pause" : "Play Trace"}</span>
+                {isPlaying ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
+                <span>{isPlaying ? "Pause" : "Play Replay"}</span>
               </button>
               <button
-                onClick={() => setCurrentStep((p) => Math.min(traces.length - 1, p + 1))}
+                onClick={() => setCurrentStep((prev) => Math.min(traces.length - 1, prev + 1))}
                 disabled={currentStep >= traces.length - 1}
-                className="p-1 text-muted-foreground hover:text-foreground disabled:opacity-30"
+                className="btn-3d rounded-lg p-1 text-muted-foreground hover:text-white disabled:opacity-30"
               >
                 <ChevronRight className="h-4 w-4" />
               </button>
               <button
                 onClick={() => {
-                  setIsPlaying(false);
                   setCurrentStep(0);
+                  setIsPlaying(false);
                 }}
-                className="p-1 text-muted-foreground hover:text-foreground"
-                title="Reset Trace"
+                className="btn-3d rounded-lg p-1 text-muted-foreground hover:text-white"
+                title="Reset Replay"
               >
-                <RotateCcw className="h-3.5 w-3.5" />
+                <RotateCcw className="h-4 w-4" />
               </button>
-              <span className="font-mono text-[10px] text-muted-foreground pl-1">
-                Step {currentStep + 1}/{traces.length}
-              </span>
             </div>
-          )}
-        </div>
-      </div>
-
-      {/* Step Trace Banner */}
-      {traces.length > 0 && traces[currentStep] && (
-        <div className="bg-purple-50/80 border-b border-purple-100 px-4 py-1.5 text-xs text-purple-900 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-[11px] text-purple-700 uppercase">
-              {algorithmName} Execution Step:
-            </span>
-            <span className="font-mono text-[11px] font-medium">{traces[currentStep]}</span>
           </div>
-          <span className="text-[10px] text-purple-600">Click any saturated edge for explainability</span>
+
+          <div className="rounded-xl border border-white/10 bg-black/60 p-3 font-mono text-xs text-emerald-300">
+            {traces[currentStep]}
+          </div>
         </div>
       )}
-
-      {/* Interactive SVG Canvas */}
-      <div className="relative w-full overflow-x-auto p-4 flex justify-center bg-slate-50/50 dark:bg-slate-950/20">
-        <svg width={width} height={height} className="select-none">
-          <defs>
-            <marker
-              id="arrow-default"
-              viewBox="0 0 10 10"
-              refX="16"
-              refY="5"
-              markerWidth="6"
-              markerHeight="6"
-              orient="auto-start-reverse"
-            >
-              <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
-            </marker>
-            <marker
-              id="arrow-saturated"
-              viewBox="0 0 10 10"
-              refX="16"
-              refY="5"
-              markerWidth="6"
-              markerHeight="6"
-              orient="auto-start-reverse"
-            >
-              <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb" />
-            </marker>
-          </defs>
-
-          {/* Draw Edges */}
-          {filteredEdges.map((edge, i) => {
-            const p1 = nodePositions[edge.source];
-            const p2 = nodePositions[edge.target];
-            if (!p1 || !p2) return null;
-
-            const isSaturated = edge.flow > 0;
-            const isHighlighted =
-              selectedNode && (edge.source === selectedNode || edge.target === selectedNode);
-
-            // Bezier curve control points
-            const dx = (p2.x - p1.x) / 2;
-            const pathD = `M ${p1.x} ${p1.y} C ${p1.x + dx} ${p1.y}, ${p2.x - dx} ${p2.y}, ${p2.x} ${p2.y}`;
-
-            const midX = (p1.x + p2.x) / 2;
-            const midY = (p1.y + p2.y) / 2;
-
-            return (
-              <g
-                key={`edge-${i}`}
-                className="cursor-pointer group"
-                onClick={() => {
-                  if (edge.manuscriptId && edge.reviewerId && onEdgeClick) {
-                    onEdgeClick(edge.manuscriptId, edge.reviewerId);
-                  }
-                }}
-                onMouseEnter={() => setHoveredEdge(edge)}
-                onMouseLeave={() => setHoveredEdge(null)}
-              >
-                {/* Background path for hover hit target */}
-                <path d={pathD} fill="none" stroke="transparent" strokeWidth="12" />
-
-                {/* Visible Edge Line */}
-                <path
-                  d={pathD}
-                  fill="none"
-                  stroke={
-                    isHighlighted
-                      ? "#2563eb"
-                      : isSaturated
-                      ? "#3b82f6"
-                      : "#cbd5e1"
-                  }
-                  strokeWidth={isSaturated ? "2.5" : "1.2"}
-                  strokeOpacity={isSaturated || isHighlighted ? 1 : 0.4}
-                  className={isSaturated ? "flow-animate" : ""}
-                  markerEnd={isSaturated ? "url(#arrow-saturated)" : "url(#arrow-default)"}
-                />
-
-                {/* Capacity / Flow Label */}
-                {(isSaturated || isHighlighted) && (
-                  <g transform={`translate(${midX}, ${midY})`}>
-                    <rect
-                      x="-14"
-                      y="-8"
-                      width="28"
-                      height="16"
-                      rx="3"
-                      fill="#ffffff"
-                      stroke={isSaturated ? "#3b82f6" : "#cbd5e1"}
-                      strokeWidth="1"
-                    />
-                    <text
-                      x="0"
-                      y="3.5"
-                      textAnchor="middle"
-                      className="font-mono text-[9px] font-bold fill-slate-800"
-                    >
-                      {edge.flow}/{edge.capacity}
-                    </text>
-                  </g>
-                )}
-              </g>
-            );
-          })}
-
-          {/* Draw Nodes */}
-          {Object.entries(nodePositions).map(([id, { x, y, node }]) => {
-            const isSelected = selectedNode === id;
-            const isSourceSink = node.type === "SOURCE" || node.type === "SINK";
-
-            let fill = "#ffffff";
-            let stroke = "#94a3b8";
-            let textFill = "#1e293b";
-
-            if (node.type === "SOURCE") {
-              fill = "#eff6ff";
-              stroke = "#3b82f6";
-            } else if (node.type === "SINK") {
-              fill = "#fdf2f8";
-              stroke = "#ec4899";
-            } else if (node.type === "MANUSCRIPT") {
-              fill = "#f0fdf4";
-              stroke = "#22c55e";
-            } else if (node.type === "REVIEWER") {
-              fill = "#faf5ff";
-              stroke = "#a855f7";
-            }
-
-            return (
-              <g
-                key={`node-${id}`}
-                transform={`translate(${x}, ${y})`}
-                className="cursor-pointer"
-                onClick={() => setSelectedNode(selectedNode === id ? null : id)}
-              >
-                {/* Node Pill / Circle */}
-                <rect
-                  x="-55"
-                  y="-16"
-                  width="110"
-                  height="32"
-                  rx="6"
-                  fill={fill}
-                  stroke={isSelected ? "#2563eb" : stroke}
-                  strokeWidth={isSelected ? "2.5" : "1.5"}
-                  className="transition-all hover:scale-105 shadow-sm"
-                />
-
-                {/* Node Label */}
-                <text
-                  x="0"
-                  y="-1"
-                  textAnchor="middle"
-                  className="font-sans text-[10px] font-bold fill-slate-900 pointer-events-none"
-                >
-                  {node.label}
-                </text>
-
-                {/* Capacity badge */}
-                <text
-                  x="0"
-                  y="10"
-                  textAnchor="middle"
-                  className="font-mono text-[8.5px] font-medium fill-slate-500 pointer-events-none"
-                >
-                  Cap: {node.capacity}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
-      </div>
-
-      {/* Footer Legend */}
-      <div className="flex items-center justify-between border-t bg-card px-4 py-2 text-[11px] text-muted-foreground">
-        <div className="flex items-center gap-4">
-          <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-blue-500" /> Source (S)
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" /> Manuscripts (P)
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-purple-500" /> Reviewers (R)
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-pink-500" /> Sink (T)
-          </span>
-        </div>
-        <span className="font-medium text-blue-600">
-          Animated dashes = active residual flow
-        </span>
-      </div>
     </div>
   );
 }

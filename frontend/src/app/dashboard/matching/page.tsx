@@ -18,11 +18,13 @@ import {
   ShieldCheck,
   Network,
   HelpCircle,
+  Cpu,
 } from "lucide-react";
 import type { AlgorithmType, SimulationResponse, AssignmentExplanation } from "@/types";
 import { BipartiteFlowGraph } from "@/components/graph/BipartiteFlowGraph";
 import { ExplainDrawer } from "@/components/matching/ExplainDrawer";
 import { formatMs } from "@/lib/utils";
+import { Card3D } from "@/components/ui/Card3D";
 
 export default function MatchingCockpitPage() {
   const queryClient = useQueryClient();
@@ -64,6 +66,7 @@ export default function MatchingCockpitPage() {
     if (activeConfId && !simulationResult && !simulateMutation.isPending) {
       simulateMutation.mutate();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeConfId]);
 
   const commitMutation = useMutation({
@@ -90,260 +93,262 @@ export default function MatchingCockpitPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 select-none text-white">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-b pb-4">
+      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-white/10">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold tracking-tight text-foreground">
+          <div className="flex items-center gap-3">
+            <h1
+              className="text-3xl tracking-tight text-white"
+              style={{ fontFamily: "'Instrument Serif', serif" }}
+            >
               Matching Engine Cockpit
             </h1>
-            <span className="rounded bg-purple-50 border border-purple-200 px-2 py-0.5 text-[11px] font-semibold text-purple-700">
-              Deterministic Bipartite Max-Flow
+            <span className="rounded-full bg-cyan-500/20 border border-cyan-500/40 px-3 py-0.5 text-[11px] font-bold text-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.3)]">
+              Deterministic Maximum Flow
             </span>
           </div>
-          <p className="text-xs text-muted-foreground">
-            Configure matching parameters, preview residual flow graphs, and transactionally commit allocations
+          <p className="mt-1 text-xs text-muted-foreground">
+            Bipartite graph model with edge capacity saturation and conflict-free matching.
           </p>
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-3">
           <button
             onClick={() => simulateMutation.mutate()}
-            disabled={!activeConfId || simulateMutation.isPending}
-            className="flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-blue-700 disabled:opacity-50 transition-colors"
+            disabled={simulateMutation.isPending || !activeConfId}
+            className="liquid-glass rounded-xl px-5 py-2.5 text-xs font-semibold text-white flex items-center gap-2 disabled:opacity-50"
           >
-            {simulateMutation.isPending ? (
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-            ) : (
-              <Play className="h-4 w-4" />
-            )}
-            <span>{simulateMutation.isPending ? "Solving Flow Network..." : "Simulate Allocation"}</span>
+            <Play className={`h-4 w-4 text-cyan-400 ${simulateMutation.isPending ? "animate-spin" : ""}`} />
+            <span>{simulateMutation.isPending ? "Computing Flow..." : "Simulate Allocation"}</span>
           </button>
 
-          {simulationResult && (
+          {simulationResult && !commitSuccess && (
             <button
               onClick={() => commitMutation.mutate()}
-              disabled={commitMutation.isPending || commitSuccess}
-              className={`flex items-center gap-1.5 rounded-md px-4 py-2 text-xs font-semibold text-white shadow-sm transition-colors ${
-                commitSuccess
-                  ? "bg-emerald-600 cursor-default"
-                  : "bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50"
-              }`}
+              disabled={commitMutation.isPending || simulationResult.achievedFlow === 0}
+              className="btn-3d rounded-xl px-5 py-2.5 text-xs font-semibold text-white flex items-center gap-2 bg-emerald-600/30 border-emerald-500/50 hover:bg-emerald-600/50 disabled:opacity-40"
             >
-              {commitSuccess ? <CheckCheck className="h-4 w-4" /> : <CheckCircle className="h-4 w-4" />}
-              <span>{commitSuccess ? "Assignments Committed ✓" : "Commit to Database"}</span>
+              <CheckCheck className="h-4 w-4 text-emerald-400" />
+              <span>{commitMutation.isPending ? "Committing..." : "Commit Matches"}</span>
             </button>
+          )}
+
+          {commitSuccess && (
+            <div className="flex items-center gap-2 rounded-xl bg-emerald-500/20 border border-emerald-500/40 px-3.5 py-2 text-xs font-semibold text-emerald-300">
+              <CheckCircle className="h-4 w-4" />
+              <span>Committed to DB</span>
+            </div>
           )}
         </div>
       </div>
 
-      {/* Matching Configuration Panel */}
-      <div className="rounded-xl border bg-card p-5 shadow-sm space-y-4">
-        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-          <Sliders className="h-4 w-4 text-blue-600" />
-          <span>Allocation Parameters &amp; Algorithm Selection</span>
+      {/* PARAMETERS CONFIGURATION BAR */}
+      <Card3D glowColor="purple" className="p-5">
+        <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+          <div className="flex items-center gap-2">
+            <Sliders className="h-4 w-4 text-purple-400" />
+            <h2 className="text-xs font-bold uppercase tracking-wider text-white">
+              Flow Model Constraint Controls
+            </h2>
+          </div>
+          <span className="text-[11px] text-muted-foreground">
+            Algorithm: <strong className="text-purple-300 font-mono">{algorithm}</strong>
+          </span>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 text-xs">
-          {/* Algorithm Choice */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 text-xs">
+          {/* Solver Algorithm Selection */}
           <div className="space-y-1.5">
-            <label className="font-semibold text-foreground">Max-Flow Algorithm</label>
+            <label className="font-semibold text-muted-foreground">Flow Solver Algorithm</label>
             <select
               value={algorithm}
               onChange={(e) => setAlgorithm(e.target.value as AlgorithmType)}
-              className="w-full rounded-md border bg-background p-2 text-xs text-foreground focus:border-blue-500 focus:outline-none"
+              className="w-full rounded-xl border border-white/10 bg-black/60 py-2.5 px-3 text-xs text-white focus:border-white/30 focus:outline-none backdrop-blur-md"
             >
-              <option value="DINIC">Dinic (Level Graph BFS + Blocking Flow DFS) [O(V²E)]</option>
-              <option value="EDMONDS_KARP">Edmonds-Karp (BFS Shortest Path) [O(V·E²)]</option>
-              <option value="FORD_FULKERSON">Ford-Fulkerson (Standard DFS Augmentation) [O(E·|f|)]</option>
+              <option value="DINIC">Dinic&apos;s Algorithm (Layered BFS/DFS)</option>
+              <option value="EDMONDS_KARP">Edmonds-Karp (Shortest BFS)</option>
+              <option value="FORD_FULKERSON">Ford-Fulkerson (DFS Augmenting)</option>
             </select>
           </div>
 
           {/* Required Reviews per Paper */}
           <div className="space-y-1.5">
-            <label className="font-semibold text-foreground">Required Reviews / Paper</label>
+            <div className="flex justify-between">
+              <label className="font-semibold text-muted-foreground">Reviews Required / Paper</label>
+              <span className="font-mono font-bold text-cyan-300">{reviewsPerPaper}</span>
+            </div>
             <input
-              type="number"
-              min={1}
-              max={5}
+              type="range"
+              min="1"
+              max="5"
+              step="1"
               value={reviewsPerPaper}
-              onChange={(e) => setReviewsPerPaper(Number(e.target.value))}
-              className="w-full rounded-md border bg-background p-2 text-xs text-foreground focus:border-blue-500 focus:outline-none"
+              onChange={(e) => setReviewsPerPaper(parseInt(e.target.value))}
+              className="w-full accent-cyan-400"
             />
           </div>
 
           {/* Reviewer Capacity */}
           <div className="space-y-1.5">
-            <label className="font-semibold text-foreground">Default Reviewer Capacity</label>
+            <div className="flex justify-between">
+              <label className="font-semibold text-muted-foreground">Reviewer Max Capacity</label>
+              <span className="font-mono font-bold text-purple-300">{reviewerCapacity} papers</span>
+            </div>
             <input
-              type="number"
-              min={1}
-              max={10}
+              type="range"
+              min="1"
+              max="10"
+              step="1"
               value={reviewerCapacity}
-              onChange={(e) => setReviewerCapacity(Number(e.target.value))}
-              className="w-full rounded-md border bg-background p-2 text-xs text-foreground focus:border-blue-500 focus:outline-none"
+              onChange={(e) => setReviewerCapacity(parseInt(e.target.value))}
+              className="w-full accent-purple-400"
             />
           </div>
 
-          {/* COI Exclusion Toggle */}
-          <div className="flex flex-col justify-end">
-            <label className="flex items-center gap-2 rounded-md border bg-secondary/30 p-2.5 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={excludeConflicts}
-                onChange={(e) => setExcludeConflicts(e.target.checked)}
-                className="rounded text-blue-600 focus:ring-0"
-              />
-              <span className="font-medium text-foreground">Enforce Zero-COI Exclusions</span>
-            </label>
+          {/* Exclude Conflicts Toggle */}
+          <div className="flex items-center justify-between pt-4 sm:pt-0">
+            <div>
+              <p className="font-semibold text-white">Strict COI Exclusion</p>
+              <p className="text-[10px] text-muted-foreground">Cut conflicting graph edges</p>
+            </div>
+            <input
+              type="checkbox"
+              checked={excludeConflicts}
+              onChange={(e) => setExcludeConflicts(e.target.checked)}
+              className="h-4 w-4 rounded border-white/20 bg-white/10 text-cyan-400 focus:ring-0"
+            />
           </div>
         </div>
-      </div>
+      </Card3D>
 
-      {/* Simulation Result Header */}
+      {/* SIMULATION METRICS BAR */}
       {simulationResult && (
-        <div className="space-y-6">
-          {/* Metrics Overview Bar */}
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-            <div className="rounded-xl border bg-card p-3.5 shadow-sm space-y-1">
-              <span className="text-[11px] text-muted-foreground">Max Flow Achieved</span>
-              <p className="font-mono text-lg font-bold text-foreground">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Card3D glowColor="cyan" className="p-4">
+            <p className="text-[11px] font-medium text-muted-foreground uppercase">
+              Achieved Flow Capacity
+            </p>
+            <div className="mt-1 flex items-baseline gap-2">
+              <span className="text-2xl font-bold font-mono text-cyan-300">
                 {simulationResult.achievedFlow} / {simulationResult.totalRequiredFlow}
-              </p>
-              <p className="text-[10px] text-muted-foreground">units of flow</p>
+              </span>
+              <span className="text-xs text-muted-foreground">Units</span>
             </div>
+          </Card3D>
 
-            <div className="rounded-xl border bg-card p-3.5 shadow-sm space-y-1">
-              <span className="text-[11px] text-muted-foreground">Coverage</span>
-              <p className="font-mono text-lg font-bold text-emerald-700">
+          <Card3D glowColor="emerald" className="p-4">
+            <p className="text-[11px] font-medium text-muted-foreground uppercase">
+              Requirement Coverage
+            </p>
+            <div className="mt-1 flex items-baseline gap-2">
+              <span className="text-2xl font-bold font-mono text-emerald-300">
                 {simulationResult.coveragePercentage.toFixed(1)}%
-              </p>
-              <p className="text-[10px] text-muted-foreground">fully satisfied</p>
+              </span>
+              <span className="text-xs text-muted-foreground">Completed</span>
             </div>
+          </Card3D>
 
-            <div className="rounded-xl border bg-card p-3.5 shadow-sm space-y-1">
-              <span className="text-[11px] text-muted-foreground">Solving Duration</span>
-              <p className="font-mono text-lg font-bold text-purple-700">
+          <Card3D glowColor="purple" className="p-4">
+            <p className="text-[11px] font-medium text-muted-foreground uppercase">
+              Execution Timing
+            </p>
+            <div className="mt-1 flex items-baseline gap-2">
+              <span className="text-2xl font-bold font-mono text-purple-300">
                 {formatMs(simulationResult.durationMs)}
-              </p>
-              <p className="text-[10px] text-muted-foreground font-mono">
-                {simulationResult.augmentationsCount} augmentations
-              </p>
-            </div>
-
-            <div className="rounded-xl border bg-card p-3.5 shadow-sm space-y-1">
-              <span className="text-[11px] text-muted-foreground">Canonical Vertices</span>
-              <p className="font-mono text-lg font-bold text-foreground">
-                {simulationResult.totalVertices}
-              </p>
-              <p className="text-[10px] text-muted-foreground">
-                {simulationResult.totalManuscripts} Papers · {simulationResult.totalReviewers} Reviewers
-              </p>
-            </div>
-
-            <div className="rounded-xl border bg-card p-3.5 shadow-sm space-y-1">
-              <span className="text-[11px] text-muted-foreground">Canonical Edges</span>
-              <p className="font-mono text-lg font-bold text-foreground">
-                {simulationResult.totalEdges}
-              </p>
-              <p className="text-[10px] text-muted-foreground">bipartite candidates</p>
-            </div>
-
-            <div className="rounded-xl border bg-card p-3.5 shadow-sm space-y-1">
-              <span className="text-[11px] text-muted-foreground">SHA-256 Fingerprint</span>
-              <p className="font-mono text-[11px] font-bold text-blue-700 truncate">
-                {simulationResult.graphFingerprint}
-              </p>
-              <p className="text-[10px] text-muted-foreground">Canonical hash verified</p>
-            </div>
-          </div>
-
-          {/* Interactive Bipartite Flow Graph */}
-          <BipartiteFlowGraph
-            data={simulationResult.graphVisualization}
-            traces={simulationResult.executionTraceSummary}
-            algorithmName={simulationResult.algorithmName}
-            onEdgeClick={handleExplain}
-          />
-
-          {/* Allocated Pairs Table */}
-          <div className="rounded-xl border bg-card shadow-sm overflow-hidden space-y-3 p-5">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="text-sm font-bold text-foreground">
-                  Simulated Reviewer Allocations ({simulationResult.assignments.length} Pairs)
-                </h3>
-                <p className="text-xs text-muted-foreground">
-                  Click any row or &quot;Explain&quot; button to view the deterministic bipartite matching proof
-                </p>
-              </div>
-              <span className="rounded bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-xs font-semibold text-emerald-800">
-                100% Conflict-Free
+              </span>
+              <span className="text-xs text-muted-foreground">
+                ({simulationResult.augmentationsCount} aug)
               </span>
             </div>
+          </Card3D>
 
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
-                <thead className="border-b bg-secondary/30 text-muted-foreground font-semibold">
-                  <tr>
-                    <th className="py-2.5 px-3">Manuscript</th>
-                    <th className="py-2.5 px-3">Assigned Reviewer</th>
-                    <th className="py-2.5 px-3">Affiliation</th>
-                    <th className="py-2.5 px-3 text-center">Topic Overlap</th>
-                    <th className="py-2.5 px-3 text-center">Keyword Matches</th>
-                    <th className="py-2.5 px-3 text-center">Flow</th>
-                    <th className="py-2.5 px-3 text-right">Explainability</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y">
-                  {simulationResult.assignments.map((pair, idx) => (
-                    <tr
-                      key={idx}
-                      onClick={() => handleExplain(pair.manuscriptId, pair.reviewerId)}
-                      className="hover:bg-secondary/20 cursor-pointer transition-colors"
-                    >
-                      <td className="py-2.5 px-3 font-bold text-foreground max-w-xs truncate">
-                        {pair.manuscriptTitle}
-                      </td>
-                      <td className="py-2.5 px-3 font-medium text-foreground">
-                        {pair.reviewerName}
-                      </td>
-                      <td className="py-2.5 px-3 text-muted-foreground">
-                        {pair.reviewerAffiliation || "Independent"}
-                      </td>
-                      <td className="py-2.5 px-3 text-center font-mono font-semibold text-blue-700">
-                        {pair.topicOverlapCount} topics
-                      </td>
-                      <td className="py-2.5 px-3 text-center font-mono text-muted-foreground">
-                        {pair.keywordOverlapCount} tags
-                      </td>
-                      <td className="py-2.5 px-3 text-center font-mono font-bold text-emerald-700">
-                        {pair.flow} unit
-                      </td>
-                      <td className="py-2.5 px-3 text-right">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleExplain(pair.manuscriptId, pair.reviewerId);
-                          }}
-                          className="inline-flex items-center gap-1 rounded bg-secondary px-2.5 py-1 text-[11px] font-semibold text-blue-600 hover:bg-secondary/80"
-                        >
-                          <HelpCircle className="h-3 w-3" />
-                          <span>Explain</span>
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+          <Card3D glowColor="blue" className="p-4">
+            <p className="text-[11px] font-medium text-muted-foreground uppercase">
+              SHA-256 Fingerprint
+            </p>
+            <div className="mt-1 flex items-center gap-1 font-mono text-xs text-muted-foreground truncate">
+              <Fingerprint className="h-3.5 w-3.5 text-blue-400 shrink-0" />
+              <span className="truncate">{simulationResult.graphFingerprint}</span>
             </div>
-          </div>
+          </Card3D>
         </div>
       )}
 
-      {/* Explain This Assignment Drawer */}
+      {/* BIPARTITE FLOW GRAPH VISUALIZER */}
+      {simulationResult && (
+        <BipartiteFlowGraph
+          data={simulationResult.graphVisualization}
+          traces={simulationResult.executionTraceSummary}
+          algorithmName={simulationResult.algorithmName || simulationResult.algorithm}
+          onEdgeClick={(mId, rId) => handleExplain(mId, rId)}
+        />
+      )}
+
+      {/* MATCHING RESULTS TABLE */}
+      {simulationResult && (
+        <Card3D glowColor="none" className="p-5 space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <GitMerge className="h-4 w-4 text-cyan-400" />
+              <h2 className="text-sm font-bold text-white">
+                Assigned Reviewer Pairs ({simulationResult.assignments.length})
+              </h2>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Click any match row to view the full formal explainability proof
+            </p>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead>
+                <tr className="border-b border-white/10 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                  <th className="pb-3">Manuscript</th>
+                  <th className="pb-3">Assigned Reviewer</th>
+                  <th className="pb-3">Affiliation</th>
+                  <th className="pb-3">Score</th>
+                  <th className="pb-3">COI Status</th>
+                  <th className="pb-3 text-right">Proof</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/5 font-mono text-[11px]">
+                {simulationResult.assignments.map((assignment, idx) => (
+                  <tr
+                    key={idx}
+                    onClick={() => handleExplain(assignment.manuscriptId, assignment.reviewerId)}
+                    className="cursor-pointer hover:bg-white/[0.04] transition-colors"
+                  >
+                    <td className="py-3 font-sans font-medium text-white max-w-[240px] truncate">
+                      {assignment.manuscriptTitle}
+                    </td>
+                    <td className="py-3 font-sans text-cyan-300">{assignment.reviewerName}</td>
+                    <td className="py-3 font-sans text-muted-foreground">
+                      {assignment.reviewerAffiliation || "Independent"}
+                    </td>
+                    <td className="py-3 text-emerald-400 font-bold">
+                      {(assignment.compatibilityScore * 100).toFixed(0)}%
+                    </td>
+                    <td className="py-3">
+                      <span className="rounded bg-emerald-500/20 border border-emerald-500/30 px-1.5 py-0.5 text-[9px] font-bold text-emerald-300">
+                        CLEARED
+                      </span>
+                    </td>
+                    <td className="py-3 text-right">
+                      <button className="text-xs text-cyan-400 hover:text-cyan-300 font-sans underline transition-colors">
+                        Explain Proof →
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card3D>
+      )}
+
+      {/* Explain Drawer Slide-Over */}
       <ExplainDrawer
         explanation={selectedExplanation}
         isOpen={isExplainOpen}

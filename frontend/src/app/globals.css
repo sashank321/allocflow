@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,36 +8,30 @@
   :root {
     --font-display: 'Instrument Serif', serif;
     --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
 
-    /* Dark deep navy theme */
-    --background: 201 100% 13%; /* deep navy blue */
-    --foreground: 0 0% 100%; /* white */
-    --muted-foreground: 240 4% 66%; /* muted gray */
+    --background: 0 0% 0%; /* Pure black */
+    --foreground: 0 0% 100%;
+    --muted-foreground: 240 4% 68%;
 
     --primary: 0 0% 100%;
     --primary-foreground: 0 0% 4%;
 
-    --secondary: 201 50% 18%;
+    --secondary: 240 4% 12%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 201 50% 18%;
-    --accent: 201 50% 20%;
+    --muted: 240 4% 14%;
+    --accent: 217 91% 60%;
     --accent-foreground: 0 0% 100%;
 
     --border: 0 0% 100% / 0.12;
     --input: 0 0% 100% / 0.15;
-    --ring: 0 0% 100%;
+    --ring: 217 91% 60%;
 
-    --card: 201 70% 10% / 0.7;
+    --card: 0 0% 5% / 0.75;
     --card-foreground: 0 0% 100%;
 
-    --popover: 201 70% 10%;
-    --popover-foreground: 0 0% 100%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-
-    --radius: 0.75rem;
+    --radius: 1rem;
   }
 }
 
@@ -46,11 +40,12 @@
     @apply border-border;
   }
   body {
-    background-color: hsl(201 100% 13%);
-    color: hsl(0 0% 100%);
+    background-color: #000000;
+    color: #ffffff;
     font-family: var(--font-body);
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     overflow-x: hidden;
+    perspective: 1200px;
   }
 
   h1, h2, .font-display {
@@ -58,60 +53,140 @@
   }
 }
 
-/* Liquid Glass Effect */
+/* =========================================================
+   3D GLASSMORPHISM & DEPTH DESIGN SYSTEM
+   ========================================================= */
+
+/* Premium Frosted Glass Panel */
+.glass-panel {
+  background: rgba(18, 18, 22, 0.65);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 10px 30px -10px rgba(0, 0, 0, 0.8),
+    0 20px 40px -15px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4);
+  border-radius: 1rem;
+  position: relative;
+}
+
+/* 3D Floating Glass Card */
+.glass-card-3d {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  box-shadow: 
+    0 12px 36px -8px rgba(0, 0, 0, 0.7),
+    inset 0 1px 2px rgba(255, 255, 255, 0.25);
+  transform-style: preserve-3d;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+}
+
+.glass-card-3d:hover {
+  transform: translateY(-5px) rotateX(2deg) rotateY(-1deg) scale(1.015);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 
+    0 24px 60px -12px rgba(0, 0, 0, 0.9),
+    0 0 35px -5px rgba(99, 102, 241, 0.2),
+    inset 0 1px 3px rgba(255, 255, 255, 0.4);
+}
+
+/* Liquid Glass Interactive Element */
 .liquid-glass {
-  background: rgba(255, 255, 255, 0.03);
-  background-blend-mode: luminosity;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: none;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 
+    0 8px 24px -4px rgba(0, 0, 0, 0.5),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
   position: relative;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.liquid-glass::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1.4px;
-  background: linear-gradient(180deg,
-    rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%,
-    rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
-    rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .liquid-glass:hover {
-  transform: scale(1.03);
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25), 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px) scale(1.02);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 16px 36px -6px rgba(0, 0, 0, 0.7),
+    0 0 20px rgba(255, 255, 255, 0.15),
+    inset 0 1px 3px rgba(255, 255, 255, 0.4);
 }
 
-/* Animations */
-@keyframes fade-rise {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+/* 3D Glass Button */
+.btn-3d {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.04) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  box-shadow: 
+    0 4px 14px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.animate-fade-rise {
-  animation: fade-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+.btn-3d:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 8px 25px rgba(0, 0, 0, 0.6),
+    0 0 15px rgba(255, 255, 255, 0.25),
+    inset 0 1px 2px rgba(255, 255, 255, 0.5);
 }
 
-.animate-fade-rise-delay {
-  animation: fade-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+.btn-3d:active {
+  transform: translateY(1px);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.5),
+    inset 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.animate-fade-rise-delay-2 {
-  animation: fade-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+/* 3D Isometric View Container */
+.isometric-stage {
+  perspective: 1000px;
+  transform-style: preserve-3d;
 }
 
-/* Custom flow edge animation keyframes */
+.isometric-layer {
+  transform: rotateX(12deg) rotateY(-4deg) rotateZ(0deg);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.isometric-stage:hover .isometric-layer {
+  transform: rotateX(4deg) rotateY(-1deg) rotateZ(0deg);
+}
+
+/* Ambient Neon Glow Helpers */
+.glow-cyan {
+  box-shadow: 0 0 25px -4px rgba(6, 182, 212, 0.45);
+}
+
+.glow-purple {
+  box-shadow: 0 0 25px -4px rgba(168, 85, 247, 0.45);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 25px -4px rgba(16, 185, 129, 0.45);
+}
+
+/* Keyframe Animations */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
 @keyframes flowDash {
   to {
     stroke-dashoffset: -24;
@@ -121,4 +196,13 @@
 .flow-animate {
   stroke-dasharray: 6 6;
   animation: flowDash 1s linear infinite;
+}
+
+@keyframes float3D {
+  0%, 100% { transform: translateY(0px) rotateX(0deg); }
+  50% { transform: translateY(-8px) rotateX(2deg); }
+}
+
+.animate-float-3d {
+  animation: float3D 6s ease-in-out infinite;
 }
