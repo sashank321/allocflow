@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
-import "../../../public/browseros.css";
+import "@/browseros.css";
 
 export default function DashboardLayout({
   children,
