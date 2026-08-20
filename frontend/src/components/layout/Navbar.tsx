@@ -43,7 +43,7 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
 
         <div className="hidden md:flex items-center gap-2 px-3 py-1 font-space text-xs text-muted border-l border-divider">
           <span className="font-bold text-beige-bg uppercase tracking-widest">{activeConferenceCode}</span>
-          <span className="text-[10px] opacity-60">// ACTIVE CYCLE</span>
+          <span className="text-[10px] opacity-60">{"// ACTIVE CYCLE"}</span>
         </div>
       </div>
 
