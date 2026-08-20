@@ -29,20 +29,21 @@ export function Sidebar() {
 
   const researchNav = [
     { label: "Matching Cockpit", href: "/dashboard/matching", icon: GitMerge, badge: "Max-Flow" },
-    { label: "Algorithm Comparison", href: "/dashboard/comparison", icon: Scale, badge: "FF·EK·Dinic" },
-    { label: "Flow Graph Visualizer", href: "/dashboard/graph-view", icon: Network, badge: "S→P→R→T" },
+    { label: "Algorithm Compare", href: "/dashboard/comparison", icon: Scale, badge: "Tri-Algo" },
+    { label: "Graph Visualizer", href: "/dashboard/graph-view", icon: Network, badge: "S→P→R→T" },
     { label: "Scalability Lab", href: "/dashboard/experiments", icon: FlaskConical, badge: "Sweeps" },
   ];
 
   return (
-    <aside className="w-64 border-r border-white/10 bg-black/60 backdrop-blur-xl flex flex-col justify-between p-4 h-[calc(100vh-4rem)] sticky top-16 select-none text-white">
-      <div className="space-y-6">
+    <aside className="w-64 border-r border-divider bg-ink-black/80 backdrop-blur-md flex flex-col justify-between p-4 h-[calc(100vh-4rem)] sticky top-16 select-none font-sans text-beige-bg">
+      <div className="space-y-8 mt-2">
         {/* OPERATIONS SECTION */}
         <div>
-          <p className="px-3 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-            Operations
-          </p>
-          <nav className="mt-2 space-y-1">
+          <div className="mb-4 flex items-center gap-2 font-space text-[10px] uppercase tracking-[0.2em] text-muted pl-2">
+            <span className="h-[4px] w-[4px] bg-accent-orange"></span>
+            <span>Operations Manifest</span>
+          </div>
+          <nav className="space-y-1">
             {operationsNav.map((item) => {
               const active = pathname === item.href;
               const Icon = item.icon;
@@ -50,17 +51,17 @@ export function Sidebar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center justify-between rounded-xl px-3 py-2 text-xs font-medium transition-all ${
+                  className={`flex items-center justify-between px-3 py-2 text-[11px] font-space tracking-wider uppercase transition-all ${
                     active
-                      ? "bg-white/15 text-white font-semibold border border-white/25 shadow-sm"
-                      : "text-muted-foreground hover:bg-white/[0.06] hover:text-white"
+                      ? "bg-white/10 text-beige-bg font-bold border-l-2 border-accent-orange"
+                      : "text-muted hover:bg-white/5 hover:text-beige-bg border-l-2 border-transparent"
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <Icon className={`h-4 w-4 ${active ? "text-white" : "text-muted-foreground"}`} />
+                  <div className="flex items-center gap-3">
+                    <Icon className={`h-3.5 w-3.5 ${active ? "text-accent-orange" : "text-muted"}`} />
                     <span>{item.label}</span>
                   </div>
-                  {active && <ChevronRight className="h-3.5 w-3.5 text-white/80" />}
+                  {active && <span className="text-accent-orange opacity-70">{"<"}</span>}
                 </Link>
               );
             })}
@@ -69,15 +70,16 @@ export function Sidebar() {
 
         {/* RESEARCH LAB SECTION */}
         <div>
-          <div className="flex items-center justify-between px-3">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-purple-300">
-              Research Lab
-            </p>
-            <span className="rounded bg-purple-500/20 border border-purple-500/40 px-1.5 py-0.2 text-[9px] font-bold text-purple-200">
+          <div className="mb-4 flex items-center justify-between pl-2">
+            <div className="flex items-center gap-2 font-space text-[10px] uppercase tracking-[0.2em] text-accent-blue">
+              <span className="h-[4px] w-[4px] bg-accent-blue shadow-[0_0_8px_rgba(2,84,236,0.6)]"></span>
+              <span>Research Lab</span>
+            </div>
+            <span className="border border-accent-blue/30 bg-accent-blue/10 px-1 py-0.5 text-[8px] font-space font-bold text-accent-blue">
               DSA Suite
             </span>
           </div>
-          <nav className="mt-2 space-y-1">
+          <nav className="space-y-1">
             {researchNav.map((item) => {
               const active = pathname === item.href;
               const Icon = item.icon;
@@ -85,18 +87,18 @@ export function Sidebar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center justify-between rounded-xl px-3 py-2 text-xs font-medium transition-all ${
+                  className={`flex items-center justify-between px-3 py-2 text-[11px] font-space tracking-wider uppercase transition-all ${
                     active
-                      ? "bg-purple-500/20 text-white font-semibold border border-purple-500/40 shadow-sm"
-                      : "text-muted-foreground hover:bg-white/[0.06] hover:text-white"
+                      ? "bg-accent-blue/10 text-beige-bg font-bold border-l-2 border-accent-blue"
+                      : "text-muted hover:bg-white/5 hover:text-beige-bg border-l-2 border-transparent"
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <Icon className={`h-4 w-4 ${active ? "text-purple-300" : "text-muted-foreground"}`} />
+                  <div className="flex items-center gap-3">
+                    <Icon className={`h-3.5 w-3.5 ${active ? "text-accent-blue" : "text-muted"}`} />
                     <span>{item.label}</span>
                   </div>
                   {item.badge && (
-                    <span className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] font-medium text-muted-foreground">
+                    <span className="border border-divider bg-black/40 px-1 py-0.5 text-[8px] font-bold text-muted">
                       {item.badge}
                     </span>
                   )}
@@ -108,18 +110,23 @@ export function Sidebar() {
       </div>
 
       {/* System Invariant Status Footer */}
-      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3 text-[11px]">
-        <div className="flex items-center justify-between">
-          <span className="font-semibold text-white">Graph Invariant</span>
-          <span className="rounded bg-emerald-500/20 border border-emerald-500/30 px-1.5 py-0.5 text-[9px] font-bold text-emerald-300">
-            ACTIVE
+      <div className="border border-divider bg-black/40 p-4 text-[11px] font-space">
+        <div className="flex items-center justify-between mb-2">
+          <span className="font-bold text-muted uppercase tracking-wider text-[10px]">Graph Invariant</span>
+          <span className="border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-[8px] font-bold text-green-400 uppercase tracking-widest animate-pulse">
+            Sys_Active
           </span>
         </div>
-        <p className="mt-1 font-mono text-[10px] text-muted-foreground">
-          FF.flow == EK.flow == Dinic.flow
-        </p>
-        <p className="mt-0.5 text-[10px] text-muted-foreground">
-          Capacity &amp; Zero-COI strictly enforced.
+        <div className="bg-ink-black border border-white/5 p-2 mb-2">
+          <p className="font-mono text-[9px] text-green-400">
+            FF.flow == EK.flow
+            <br />
+            == Dinic.flow
+          </p>
+        </div>
+        <p className="text-[9px] text-muted uppercase tracking-widest leading-relaxed">
+          Capacity &amp; Zero-COI
+          <br />strictly enforced.
         </p>
       </div>
     </aside>

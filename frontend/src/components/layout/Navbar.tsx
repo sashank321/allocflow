@@ -4,14 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/lib/auth";
-import {
-  Layers,
-  Sparkles,
-  LogOut,
-  Building2,
-  Cpu,
-  FlaskConical,
-} from "lucide-react";
+import { LogOut } from "lucide-react";
 import type { UserRole } from "@/types";
 import { BackendStatusPill } from "./BackendStatusPill";
 
@@ -31,89 +24,78 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
     pathname.includes("/graph-view");
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-white/10 bg-black/80 px-6 backdrop-blur-xl text-white">
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-divider bg-ink-black/90 px-6 backdrop-blur-md text-beige-bg font-sans">
       {/* Brand & Conference Badge */}
       <div className="flex items-center gap-6">
-        <Link href="/dashboard" className="flex items-center gap-2.5 group">
-          <span
-            className="text-2xl tracking-tight text-white transition-opacity group-hover:opacity-90"
-            style={{ fontFamily: "'Instrument Serif', serif" }}
-          >
-            AllocFlow
+        <Link href="/dashboard" className="flex items-center gap-2 group">
+          <svg className="h-6 w-6" viewBox="0 0 32 32" fill="none">
+            <circle cx="6" cy="16" r="4" fill="#E57D25"/>
+            <circle cx="26" cy="16" r="4" fill="#E57D25"/>
+            <path d="M6 16L26 16" stroke="#f4f1e6" strokeWidth="2"/>
+          </svg>
+          <span className="font-heading text-xl font-bold tracking-tight text-beige-bg transition-opacity group-hover:opacity-90">
+            Alloc<span className="text-accent-orange font-normal italic">Flow</span>
           </span>
-          <sup className="text-xs text-muted-foreground">®</sup>
-          <span className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] font-bold text-white/90 border border-white/15">
-            DSA Engine
+          <span className="ml-2 px-1.5 py-0.5 text-[9px] font-mono font-bold tracking-wider text-accent-orange border border-accent-orange/30 bg-accent-orange/10 uppercase">
+            Portal
           </span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-muted-foreground">
-          <Building2 className="h-3.5 w-3.5 text-white/80" />
-          <span className="font-medium text-white">{activeConferenceCode}</span>
-          <span className="text-[10px] text-muted-foreground">(Active Cycle)</span>
+        <div className="hidden md:flex items-center gap-2 px-3 py-1 font-space text-xs text-muted border-l border-divider">
+          <span className="font-bold text-beige-bg uppercase tracking-widest">{activeConferenceCode}</span>
+          <span className="text-[10px] opacity-60">// ACTIVE CYCLE</span>
         </div>
       </div>
 
       {/* Mode Indicator & Quick Action Pills */}
-      <div className="flex items-center gap-3.5">
-        {/* Backend Live Status Pill */}
+      <div className="flex items-center gap-4">
         <BackendStatusPill />
 
-        {/* Mode Badge */}
+        {/* Terminal Mode Badge */}
         <div
-          className={`flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold backdrop-blur-md ${
+          className={`font-mono text-[11px] font-bold tracking-widest uppercase px-2 py-1 ${
             isResearchMode
-              ? "bg-purple-500/20 text-purple-200 border border-purple-500/40"
-              : "bg-white/10 text-white border border-white/20"
+              ? "text-accent-blue bg-accent-blue/10 border border-accent-blue/20"
+              : "text-beige-bg bg-white/5 border border-white/10"
           }`}
         >
-          {isResearchMode ? (
-            <>
-              <FlaskConical className="h-3.5 w-3.5 text-purple-300" />
-              <span>RESEARCH MODE</span>
-            </>
-          ) : (
-            <>
-              <Cpu className="h-3.5 w-3.5 text-white" />
-              <span>OPERATIONS MODE</span>
-            </>
-          )}
+          {isResearchMode ? "[ RSH_MODE ]" : "[ OPS_MODE ]"}
         </div>
 
         {/* Demo Role Switcher */}
-        <div className="hidden lg:flex items-center gap-1 rounded-lg border border-white/10 bg-white/[0.03] p-1 text-xs">
-          <span className="px-2 text-[11px] font-medium text-muted-foreground">Demo:</span>
+        <div className="hidden lg:flex items-center gap-1 p-1 text-xs font-space border border-divider bg-black/40">
+          <span className="px-2 text-[10px] uppercase text-muted tracking-widest">User:</span>
           {(["SUPER_ADMIN", "CONFERENCE_ADMIN", "REVIEWER", "AUTHOR"] as UserRole[]).map((role) => (
             <button
               key={role}
               onClick={() => quickLogin(role)}
-              className={`rounded px-2 py-0.5 text-[11px] transition-all ${
+              className={`px-2 py-0.5 text-[10px] uppercase tracking-wider transition-all ${
                 user?.role === role
-                  ? "bg-white/20 font-semibold text-white shadow-sm border border-white/25"
-                  : "text-muted-foreground hover:text-white"
+                  ? "bg-beige-bg text-ink-black font-bold"
+                  : "text-muted hover:text-beige-bg"
               }`}
             >
               {role === "SUPER_ADMIN"
-                ? "SysAdmin"
+                ? "Sys"
                 : role === "CONFERENCE_ADMIN"
                 ? "Chair"
                 : role === "REVIEWER"
-                ? "Reviewer"
-                : "Author"}
+                ? "Rev"
+                : "Auth"}
             </button>
           ))}
         </div>
 
         {/* User Menu / Logout */}
         {isAuthenticated ? (
-          <div className="flex items-center gap-3">
-            <div className="text-right">
-              <p className="text-xs font-medium leading-none text-white">{user?.fullName}</p>
-              <p className="text-[10px] text-muted-foreground">{user?.email}</p>
+          <div className="flex items-center gap-3 pl-2 border-l border-divider">
+            <div className="text-right font-space">
+              <p className="text-[11px] font-bold uppercase text-beige-bg">{user?.fullName}</p>
+              <p className="text-[9px] text-muted tracking-widest">{user?.email}</p>
             </div>
             <button
               onClick={logout}
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 text-muted-foreground hover:bg-white/10 hover:text-white transition-colors"
+              className="flex h-8 w-8 items-center justify-center border border-divider text-muted hover:bg-white/10 hover:text-beige-bg transition-colors"
               title="Sign Out"
             >
               <LogOut className="h-4 w-4" />
@@ -122,7 +104,7 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
         ) : (
           <Link
             href="/login"
-            className="liquid-glass rounded-full px-4 py-1.5 text-xs font-semibold text-white hover:scale-105 transition-all"
+            className="px-4 py-1.5 font-space text-[11px] font-bold uppercase tracking-widest text-ink-black bg-accent-orange hover:bg-[#d67220] transition-colors"
           >
             Sign In
           </Link>
