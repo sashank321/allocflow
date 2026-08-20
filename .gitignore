@@ -50,3 +50,12 @@ yarn-error.log*
 *.sqlite3
 *.db
 pgdata/
+
+# Temporary test scripts and test screenshot artifacts
+frontend/*.js
+!frontend/next.config.js
+frontend/public/*.png
+frontend/public/*.html
+frontend/public/cdn-cgi/
+frontend/public/test_output.html
+.gemini/
