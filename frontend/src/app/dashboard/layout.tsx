@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Sidebar } from "@/components/layout/Sidebar";
-import "@/browseros.css";
 
 export default function DashboardLayout({
   children,
@@ -14,6 +13,7 @@ export default function DashboardLayout({
 
   return (
     <div className="relative min-h-screen bg-ink-black text-beige-bg flex flex-col font-sans selection:bg-accent-orange/30 selection:text-white">
+      <link rel="stylesheet" href="/browseros.css" />
       {/* Blueprint Grid Background */}
       <div 
         className="fixed inset-0 pointer-events-none z-0 opacity-20"
