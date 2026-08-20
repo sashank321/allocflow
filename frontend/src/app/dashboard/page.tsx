@@ -235,7 +235,7 @@ export default function DashboardOverviewPage() {
                   dataKey="name"
                   tickLine={false}
                   axisLine={{ stroke: "rgba(255,255,255,0.1)", strokeWidth: 1 }}
-                  tick={{ fontSize: 10, fill: "#8a8a8a", fontFamily: "'Space Mono', monospace", textTransform: 'uppercase' }}
+                  tick={{ fontSize: 10, fill: "#8a8a8a", fontFamily: "'Space Mono', monospace" }}
                   dy={10}
                 />
                 <YAxis
