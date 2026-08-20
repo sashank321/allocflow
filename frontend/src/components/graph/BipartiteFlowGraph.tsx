@@ -55,9 +55,9 @@ export function BipartiteFlowGraph({
 
   if (!data || !data.nodes || data.nodes.length === 0) {
     return (
-      <div className="flex h-80 w-full flex-col items-center justify-center rounded-2xl border border-white/10 bg-black/40 backdrop-blur-xl text-muted-foreground">
-        <Box className="h-10 w-10 mb-2 text-white/80 opacity-60 animate-pulse-glow" />
-        <p className="text-sm font-semibold text-white">Flow Network Awaiting Simulation</p>
+      <div className="flex h-80 w-full flex-col items-center justify-center rounded-2xl border border-ink-black/10 bg-black/5 backdrop-blur-xl text-muted-foreground">
+        <Box className="h-10 w-10 mb-2 text-ink-black/80 opacity-60 animate-pulse-glow" />
+        <p className="text-sm font-semibold text-ink-black">Flow Network Awaiting Simulation</p>
         <p className="text-xs text-muted-foreground mt-1 max-w-sm text-center">
           Execute a matching run or benchmark sweep to render the multi-stage 3D bipartite graph.
         </p>
@@ -121,23 +121,23 @@ export function BipartiteFlowGraph({
   return (
     <div className="space-y-4 select-none">
       {/* 3D HUD Controls Header */}
-      <div className="glass-panel p-4 flex flex-wrap items-center justify-between gap-4 border border-white/10">
+      <div className="glass-panel p-4 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 border border-white/20 text-white shadow-lg">
-            <Box className="h-5 w-5 text-white" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-ink-black/10 border border-ink-black/20 text-ink-black shadow-lg">
+            <Box className="h-5 w-5 text-ink-black" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-sm font-bold text-white tracking-wide">
+              <span className="text-sm font-bold text-ink-black tracking-wide">
                 Bipartite Flow Topology
               </span>
-              <span className="rounded-md bg-white/10 px-2 py-0.5 text-[10px] font-mono text-white/90 border border-white/20">
+              <span className="rounded-md bg-ink-black/10 px-2 py-0.5 text-[10px] font-mono text-ink-black/90 border border-ink-black/20">
                 S → P → R → T
               </span>
             </div>
             <p className="text-xs text-muted-foreground">
               {data.nodes.length} Vertices • {data.edges.length} Directed Capacities • Algorithm:{" "}
-              <span className="text-white font-medium">{algorithmName}</span>
+              <span className="text-ink-black font-medium">{algorithmName}</span>
             </p>
           </div>
         </div>
@@ -148,11 +148,11 @@ export function BipartiteFlowGraph({
             onClick={() => setIs3DMode(!is3DMode)}
             className={`btn-3d flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
               is3DMode
-                ? "bg-white/20 text-white border-white/40 shadow-[0_0_20px_rgba(255,255,255,0.15)]"
-                : "text-muted-foreground hover:text-white"
+                ? "bg-ink-black/20 text-ink-black border-ink-black/40 shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+                : "text-muted-foreground hover:text-ink-black"
             }`}
           >
-            <Layers className="h-3.5 w-3.5 text-white" />
+            <Layers className="h-3.5 w-3.5 text-ink-black" />
             <span>{is3DMode ? "3D Isometric View" : "2D Ortho View"}</span>
           </button>
 
@@ -161,7 +161,7 @@ export function BipartiteFlowGraph({
             className={`btn-3d flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
               showOnlySaturated
                 ? "bg-emerald-500/20 text-emerald-200 border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.3)]"
-                : "text-muted-foreground hover:text-white"
+                : "text-muted-foreground hover:text-ink-black"
             }`}
           >
             <Filter className="h-3.5 w-3.5 text-emerald-400" />
@@ -171,7 +171,7 @@ export function BipartiteFlowGraph({
       </div>
 
       {/* Graph Visualizer Stage */}
-      <div className="glass-panel p-6 overflow-x-auto relative min-h-[500px] flex items-center justify-center border border-white/10">
+      <div className="glass-panel p-6 overflow-x-auto relative min-h-[500px] flex items-center justify-center border border-ink-black/10">
         <div className="w-full flex justify-center">
           <svg
             viewBox={`0 0 ${width} ${height}`}
@@ -425,12 +425,12 @@ export function BipartiteFlowGraph({
 
       {/* Execution Trace Timeline Player */}
       {traces.length > 0 && (
-        <div className="glass-panel p-4 space-y-3 border border-white/10">
+        <div className="glass-panel p-4 space-y-3 border border-ink-black/10">
           <div className="flex items-center justify-between text-xs">
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-purple-400" />
-              <span className="font-semibold text-white">Augmentation Step Tracer</span>
-              <span className="rounded bg-white/10 px-2 py-0.5 text-[10px] text-muted-foreground">
+              <span className="font-semibold text-ink-black">Augmentation Step Tracer</span>
+              <span className="rounded bg-ink-black/10 px-2 py-0.5 text-[10px] text-muted-foreground">
                 Step {currentStep + 1} of {traces.length}
               </span>
             </div>
@@ -439,13 +439,13 @@ export function BipartiteFlowGraph({
               <button
                 onClick={() => setCurrentStep((prev) => Math.max(0, prev - 1))}
                 disabled={currentStep === 0}
-                className="btn-3d rounded-lg p-1 text-muted-foreground hover:text-white disabled:opacity-30"
+                className="btn-3d rounded-lg p-1 text-muted-foreground hover:text-ink-black disabled:opacity-30"
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="btn-3d flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold text-white"
+                className="btn-3d flex items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold text-ink-black"
               >
                 {isPlaying ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
                 <span>{isPlaying ? "Pause" : "Play Replay"}</span>
@@ -453,7 +453,7 @@ export function BipartiteFlowGraph({
               <button
                 onClick={() => setCurrentStep((prev) => Math.min(traces.length - 1, prev + 1))}
                 disabled={currentStep >= traces.length - 1}
-                className="btn-3d rounded-lg p-1 text-muted-foreground hover:text-white disabled:opacity-30"
+                className="btn-3d rounded-lg p-1 text-muted-foreground hover:text-ink-black disabled:opacity-30"
               >
                 <ChevronRight className="h-4 w-4" />
               </button>
@@ -462,7 +462,7 @@ export function BipartiteFlowGraph({
                   setCurrentStep(0);
                   setIsPlaying(false);
                 }}
-                className="btn-3d rounded-lg p-1 text-muted-foreground hover:text-white"
+                className="btn-3d rounded-lg p-1 text-muted-foreground hover:text-ink-black"
                 title="Reset Replay"
               >
                 <RotateCcw className="h-4 w-4" />
@@ -470,7 +470,7 @@ export function BipartiteFlowGraph({
             </div>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-black/80 p-3 font-mono text-xs text-emerald-300">
+          <div className="rounded-xl border border-ink-black/10 bg-black/80 p-3 font-mono text-xs text-emerald-300">
             {traces[currentStep]}
           </div>
         </div>

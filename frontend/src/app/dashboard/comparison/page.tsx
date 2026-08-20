@@ -80,13 +80,13 @@ export default function AlgorithmComparisonPage() {
     })) || [];
 
   return (
-    <div className="space-y-6 select-none text-white">
+    <div className="space-y-6 select-none text-ink-black">
       {/* Header */}
-      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-white/10">
+      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
         <div>
           <div className="flex items-center gap-3">
             <h1
-              className="text-3xl tracking-tight text-white"
+              className="text-3xl tracking-tight text-ink-black"
               style={{ fontFamily: "'Instrument Serif', serif" }}
             >
               Tri-Algorithm Max-Flow Comparison
@@ -103,12 +103,12 @@ export default function AlgorithmComparisonPage() {
         <button
           onClick={() => compareMutation.mutate()}
           disabled={compareMutation.isPending}
-          className="liquid-glass rounded-xl px-5 py-2.5 text-xs font-semibold text-white flex items-center gap-2 disabled:opacity-50"
+          className="liquid-glass rounded-xl px-5 py-2.5 text-xs font-semibold text-ink-black flex items-center gap-2 disabled:opacity-50"
         >
           {compareMutation.isPending ? (
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+            <div className="h-4 w-4 animate-spin rounded-full border-2 border-ink-black border-t-transparent" />
           ) : (
-            <Play className="h-4 w-4 text-white" />
+            <Play className="h-4 w-4 text-ink-black" />
           )}
           <span>
             {compareMutation.isPending
@@ -120,12 +120,12 @@ export default function AlgorithmComparisonPage() {
 
       {/* BENCHMARK PARAMETERS CONTROLS */}
       <Card3D glowColor="purple" className="p-5">
-        <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-white">
+        <div className="flex items-center justify-between mb-4 pb-3 border-b border-ink-black/10">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-ink-black">
             Synthetic Benchmark Parameters
           </h2>
           <span className="text-[11px] font-mono text-muted-foreground">
-            Seed: <strong className="text-white">{seed}</strong> • {warmups} Warmups • {trials} Measured Trials
+            Seed: <strong className="text-ink-black">{seed}</strong> • {warmups} Warmups • {trials} Measured Trials
           </span>
         </div>
 
@@ -138,7 +138,7 @@ export default function AlgorithmComparisonPage() {
               max="200"
               value={manuscripts}
               onChange={(e) => setManuscripts(parseInt(e.target.value) || 30)}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/80 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-black/80 py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -150,7 +150,7 @@ export default function AlgorithmComparisonPage() {
               max="100"
               value={reviewers}
               onChange={(e) => setReviewers(parseInt(e.target.value) || 15)}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/80 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-black/80 py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -162,7 +162,7 @@ export default function AlgorithmComparisonPage() {
               max="5"
               value={reviewsPerPaper}
               onChange={(e) => setReviewsPerPaper(parseInt(e.target.value) || 2)}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/80 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-black/80 py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -174,7 +174,7 @@ export default function AlgorithmComparisonPage() {
               max="10"
               value={capacity}
               onChange={(e) => setCapacity(parseInt(e.target.value) || 4)}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/80 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-black/80 py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -186,7 +186,7 @@ export default function AlgorithmComparisonPage() {
               max="10"
               value={warmups}
               onChange={(e) => setWarmups(parseInt(e.target.value) || 3)}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/80 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-black/80 py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -198,7 +198,7 @@ export default function AlgorithmComparisonPage() {
               max="50"
               value={trials}
               onChange={(e) => setTrials(parseInt(e.target.value) || 10)}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-black/80 py-2 px-3 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-black/80 py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
         </div>
@@ -224,7 +224,7 @@ export default function AlgorithmComparisonPage() {
               </div>
             )}
             <div>
-              <p className="text-sm font-bold text-white">
+              <p className="text-sm font-bold text-ink-black">
                 Mathematical Invariant Status:{" "}
                 {benchmarkResult.invariantSatisfied
                   ? "VERIFIED & EQUIVALENT"
@@ -238,8 +238,8 @@ export default function AlgorithmComparisonPage() {
             </div>
           </div>
 
-          <div className="hidden sm:flex items-center gap-2 font-mono text-xs text-muted-foreground bg-black/60 px-3 py-1.5 rounded-xl border border-white/10">
-            <Fingerprint className="h-4 w-4 text-white/80" />
+          <div className="hidden sm:flex items-center gap-2 font-mono text-xs text-muted-foreground bg-black/5 px-3 py-1.5 rounded-xl border border-ink-black/10">
+            <Fingerprint className="h-4 w-4 text-ink-black/80" />
             <span>Fingerprint: {benchmarkResult.graphFingerprint ? benchmarkResult.graphFingerprint.substring(0, 16) : ""}…</span>
           </div>
         </div>
@@ -258,9 +258,9 @@ export default function AlgorithmComparisonPage() {
 
             return (
               <Card3D key={algo.algorithmName} glowColor={glow} className="p-5 space-y-4">
-                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                <div className="flex items-center justify-between border-b border-ink-black/10 pb-3">
                   <div>
-                    <h3 className="text-base font-bold text-white">{algo.algorithmName}</h3>
+                    <h3 className="text-base font-bold text-ink-black">{algo.algorithmName}</h3>
                     <p className="text-[11px] text-muted-foreground font-mono">
                       {algo.algorithmName === "Ford-Fulkerson"
                         ? "O(E · |f*|) DFS Augmenting"
@@ -269,7 +269,7 @@ export default function AlgorithmComparisonPage() {
                         : "O(V² · E) Layered BFS/DFS"}
                     </p>
                   </div>
-                  <span className="rounded-full bg-white/10 border border-white/10 px-2.5 py-0.5 text-[10px] font-mono text-white">
+                  <span className="rounded-full bg-ink-black/10 border border-ink-black/10 px-2.5 py-0.5 text-[10px] font-mono text-ink-black">
                     Rank #{index + 1}
                   </span>
                 </div>
@@ -278,12 +278,12 @@ export default function AlgorithmComparisonPage() {
                 <div className="space-y-2.5 text-xs">
                   <div className="flex justify-between items-baseline">
                     <span className="text-muted-foreground">Calculated Max Flow:</span>
-                    <span className="font-mono font-bold text-white text-sm">{algo.maxFlow} units</span>
+                    <span className="font-mono font-bold text-ink-black text-sm">{algo.maxFlow} units</span>
                   </div>
 
                   <div className="flex justify-between items-baseline">
                     <span className="text-muted-foreground">Median Runtime:</span>
-                    <span className="font-mono font-bold text-white text-sm">
+                    <span className="font-mono font-bold text-ink-black text-sm">
                       {formatMs(algo.medianDurationMs)}
                     </span>
                   </div>
@@ -314,7 +314,7 @@ export default function AlgorithmComparisonPage() {
                 </div>
 
                 {/* Graph Specs */}
-                <div className="rounded-xl border border-white/10 bg-black/60 p-3 text-[11px] font-mono text-muted-foreground space-y-1">
+                <div className="rounded-xl border border-ink-black/10 bg-black/5 p-3 text-[11px] font-mono text-muted-foreground space-y-1">
                   <div>Vertices: {benchmarkResult.vertexCount}</div>
                   <div>Edges: {benchmarkResult.edgeCount}</div>
                   <div>Trials: {algo.measuredTrials} runs (Sequential isolated)</div>
@@ -330,7 +330,7 @@ export default function AlgorithmComparisonPage() {
         <Card3D glowColor="purple" className="p-5 space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-sm font-bold text-white">Runtime Latency Benchmarking (ms)</h2>
+              <h2 className="text-sm font-bold text-ink-black">Runtime Latency Benchmarking (ms)</h2>
               <p className="text-xs text-muted-foreground">
                 Sequential execution on identical cloned canonical graphs (Median vs p95)
               </p>

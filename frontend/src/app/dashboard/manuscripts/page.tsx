@@ -104,9 +104,9 @@ export default function ManuscriptsPage() {
 
         <button
           onClick={() => setIsSubmitModalOpen(true)}
-          className="liquid-glass rounded-xl px-4 py-2 text-xs font-semibold text-white flex items-center gap-2"
+          className="liquid-glass rounded-xl px-4 py-2 text-xs font-semibold text-ink-black flex items-center gap-2"
         >
-          <Plus className="h-4 w-4 text-white" />
+          <Plus className="h-4 w-4 text-ink-black" />
           <span>Submit Manuscript</span>
         </button>
       </div>
@@ -120,7 +120,7 @@ export default function ManuscriptsPage() {
             placeholder="Search by title, author, topic..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border border-white/10 bg-black/60 py-2.5 pl-9 pr-4 text-xs text-white placeholder:text-muted-foreground focus:border-white/30 focus:outline-none"
+            className="w-full rounded-xl border border-ink-black/10 bg-black/5 py-2.5 pl-9 pr-4 text-xs text-ink-black placeholder:text-muted-foreground focus:border-ink-black/30 focus:outline-none"
           />
         </div>
 
@@ -130,7 +130,7 @@ export default function ManuscriptsPage() {
           <select
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
-            className="rounded-xl border border-white/10 bg-black/60 px-3 py-2 text-xs text-white focus:outline-none"
+            className="rounded-xl border border-ink-black/10 bg-black/5 px-3 py-2 text-xs text-ink-black focus:outline-none"
           >
             <option value="ALL">All Statuses</option>
             <option value="SUBMITTED">SUBMITTED</option>
@@ -143,11 +143,11 @@ export default function ManuscriptsPage() {
       </div>
 
       {/* Manuscripts Table */}
-      <div className="glass-panel overflow-hidden border border-white/10 rounded-xl bg-card shadow-sm">
+      <div className="glass-panel overflow-hidden border border-ink-black/10 rounded-xl bg-card shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-white/10 bg-white/[0.02] text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              <tr className="border-b border-ink-black/10 bg-ink-black/[0.02] text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                 <th className="py-3 px-4">Title &amp; Track</th>
                 <th className="py-3 px-4">Author &amp; Affiliation</th>
                 <th className="py-3 px-4">Topics &amp; Keywords</th>
@@ -165,21 +165,21 @@ export default function ManuscriptsPage() {
                 </tr>
               ) : filteredManuscripts.length > 0 ? (
                 filteredManuscripts.map((m) => (
-                  <tr key={m.id} className="hover:bg-white/[0.03] transition-colors">
+                  <tr key={m.id} className="hover:bg-ink-black/[0.03] transition-colors">
                     <td className="py-3 px-4 max-w-xs">
-                      <p className="font-bold text-white line-clamp-1">{m.title}</p>
+                      <p className="font-bold text-ink-black line-clamp-1">{m.title}</p>
                       <p className="text-[11px] text-muted-foreground line-clamp-1 mt-0.5">
                         {m.abstractText || "No abstract provided"}
                       </p>
                       {m.trackName && (
-                        <span className="inline-block rounded bg-white/10 border border-white/15 px-1.5 py-0.5 text-[9px] font-medium text-white/90 mt-1">
+                        <span className="inline-block rounded bg-ink-black/10 border border-ink-black/15 px-1.5 py-0.5 text-[9px] font-medium text-ink-black/90 mt-1">
                           {m.trackName}
                         </span>
                       )}
                     </td>
 
                     <td className="py-3 px-4">
-                      <p className="font-medium text-white">{m.authorName}</p>
+                      <p className="font-medium text-ink-black">{m.authorName}</p>
                       <p className="text-[11px] text-muted-foreground">{m.authorEmail}</p>
                       {m.authorAffiliations && m.authorAffiliations.length > 0 && (
                         <p className="text-[10px] text-muted-foreground/80 mt-0.5">
@@ -193,7 +193,7 @@ export default function ManuscriptsPage() {
                         {m.topics.map((t, idx) => (
                           <span
                             key={idx}
-                            className="rounded bg-white/10 border border-white/15 px-1.5 py-0.5 text-[10px] font-medium text-white/90"
+                            className="rounded bg-ink-black/10 border border-ink-black/15 px-1.5 py-0.5 text-[10px] font-medium text-ink-black/90"
                           >
                             {t}
                           </span>
@@ -203,7 +203,7 @@ export default function ManuscriptsPage() {
                         {m.keywords.map((k, idx) => (
                           <span
                             key={idx}
-                            className="rounded bg-white/5 px-1.5 py-0.5 text-[9px] text-muted-foreground"
+                            className="rounded bg-ink-black/5 px-1.5 py-0.5 text-[9px] text-muted-foreground"
                           >
                             #{k}
                           </span>
@@ -211,7 +211,7 @@ export default function ManuscriptsPage() {
                       </div>
                     </td>
 
-                    <td className="py-3 px-4 text-center font-mono font-bold text-white">
+                    <td className="py-3 px-4 text-center font-mono font-bold text-ink-black">
                       {m.requiredReviews}
                     </td>
 
@@ -219,12 +219,12 @@ export default function ManuscriptsPage() {
                       <span
                         className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-semibold border ${
                           m.status === "SUBMITTED"
-                            ? "bg-white/10 text-white border-white/20"
+                            ? "bg-ink-black/10 text-ink-black border-ink-black/20"
                             : m.status === "UNDER_REVIEW"
                             ? "bg-purple-500/20 text-purple-300 border-purple-500/40"
                             : m.status === "ACCEPTED"
                             ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
-                            : "bg-white/5 text-muted-foreground border-white/10"
+                            : "bg-ink-black/5 text-muted-foreground border-ink-black/10"
                         }`}
                       >
                         {m.status}
@@ -262,7 +262,7 @@ export default function ManuscriptsPage() {
 
       {/* Submit Manuscript Modal */}
       {isSubmitModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/5 backdrop-blur-sm p-4">
           <div className="w-full max-w-lg rounded-xl border bg-card p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b pb-3">
               <div className="flex items-center gap-2">
@@ -355,7 +355,7 @@ export default function ManuscriptsPage() {
                 <button
                   type="submit"
                   disabled={createMutation.isPending}
-                  className="rounded-md bg-blue-600 px-4 py-1.5 text-xs font-semibold text-white hover:bg-blue-700 disabled:opacity-50"
+                  className="rounded-md bg-blue-600 px-4 py-1.5 text-xs font-semibold text-ink-black hover:bg-blue-700 disabled:opacity-50"
                 >
                   {createMutation.isPending ? "Submitting..." : "Submit Paper"}
                 </button>

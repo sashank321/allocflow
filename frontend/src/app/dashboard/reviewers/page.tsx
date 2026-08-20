@@ -31,12 +31,12 @@ export default function ReviewersRosterPage() {
   });
 
   return (
-    <div className="space-y-6 select-none text-white">
+    <div className="space-y-6 select-none text-ink-black">
       {/* Header */}
-      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-white/10">
+      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
         <div>
           <h1
-            className="text-3xl tracking-tight text-white"
+            className="text-3xl tracking-tight text-ink-black"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
             Program Committee Reviewer Roster
@@ -55,7 +55,7 @@ export default function ReviewersRosterPage() {
           placeholder="Search by reviewer name, email, topic..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full rounded-xl border border-white/10 bg-black/60 py-2.5 pl-9 pr-4 text-xs text-white placeholder:text-muted-foreground focus:border-white/30 focus:outline-none"
+          className="w-full rounded-xl border border-ink-black/10 bg-black/5 py-2.5 pl-9 pr-4 text-xs text-ink-black placeholder:text-muted-foreground focus:border-ink-black/30 focus:outline-none"
         />
       </div>
 
@@ -77,7 +77,7 @@ export default function ReviewersRosterPage() {
               >
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-bold text-sm text-white">{r.userName}</h3>
+                    <h3 className="font-bold text-sm text-ink-black">{r.userName}</h3>
                     <p className="text-[11px] text-muted-foreground flex items-center gap-1 mt-0.5">
                       <Building2 className="h-3 w-3" />
                       {r.affiliation || "Independent Scholar"}
@@ -100,11 +100,11 @@ export default function ReviewersRosterPage() {
                 <div className="space-y-1.5 text-xs">
                   <div className="flex justify-between text-[11px]">
                     <span className="text-muted-foreground">Workload Saturation:</span>
-                    <span className="font-mono font-bold text-white">
+                    <span className="font-mono font-bold text-ink-black">
                       {r.currentWorkload} / {r.maxCapacity} slots ({utilizationPct.toFixed(0)}%)
                     </span>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
+                  <div className="h-2 w-full rounded-full bg-ink-black/10 overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all ${
                         utilizationPct >= 100
@@ -119,7 +119,7 @@ export default function ReviewersRosterPage() {
                 </div>
 
                 {/* Topic Expertise Badges */}
-                <div className="space-y-1.5 pt-2 border-t border-white/10 text-xs">
+                <div className="space-y-1.5 pt-2 border-t border-ink-black/10 text-xs">
                   <span className="text-[10px] font-semibold uppercase text-muted-foreground">
                     Topic Expertise:
                   </span>
@@ -136,7 +136,7 @@ export default function ReviewersRosterPage() {
                 </div>
 
                 {/* Email Footer */}
-                <div className="pt-2 border-t border-white/10 text-[10px] text-muted-foreground truncate">
+                <div className="pt-2 border-t border-ink-black/10 text-[10px] text-muted-foreground truncate">
                   {r.userEmail}
                 </div>
               </Card3D>

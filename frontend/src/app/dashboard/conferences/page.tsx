@@ -56,12 +56,12 @@ export default function ConferencesPage() {
   };
 
   return (
-    <div className="space-y-6 select-none text-white">
+    <div className="space-y-6 select-none text-ink-black">
       {/* Header */}
-      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-white/10">
+      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
         <div>
           <h1
-            className="text-3xl tracking-tight text-white"
+            className="text-3xl tracking-tight text-ink-black"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
             Conferences &amp; Academic Cycles
@@ -73,9 +73,9 @@ export default function ConferencesPage() {
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="liquid-glass rounded-xl px-4 py-2 text-xs font-semibold text-white flex items-center gap-2"
+          className="liquid-glass rounded-xl px-4 py-2 text-xs font-semibold text-ink-black flex items-center gap-2"
         >
-          <Plus className="h-4 w-4 text-white" />
+          <Plus className="h-4 w-4 text-ink-black" />
           <span>New Conference Cycle</span>
         </button>
       </div>
@@ -96,12 +96,12 @@ export default function ConferencesPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="font-mono font-bold text-base text-white">{c.code}</span>
+                    <span className="font-mono font-bold text-base text-ink-black">{c.code}</span>
                     <span className="rounded bg-emerald-500/20 border border-emerald-500/40 px-2 py-0.5 text-[9px] font-bold text-emerald-300">
                       {c.status}
                     </span>
                   </div>
-                  <h3 className="font-bold text-sm text-white mt-1">{c.name}</h3>
+                  <h3 className="font-bold text-sm text-ink-black mt-1">{c.name}</h3>
                 </div>
               </div>
 
@@ -109,20 +109,20 @@ export default function ConferencesPage() {
                 {c.description || "No description provided."}
               </p>
 
-              <div className="grid grid-cols-2 gap-3 pt-3 border-t border-white/10 text-xs">
+              <div className="grid grid-cols-2 gap-3 pt-3 border-t border-ink-black/10 text-xs">
                 <div className="space-y-1">
                   <span className="text-[11px] text-muted-foreground">Required / Paper:</span>
-                  <p className="font-mono font-bold text-white">{c.requiredReviewsPerPaper} reviews</p>
+                  <p className="font-mono font-bold text-ink-black">{c.requiredReviewsPerPaper} reviews</p>
                 </div>
                 <div className="space-y-1">
                   <span className="text-[11px] text-muted-foreground">Reviewer Max Cap:</span>
-                  <p className="font-mono font-bold text-white">{c.defaultReviewerCapacity} papers</p>
+                  <p className="font-mono font-bold text-ink-black">{c.defaultReviewerCapacity} papers</p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-white/10 text-[11px] text-muted-foreground">
+              <div className="flex items-center justify-between pt-2 border-t border-ink-black/10 text-[11px] text-muted-foreground">
                 <div className="flex items-center gap-1.5">
-                  <FileText className="h-3.5 w-3.5 text-white" />
+                  <FileText className="h-3.5 w-3.5 text-ink-black" />
                   <span>{c.manuscriptCount} Manuscripts</span>
                 </div>
                 <div className="flex items-center gap-1.5">
@@ -142,12 +142,12 @@ export default function ConferencesPage() {
       {/* Create Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md">
-          <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-black/95 p-6 shadow-2xl space-y-4 text-white">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h2 className="text-sm font-bold text-white">Initialize New Conference Cycle</h2>
+          <div className="w-full max-w-lg rounded-2xl border border-ink-black/10 bg-black/95 p-6 shadow-2xl space-y-4 text-ink-black">
+            <div className="flex items-center justify-between border-b border-ink-black/10 pb-3">
+              <h2 className="text-sm font-bold text-ink-black">Initialize New Conference Cycle</h2>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="btn-3d rounded-lg p-1 text-muted-foreground hover:text-white"
+                className="btn-3d rounded-lg p-1 text-muted-foreground hover:text-ink-black"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -163,7 +163,7 @@ export default function ConferencesPage() {
                     placeholder="e.g. SIGCOMM-2026"
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-white/10 bg-black/60 p-2.5 text-xs text-white focus:border-white/30 focus:outline-none font-mono"
+                    className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/5 p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none font-mono"
                   />
                 </div>
                 <div>
@@ -173,7 +173,7 @@ export default function ConferencesPage() {
                     placeholder="e.g. SIGCOMM '26"
                     value={acronym}
                     onChange={(e) => setAcronym(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-white/10 bg-black/60 p-2.5 text-xs text-white focus:border-white/30 focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/5 p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
                   />
                 </div>
               </div>
@@ -186,7 +186,7 @@ export default function ConferencesPage() {
                   placeholder="e.g. ACM SIGCOMM 2026 Conference on Applications, Technologies..."
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-white/10 bg-black/60 p-2.5 text-xs text-white focus:border-white/30 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/5 p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
                 />
               </div>
 
@@ -197,7 +197,7 @@ export default function ConferencesPage() {
                   placeholder="Describe track focus, review methodology, and topics..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-white/10 bg-black/60 p-2.5 text-xs text-white focus:border-white/30 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/5 p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
                 />
               </div>
 
@@ -210,7 +210,7 @@ export default function ConferencesPage() {
                     max="5"
                     value={requiredReviews}
                     onChange={(e) => setRequiredReviews(parseInt(e.target.value))}
-                    className="mt-1 w-full rounded-xl border border-white/10 bg-black/60 p-2.5 text-xs text-white focus:border-white/30 focus:outline-none font-mono"
+                    className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/5 p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none font-mono"
                   />
                 </div>
                 <div>
@@ -221,23 +221,23 @@ export default function ConferencesPage() {
                     max="10"
                     value={defaultCapacity}
                     onChange={(e) => setDefaultCapacity(parseInt(e.target.value))}
-                    className="mt-1 w-full rounded-xl border border-white/10 bg-black/60 p-2.5 text-xs text-white focus:border-white/30 focus:outline-none font-mono"
+                    className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/5 p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none font-mono"
                   />
                 </div>
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-white/10">
+              <div className="flex justify-end gap-2 pt-3 border-t border-ink-black/10">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="btn-3d rounded-xl px-4 py-2 text-xs font-semibold text-muted-foreground hover:text-white"
+                  className="btn-3d rounded-xl px-4 py-2 text-xs font-semibold text-muted-foreground hover:text-ink-black"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={createMutation.isPending}
-                  className="liquid-glass rounded-xl px-4 py-2 text-xs font-semibold text-white disabled:opacity-50"
+                  className="liquid-glass rounded-xl px-4 py-2 text-xs font-semibold text-ink-black disabled:opacity-50"
                 >
                   {createMutation.isPending ? "Creating Cycle..." : "Create Conference Cycle"}
                 </button>

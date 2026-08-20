@@ -93,18 +93,18 @@ export default function MatchingCockpitPage() {
   };
 
   return (
-    <div className="space-y-6 select-none text-white">
+    <div className="space-y-6 select-none text-ink-black">
       {/* Header */}
-      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-white/10">
+      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
         <div>
           <div className="flex items-center gap-3">
             <h1
-              className="text-3xl tracking-tight text-white"
+              className="text-3xl tracking-tight text-ink-black"
               style={{ fontFamily: "'Instrument Serif', serif" }}
             >
               Matching Engine Cockpit
             </h1>
-            <span className="rounded-full bg-white/10 border border-white/20 px-3 py-0.5 text-[11px] font-bold text-white shadow-[0_0_15px_rgba(255,255,255,0.15)]">
+            <span className="rounded-full bg-ink-black/10 border border-ink-black/20 px-3 py-0.5 text-[11px] font-bold text-ink-black shadow-[0_0_15px_rgba(255,255,255,0.15)]">
               Deterministic Maximum Flow
             </span>
           </div>
@@ -118,9 +118,9 @@ export default function MatchingCockpitPage() {
           <button
             onClick={() => simulateMutation.mutate()}
             disabled={simulateMutation.isPending || !activeConfId}
-            className="liquid-glass rounded-xl px-5 py-2.5 text-xs font-semibold text-white flex items-center gap-2 disabled:opacity-50"
+            className="liquid-glass rounded-xl px-5 py-2.5 text-xs font-semibold text-ink-black flex items-center gap-2 disabled:opacity-50"
           >
-            <Play className={`h-4 w-4 text-white ${simulateMutation.isPending ? "animate-spin" : ""}`} />
+            <Play className={`h-4 w-4 text-ink-black ${simulateMutation.isPending ? "animate-spin" : ""}`} />
             <span>{simulateMutation.isPending ? "Computing Flow..." : "Simulate Allocation"}</span>
           </button>
 
@@ -128,7 +128,7 @@ export default function MatchingCockpitPage() {
             <button
               onClick={() => commitMutation.mutate()}
               disabled={commitMutation.isPending || simulationResult.achievedFlow === 0}
-              className="btn-3d rounded-xl px-5 py-2.5 text-xs font-semibold text-white flex items-center gap-2 bg-emerald-600/30 border-emerald-500/50 hover:bg-emerald-600/50 disabled:opacity-40"
+              className="btn-3d rounded-xl px-5 py-2.5 text-xs font-semibold text-ink-black flex items-center gap-2 bg-emerald-600/30 border-emerald-500/50 hover:bg-emerald-600/50 disabled:opacity-40"
             >
               <CheckCheck className="h-4 w-4 text-emerald-400" />
               <span>{commitMutation.isPending ? "Committing..." : "Commit Matches"}</span>
@@ -146,10 +146,10 @@ export default function MatchingCockpitPage() {
 
       {/* PARAMETERS CONFIGURATION BAR */}
       <Card3D glowColor="purple" className="p-5">
-        <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/10">
+        <div className="flex items-center justify-between mb-4 pb-3 border-b border-ink-black/10">
           <div className="flex items-center gap-2">
             <Sliders className="h-4 w-4 text-purple-300" />
-            <h2 className="text-xs font-bold uppercase tracking-wider text-white">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-ink-black">
               Flow Model Constraint Controls
             </h2>
           </div>
@@ -165,7 +165,7 @@ export default function MatchingCockpitPage() {
             <select
               value={algorithm}
               onChange={(e) => setAlgorithm(e.target.value as AlgorithmType)}
-              className="w-full rounded-xl border border-white/10 bg-black/80 py-2.5 px-3 text-xs text-white focus:border-white/30 focus:outline-none backdrop-blur-md"
+              className="w-full rounded-xl border border-ink-black/10 bg-black/80 py-2.5 px-3 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none backdrop-blur-md"
             >
               <option value="DINIC">Dinic&apos;s Algorithm (Layered BFS/DFS)</option>
               <option value="EDMONDS_KARP">Edmonds-Karp (Shortest BFS)</option>
@@ -177,7 +177,7 @@ export default function MatchingCockpitPage() {
           <div className="space-y-1.5">
             <div className="flex justify-between">
               <label className="font-semibold text-muted-foreground">Reviews Required / Paper</label>
-              <span className="font-mono font-bold text-white">{reviewsPerPaper}</span>
+              <span className="font-mono font-bold text-ink-black">{reviewsPerPaper}</span>
             </div>
             <input
               type="range"
@@ -210,14 +210,14 @@ export default function MatchingCockpitPage() {
           {/* Exclude Conflicts Toggle */}
           <div className="flex items-center justify-between pt-4 sm:pt-0">
             <div>
-              <p className="font-semibold text-white">Strict COI Exclusion</p>
+              <p className="font-semibold text-ink-black">Strict COI Exclusion</p>
               <p className="text-[10px] text-muted-foreground">Cut conflicting graph edges</p>
             </div>
             <input
               type="checkbox"
               checked={excludeConflicts}
               onChange={(e) => setExcludeConflicts(e.target.checked)}
-              className="h-4 w-4 rounded border-white/20 bg-white/10 text-white focus:ring-0"
+              className="h-4 w-4 rounded border-ink-black/20 bg-ink-black/10 text-ink-black focus:ring-0"
             />
           </div>
         </div>
@@ -231,7 +231,7 @@ export default function MatchingCockpitPage() {
               Achieved Flow Capacity
             </p>
             <div className="mt-1 flex items-baseline gap-2">
-              <span className="text-2xl font-bold font-mono text-white">
+              <span className="text-2xl font-bold font-mono text-ink-black">
                 {simulationResult.achievedFlow} / {simulationResult.totalRequiredFlow}
               </span>
               <span className="text-xs text-muted-foreground">Units</span>
@@ -269,7 +269,7 @@ export default function MatchingCockpitPage() {
               SHA-256 Fingerprint
             </p>
             <div className="mt-1 flex items-center gap-1 font-mono text-xs text-muted-foreground truncate">
-              <Fingerprint className="h-3.5 w-3.5 text-white shrink-0" />
+              <Fingerprint className="h-3.5 w-3.5 text-ink-black shrink-0" />
               <span className="truncate">{simulationResult.graphFingerprint}</span>
             </div>
           </Card3D>
@@ -291,8 +291,8 @@ export default function MatchingCockpitPage() {
         <Card3D glowColor="none" className="p-5 space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <GitMerge className="h-4 w-4 text-white" />
-              <h2 className="text-sm font-bold text-white">
+              <GitMerge className="h-4 w-4 text-ink-black" />
+              <h2 className="text-sm font-bold text-ink-black">
                 Assigned Reviewer Pairs ({simulationResult.assignments.length})
               </h2>
             </div>
@@ -304,7 +304,7 @@ export default function MatchingCockpitPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-white/10 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                <tr className="border-b border-ink-black/10 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                   <th className="pb-3">Manuscript</th>
                   <th className="pb-3">Assigned Reviewer</th>
                   <th className="pb-3">Affiliation</th>
@@ -318,12 +318,12 @@ export default function MatchingCockpitPage() {
                   <tr
                     key={idx}
                     onClick={() => handleExplain(assignment.manuscriptId, assignment.reviewerId)}
-                    className="cursor-pointer hover:bg-white/[0.04] transition-colors"
+                    className="cursor-pointer hover:bg-ink-black/[0.04] transition-colors"
                   >
-                    <td className="py-3 font-sans font-medium text-white max-w-[240px] truncate">
+                    <td className="py-3 font-sans font-medium text-ink-black max-w-[240px] truncate">
                       {assignment.manuscriptTitle}
                     </td>
-                    <td className="py-3 font-sans text-white">{assignment.reviewerName}</td>
+                    <td className="py-3 font-sans text-ink-black">{assignment.reviewerName}</td>
                     <td className="py-3 font-sans text-muted-foreground">
                       {assignment.reviewerAffiliation || "Independent"}
                     </td>
@@ -336,7 +336,7 @@ export default function MatchingCockpitPage() {
                       </span>
                     </td>
                     <td className="py-3 text-right">
-                      <button className="text-xs text-white hover:underline font-sans transition-colors">
+                      <button className="text-xs text-ink-black hover:underline font-sans transition-colors">
                         Explain Proof →
                       </button>
                     </td>

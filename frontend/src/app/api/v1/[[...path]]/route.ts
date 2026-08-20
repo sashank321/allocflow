@@ -622,13 +622,27 @@ export async function POST(req: NextRequest, { params }: { params: { path?: stri
   }
 
   if (pathStr === "auth/login" || pathStr === "auth/register") {
+    let role = "SUPER_ADMIN";
+    let fullName = "System Administrator";
+    
+    if (body.email === "chair@icdcs2026.org") {
+      role = "CONFERENCE_ADMIN";
+      fullName = "Conference Chair";
+    } else if (body.email === "reviewer.chen@stanford.edu") {
+      role = "REVIEWER";
+      fullName = "PC Reviewer";
+    } else if (body.email === "author.vaswani@google.com") {
+      role = "AUTHOR";
+      fullName = "Author";
+    }
+    
     return NextResponse.json({
       token: "jwt-allocflow-token-live",
       type: "Bearer",
-      userId: "u-admin",
+      userId: "u-mock",
       email: body.email || "admin@allocflow.io",
-      fullName: "System Administrator",
-      role: "SUPER_ADMIN",
+      fullName: fullName,
+      role: role,
     });
   }
 

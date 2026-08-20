@@ -143,10 +143,10 @@ export default function ScalabilityExperimentsPage() {
           <button
             onClick={() => sweepMutation.mutate()}
             disabled={sweepMutation.isPending}
-            className="flex items-center gap-1.5 rounded-md bg-purple-600 px-4 py-2 text-xs font-semibold text-white shadow-sm hover:bg-purple-700 disabled:opacity-50 transition-colors"
+            className="flex items-center gap-1.5 rounded-md bg-purple-600 px-4 py-2 text-xs font-semibold text-ink-black shadow-sm hover:bg-purple-700 disabled:opacity-50 transition-colors"
           >
             {sweepMutation.isPending ? (
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-ink-black border-t-transparent" />
             ) : (
               <Play className="h-4 w-4" />
             )}
@@ -169,7 +169,7 @@ export default function ScalabilityExperimentsPage() {
               type="number"
               value={startN}
               onChange={(e) => setStartN(Number(e.target.value))}
-              className="mt-1 w-full rounded-xl border border-white/10 bg-black/80 p-2 text-xs text-white focus:border-white/30 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/80 p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -179,7 +179,7 @@ export default function ScalabilityExperimentsPage() {
               type="number"
               value={endN}
               onChange={(e) => setEndN(Number(e.target.value))}
-              className="mt-1 w-full rounded-xl border border-white/10 bg-black/80 p-2 text-xs text-white focus:border-white/30 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/80 p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -189,7 +189,7 @@ export default function ScalabilityExperimentsPage() {
               type="number"
               value={step}
               onChange={(e) => setStep(Number(e.target.value))}
-              className="mt-1 w-full rounded-xl border border-white/10 bg-black/80 p-2 text-xs text-white focus:border-white/30 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/80 p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -200,7 +200,7 @@ export default function ScalabilityExperimentsPage() {
               step="0.05"
               value={ratio}
               onChange={(e) => setRatio(Number(e.target.value))}
-              className="mt-1 w-full rounded-xl border border-white/10 bg-black/80 p-2 text-xs text-white focus:border-white/30 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/80 p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -210,7 +210,7 @@ export default function ScalabilityExperimentsPage() {
               type="number"
               value={warmups}
               onChange={(e) => setWarmups(Number(e.target.value))}
-              className="mt-1 w-full rounded-xl border border-white/10 bg-black/80 p-2 text-xs text-white focus:border-white/30 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/80 p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -220,7 +220,7 @@ export default function ScalabilityExperimentsPage() {
               type="number"
               value={trials}
               onChange={(e) => setTrials(Number(e.target.value))}
-              className="mt-1 w-full rounded-xl border border-white/10 bg-black/80 p-2 text-xs text-white focus:border-white/30 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/80 p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -230,7 +230,7 @@ export default function ScalabilityExperimentsPage() {
               type="number"
               value={seed}
               onChange={(e) => setSeed(Number(e.target.value))}
-              className="mt-1 w-full rounded-xl border border-white/10 bg-black/80 p-2 text-xs font-mono text-white focus:border-white/30 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/80 p-2 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
         </div>
@@ -252,7 +252,7 @@ export default function ScalabilityExperimentsPage() {
                 </p>
               </div>
             </div>
-            <span className="font-mono text-xs font-bold text-emerald-900 bg-white/70 px-2.5 py-1 rounded-lg border border-emerald-200">
+            <span className="font-mono text-xs font-bold text-emerald-900 bg-ink-black/70 px-2.5 py-1 rounded-lg border border-emerald-200">
               Seed: {sweepResult.seed}
             </span>
           </div>
