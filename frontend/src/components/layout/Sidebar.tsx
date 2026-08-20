@@ -35,7 +35,7 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="w-64 border-r border-divider bg-ink-black/80 backdrop-blur-md flex flex-col justify-between p-4 h-[calc(100vh-4rem)] sticky top-16 select-none font-sans text-beige-bg">
+    <aside className="w-64 border-r border-ink-black/10 bg-beige-bg/80 backdrop-blur-md flex flex-col justify-between p-4 h-[calc(100vh-4rem)] sticky top-16 select-none font-sans text-ink-black">
       <div className="space-y-8 mt-2">
         {/* OPERATIONS SECTION */}
         <div>
@@ -53,8 +53,8 @@ export function Sidebar() {
                   href={item.href}
                   className={`flex items-center justify-between px-3 py-2 text-[11px] font-space tracking-wider uppercase transition-all ${
                     active
-                      ? "bg-white/10 text-beige-bg font-bold border-l-2 border-accent-orange"
-                      : "text-muted hover:bg-white/5 hover:text-beige-bg border-l-2 border-transparent"
+                      ? "bg-black/10 text-ink-black font-bold border-l-2 border-accent-orange"
+                      : "text-muted hover:bg-ink-black/5 hover:text-ink-black border-l-2 border-transparent"
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -89,8 +89,8 @@ export function Sidebar() {
                   href={item.href}
                   className={`flex items-center justify-between px-3 py-2 text-[11px] font-space tracking-wider uppercase transition-all ${
                     active
-                      ? "bg-accent-blue/10 text-beige-bg font-bold border-l-2 border-accent-blue"
-                      : "text-muted hover:bg-white/5 hover:text-beige-bg border-l-2 border-transparent"
+                      ? "bg-accent-blue/10 text-ink-black font-bold border-l-2 border-accent-blue"
+                      : "text-muted hover:bg-ink-black/5 hover:text-ink-black border-l-2 border-transparent"
                   }`}
                 >
                   <div className="flex items-center gap-3">
@@ -98,7 +98,7 @@ export function Sidebar() {
                     <span>{item.label}</span>
                   </div>
                   {item.badge && (
-                    <span className="border border-divider bg-black/40 px-1 py-0.5 text-[8px] font-bold text-muted">
+                    <span className="border border-ink-black/10 bg-black/10 px-1 py-0.5 text-[8px] font-bold text-muted">
                       {item.badge}
                     </span>
                   )}
@@ -110,7 +110,7 @@ export function Sidebar() {
       </div>
 
       {/* System Invariant Status Footer */}
-      <div className="border border-divider bg-black/40 p-4 text-[11px] font-space">
+      <div className="border border-ink-black/10 bg-black/10 p-4 text-[11px] font-space">
         <div className="flex items-center justify-between mb-2">
           <span className="font-bold text-muted uppercase tracking-wider text-[10px]">Graph Invariant</span>
           <span className="border border-green-500/30 bg-green-500/10 px-1.5 py-0.5 text-[8px] font-bold text-green-400 uppercase tracking-widest animate-pulse">

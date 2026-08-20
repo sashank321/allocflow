@@ -12,18 +12,18 @@ export default function DashboardLayout({
   const [conferenceCode, setConferenceCode] = useState("ICDCS-2026");
 
   return (
-    <div className="relative min-h-screen bg-ink-black text-beige-bg flex flex-col font-sans selection:bg-accent-orange/30 selection:text-white">
+    <div className="relative min-h-screen bg-beige-bg text-ink-black flex flex-col font-sans selection:bg-accent-orange/30 selection:text-ink-black">
       <link rel="stylesheet" href="/browseros.css" />
       {/* Blueprint Grid Background */}
       <div 
         className="fixed inset-0 pointer-events-none z-0 opacity-20"
         style={{
           backgroundSize: "40px 40px",
-          backgroundImage: "linear-gradient(to right, rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.15) 1px, transparent 1px)"
+          backgroundImage: "linear-gradient(to right, rgba(15,15,15,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(15,15,15,0.1) 1px, transparent 1px)"
         }}
       >
         {/* Subtle radial gradient to simulate screen glow in center */}
-        <div className="absolute inset-0 bg-radial-gradient from-transparent to-ink-black/80" />
+        <div className="absolute inset-0 bg-radial-gradient from-transparent to-beige-bg/80" />
       </div>
       
       {/* Subtle CRT Scanline overlay across whole app for consistency */}

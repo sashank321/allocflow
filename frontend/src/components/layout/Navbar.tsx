@@ -24,16 +24,16 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
     pathname.includes("/graph-view");
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-divider bg-ink-black/90 px-6 backdrop-blur-md text-beige-bg font-sans">
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between border-b border-ink-black/10 bg-beige-bg/90 px-6 backdrop-blur-md text-ink-black font-sans">
       {/* Brand & Conference Badge */}
       <div className="flex items-center gap-6">
         <Link href="/dashboard" className="flex items-center gap-2 group">
           <svg className="h-6 w-6" viewBox="0 0 32 32" fill="none">
             <circle cx="6" cy="16" r="4" fill="#E57D25"/>
             <circle cx="26" cy="16" r="4" fill="#E57D25"/>
-            <path d="M6 16L26 16" stroke="#f4f1e6" strokeWidth="2"/>
+            <path d="M6 16L26 16" stroke="#0F0F0F" strokeWidth="2"/>
           </svg>
-          <span className="font-heading text-xl font-bold tracking-tight text-beige-bg transition-opacity group-hover:opacity-90">
+          <span className="font-heading text-xl font-bold tracking-tight text-ink-black transition-opacity group-hover:opacity-90">
             Alloc<span className="text-accent-orange font-normal italic">Flow</span>
           </span>
           <span className="ml-2 px-1.5 py-0.5 text-[9px] font-mono font-bold tracking-wider text-accent-orange border border-accent-orange/30 bg-accent-orange/10 uppercase">
@@ -41,8 +41,8 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
           </span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-2 px-3 py-1 font-space text-xs text-muted border-l border-divider">
-          <span className="font-bold text-beige-bg uppercase tracking-widest">{activeConferenceCode}</span>
+        <div className="hidden md:flex items-center gap-2 px-3 py-1 font-space text-xs text-muted border-l border-ink-black/10">
+          <span className="font-bold text-ink-black uppercase tracking-widest">{activeConferenceCode}</span>
           <span className="text-[10px] opacity-60">{"// ACTIVE CYCLE"}</span>
         </div>
       </div>
@@ -56,14 +56,14 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
           className={`font-mono text-[11px] font-bold tracking-widest uppercase px-2 py-1 ${
             isResearchMode
               ? "text-accent-blue bg-accent-blue/10 border border-accent-blue/20"
-              : "text-beige-bg bg-white/5 border border-white/10"
+              : "text-ink-black bg-ink-black/5 border border-ink-black/10"
           }`}
         >
           {isResearchMode ? "[ RSH_MODE ]" : "[ OPS_MODE ]"}
         </div>
 
         {/* Demo Role Switcher */}
-        <div className="hidden lg:flex items-center gap-1 p-1 text-xs font-space border border-divider bg-black/40">
+        <div className="hidden lg:flex items-center gap-1 p-1 text-xs font-space border border-ink-black/10 bg-ink-black/5">
           <span className="px-2 text-[10px] uppercase text-muted tracking-widest">User:</span>
           {(["SUPER_ADMIN", "CONFERENCE_ADMIN", "REVIEWER", "AUTHOR"] as UserRole[]).map((role) => (
             <button
@@ -71,8 +71,8 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
               onClick={() => quickLogin(role)}
               className={`px-2 py-0.5 text-[10px] uppercase tracking-wider transition-all ${
                 user?.role === role
-                  ? "bg-beige-bg text-ink-black font-bold"
-                  : "text-muted hover:text-beige-bg"
+                  ? "bg-ink-black text-beige-bg font-bold"
+                  : "text-muted hover:text-ink-black"
               }`}
             >
               {role === "SUPER_ADMIN"
@@ -88,14 +88,14 @@ export function Navbar({ activeConferenceCode = "ICDCS-2026" }: NavbarProps) {
 
         {/* User Menu / Logout */}
         {isAuthenticated ? (
-          <div className="flex items-center gap-3 pl-2 border-l border-divider">
+          <div className="flex items-center gap-3 pl-2 border-l border-ink-black/10">
             <div className="text-right font-space">
-              <p className="text-[11px] font-bold uppercase text-beige-bg">{user?.fullName}</p>
+              <p className="text-[11px] font-bold uppercase text-ink-black">{user?.fullName}</p>
               <p className="text-[9px] text-muted tracking-widest">{user?.email}</p>
             </div>
             <button
               onClick={logout}
-              className="flex h-8 w-8 items-center justify-center border border-divider text-muted hover:bg-white/10 hover:text-beige-bg transition-colors"
+              className="flex h-8 w-8 items-center justify-center border border-ink-black/10 text-muted hover:bg-white/10 hover:text-ink-black transition-colors"
               title="Sign Out"
             >
               <LogOut className="h-4 w-4" />
