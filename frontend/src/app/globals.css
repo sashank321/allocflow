@@ -330,3 +330,21 @@ h1, h2, h3, .font-heading {
   border-bottom: 1px solid rgba(0,0,0,0.03) !important;
 }
 
+
+/* Page Transitions */
+@keyframes dashboard-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.995);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+.animate-dashboard-enter {
+  animation: dashboard-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+

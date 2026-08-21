@@ -13,23 +13,28 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     try {
+      setIsTransitioning(true);
       await login(email, password);
       router.push("/dashboard");
     } catch (err: any) {
+      setIsTransitioning(false);
       setError(err.response?.data?.message || "Invalid email or password");
     }
   };
 
   const handleDemoLogin = async (role: UserRole) => {
     try {
+      setIsTransitioning(true);
       await quickLogin(role);
       router.push("/dashboard");
     } catch (err: any) {
+      setIsTransitioning(false);
       setError("Failed to sign in with demo account");
     }
   };
@@ -169,6 +174,33 @@ export default function LoginPage() {
           <Link href="/" className="text-xs text-muted-foreground hover:text-ink-black transition-colors">
             &larr; Back to AllocFlow Home
           </Link>
+        </div>
+      </div>
+      {/* Cinematic Transition Overlay */}
+      <div 
+        className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-beige-bg transition-all duration-700 ease-in-out ${
+          isTransitioning ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="flex flex-col items-center space-y-6">
+          <div className="relative flex h-16 w-16 items-center justify-center">
+            <svg className="absolute inset-0 h-full w-full animate-spin text-accent-orange/20" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="2" strokeDasharray="60 20" />
+            </svg>
+            <svg className="h-8 w-8 text-accent-orange animate-pulse" viewBox="0 0 32 32" fill="none">
+              <circle cx="6" cy="16" r="4" fill="#E57D25" />
+              <circle cx="26" cy="16" r="4" fill="#E57D25" />
+              <path d="M6 16 C 12 8, 20 24, 26 16" stroke="#E57D25" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </div>
+          <div className="flex flex-col items-center">
+            <span className="font-space text-[10px] font-bold uppercase tracking-[0.3em] text-ink-black animate-pulse">
+              Authenticating
+            </span>
+            <span className="mt-1 font-body text-xs text-muted-foreground opacity-60">
+              Establishing secure session...
+            </span>
+          </div>
         </div>
       </div>
     </div>
