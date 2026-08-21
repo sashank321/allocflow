@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/lib/auth";
+import { CurtainLoader } from "@/components/ui/CurtainLoader";
 import "./globals.css";
 
 export default function RootLayout({
@@ -32,6 +33,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <CurtainLoader />
         <QueryClientProvider client={queryClient}>
           <AuthProvider>{children}</AuthProvider>
         </QueryClientProvider>

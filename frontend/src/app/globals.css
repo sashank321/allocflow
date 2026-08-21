@@ -348,3 +348,14 @@ h1, h2, h3, .font-heading {
   animation: dashboard-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
+
+/* Curtain Wipe Animation */
+@keyframes curtain-wipe {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
