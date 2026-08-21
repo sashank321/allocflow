@@ -252,7 +252,7 @@ export default function ScalabilityExperimentsPage() {
                 </p>
               </div>
             </div>
-            <span className="font-mono text-xs font-bold text-emerald-900 bg-ink-black/70 px-2.5 py-1 rounded-lg border border-emerald-200">
+            <span className="font-mono text-xs font-bold text-emerald-900 bg-white/70 px-2.5 py-1 rounded-lg border border-emerald-200">
               Seed: {sweepResult.seed}
             </span>
           </div>
