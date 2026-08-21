@@ -171,10 +171,7 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
                 <div
                   className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full transition-all"
                   style={{
-                    width: ${Math.min(
-                      100,
-                      (explanation.reviewerWorkloadAssigned / (explanation.reviewerMaxCapacity || 1)) * 100
-                    )}%,
+                    width: `${Math.min(100, (explanation.reviewerWorkloadAssigned / (explanation.reviewerMaxCapacity || 1)) * 100)}%`
                   }}
                 />
               </div>
