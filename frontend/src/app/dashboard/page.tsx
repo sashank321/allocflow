@@ -121,7 +121,7 @@ export default function DashboardOverviewPage() {
       {/* TERMINAL KPI STATS GRID */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Total Manuscripts */}
-        <div className="p-5 relative overflow-hidden group hover:opacity-90 transition-opacity rounded-2xl" style={{backgroundColor:"#C1847B", boxShadow:"0 25px 50px -12px rgba(0,0,0,0.25)", color:"#0F0F0F"}}>
+        <div className="p-5 relative overflow-hidden group hover:opacity-90 transition-all duration-300 rounded-2xl shadow-2xl hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.4)] hover:-translate-y-1" style={{backgroundColor:"#C1847B", color:"#0F0F0F"}}>
           <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
             <FileText className="h-20 w-20" />
           </div>
@@ -144,7 +144,7 @@ export default function DashboardOverviewPage() {
         </div>
 
         {/* Reviewer Roster */}
-        <div className="p-5 relative overflow-hidden group hover:opacity-90 transition-opacity rounded-2xl" style={{backgroundColor:"#5D6D7E", boxShadow:"0 25px 50px -12px rgba(0,0,0,0.25)", color:"#0F0F0F"}}>
+        <div className="p-5 relative overflow-hidden group hover:opacity-90 transition-all duration-300 rounded-2xl shadow-2xl hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.4)] hover:-translate-y-1" style={{backgroundColor:"#5D6D7E", color:"#0F0F0F"}}>
           <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
             <Users className="h-20 w-20 text-accent-blue" />
           </div>
@@ -167,7 +167,7 @@ export default function DashboardOverviewPage() {
         </div>
 
         {/* Allocated Pairs */}
-        <div className="p-5 relative overflow-hidden group hover:opacity-90 transition-opacity rounded-2xl" style={{backgroundColor:"#7A9478", boxShadow:"0 25px 50px -12px rgba(0,0,0,0.25)", color:"#0F0F0F"}}>
+        <div className="p-5 relative overflow-hidden group hover:opacity-90 transition-all duration-300 rounded-2xl shadow-2xl hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.4)] hover:-translate-y-1" style={{backgroundColor:"#7A9478", color:"#0F0F0F"}}>
           <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
             <GitMerge className="h-20 w-20 text-[#5B7553]" />
           </div>
@@ -190,7 +190,7 @@ export default function DashboardOverviewPage() {
         </div>
 
         {/* COI Safeguards */}
-        <div className="p-5 relative overflow-hidden group hover:opacity-90 transition-opacity rounded-2xl" style={{backgroundColor:"#8B8589", boxShadow:"0 25px 50px -12px rgba(0,0,0,0.25)", color:"#0F0F0F"}}>
+        <div className="p-5 relative overflow-hidden group hover:opacity-90 transition-all duration-300 rounded-2xl shadow-2xl hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.4)] hover:-translate-y-1" style={{backgroundColor:"#8B8589", color:"#0F0F0F"}}>
           <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
             <ShieldCheck className="h-20 w-20 text-accent-orange" />
           </div>
@@ -250,11 +250,11 @@ export default function DashboardOverviewPage() {
                     backgroundColor: "#FFFFFF",
                     border: "1px solid rgba(0, 0, 0, 0.12)",
                     borderRadius: "0px",
-                    color: "#f4f1e6",
+                    color: "#0F0F0F",
                     fontFamily: "'Space Mono', monospace",
                     fontSize: "11px",
                     textTransform: "uppercase",
-                    boxShadow: "10px 10px 0px rgba(0,0,0,0.5)",
+                    boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)",
                   }}
                 />
                 <Bar dataKey="count" fill="#E57D25" barSize={16} radius={[0, 0, 0, 0]} />
@@ -295,11 +295,11 @@ export default function DashboardOverviewPage() {
                     backgroundColor: "#FFFFFF",
                     border: "1px solid rgba(0, 0, 0, 0.12)",
                     borderRadius: "0px",
-                    color: "#f4f1e6",
+                    color: "#0F0F0F",
                     fontFamily: "'Space Mono', monospace",
                     fontSize: "11px",
                     textTransform: "uppercase",
-                    boxShadow: "10px 10px 0px rgba(0,0,0,0.5)",
+                    boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)",
                   }}
                 />
               </PieChart>

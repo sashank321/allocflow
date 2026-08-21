@@ -33,10 +33,9 @@ export function Card3D({
   
   return (
     <div 
-      className={`relative overflow-hidden transition-all duration-300 ${className}`}
+      className={`relative overflow-hidden transition-all duration-300 shadow-2xl hover:shadow-[0_35px_60px_-15px_rgba(0,0,0,0.4)] hover:-translate-y-1 ${className}`}
       style={{
         backgroundColor: bgColor,
-        boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)",
         border: "1px solid rgba(0,0,0,0.1)",
         color: "#0F0F0F",
         borderRadius: "16px"
