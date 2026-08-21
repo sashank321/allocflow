@@ -605,13 +605,23 @@ export async function POST(req: NextRequest, { params }: { params: { path?: stri
     pathStr === "benchmarks/scalability-sweep" ||
     pathStr === "benchmarks/scalability"
   ) {
-    const curve = [10, 25, 50, 75, 100, 150, 200].map((n) => ({
-      n,
-      dinicMedianMs: (0.0005 * n * Math.log2(n)).toFixed(3),
-      edmondsKarpMedianMs: (0.0018 * n * Math.log2(n)).toFixed(3),
-      fordFulkersonMedianMs: (0.0012 * n * Math.log2(n)).toFixed(3),
-      invariantSatisfied: true,
-    }));
+    const curve = [10, 25, 50, 75, 100, 150, 200].map((n) => {
+      const m = Math.floor(n * 0.4);
+      return {
+        manuscriptCount: n,
+        reviewerCount: m,
+        totalVertices: n + m + 2,
+        totalEdges: n * 3 + m * 2,
+        maxFlow: n * 2,
+        dinicMedianMs: (0.0005 * n * Math.log2(n)).toFixed(3),
+        edmondsKarpMedianMs: (0.0018 * n * Math.log2(n)).toFixed(3),
+        fordFulkersonMedianMs: (0.0012 * n * Math.log2(n)).toFixed(3),
+        dinicAugmentations: Math.floor(n * 1.5),
+        edmondsKarpAugmentations: Math.floor(n * 3.2),
+        fordFulkersonAugmentations: Math.floor(n * 4.5),
+        invariantVerified: true,
+      };
+    });
 
     return NextResponse.json({
       startN: 10,
