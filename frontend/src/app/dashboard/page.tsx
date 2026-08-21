@@ -61,7 +61,7 @@ export default function DashboardOverviewPage() {
   // Format workload data for chart
   const workloadData = Object.entries(stats.reviewerWorkloadDistribution || {}).map(
     ([name, count]) => ({
-      name: name.split(" ")[0] || name,
+      name: name.replace(/^(Dr\.|Prof\.)\s+/i, "").split(" ")[0] || name,
       count,
     })
   );
@@ -246,7 +246,7 @@ export default function DashboardOverviewPage() {
                 />
                 <Tooltip
                   cursor={{ fill: 'rgba(0,0,0,0.02)' }}
-                  contentStyle={{
+                  itemStyle={{ color: "#0F0F0F", fontWeight: "bold" }} labelStyle={{ color: "#8a8a8a", marginBottom: "4px" }} contentStyle={{
                     backgroundColor: "#FFFFFF",
                     border: "1px solid rgba(0, 0, 0, 0.12)",
                     borderRadius: "0px",
@@ -254,7 +254,7 @@ export default function DashboardOverviewPage() {
                     fontFamily: "'Space Mono', monospace",
                     fontSize: "11px",
                     textTransform: "uppercase",
-                    boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)",
+                    boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)",
                   }}
                 />
                 <Bar dataKey="count" fill="#E57D25" barSize={16} radius={[0, 0, 0, 0]} />
@@ -291,7 +291,7 @@ export default function DashboardOverviewPage() {
                   ))}
                 </Pie>
                 <Tooltip
-                  contentStyle={{
+                  itemStyle={{ color: "#0F0F0F", fontWeight: "bold" }} labelStyle={{ color: "#8a8a8a", marginBottom: "4px" }} contentStyle={{
                     backgroundColor: "#FFFFFF",
                     border: "1px solid rgba(0, 0, 0, 0.12)",
                     borderRadius: "0px",
@@ -299,7 +299,7 @@ export default function DashboardOverviewPage() {
                     fontFamily: "'Space Mono', monospace",
                     fontSize: "11px",
                     textTransform: "uppercase",
-                    boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)",
+                    boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)",
                   }}
                 />
               </PieChart>
