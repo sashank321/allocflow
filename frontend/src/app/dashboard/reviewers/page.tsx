@@ -33,7 +33,7 @@ export default function ReviewersRosterPage() {
   return (
     <div className="space-y-6 select-none text-ink-black">
       {/* Header */}
-      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
+      <div className="bg-white shadow-2xl rounded-2xl p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
         <div>
           <h1
             className="text-3xl tracking-tight text-ink-black"
@@ -85,11 +85,11 @@ export default function ReviewersRosterPage() {
                   </div>
                   <div className="flex items-center gap-1">
                     {r.active && r.available ? (
-                      <span className="flex items-center gap-1 rounded bg-emerald-500/20 border border-emerald-500/40 px-2 py-0.5 text-[9px] font-semibold text-emerald-300">
+                      <span className="flex items-center gap-1 rounded bg-emerald-100 border border-emerald-500/40 px-2 py-0.5 text-[9px] font-semibold text-emerald-800">
                         <CheckCircle2 className="h-3 w-3" /> Available
                       </span>
                     ) : (
-                      <span className="flex items-center gap-1 rounded bg-rose-500/20 border border-rose-500/40 px-2 py-0.5 text-[9px] font-semibold text-rose-300">
+                      <span className="flex items-center gap-1 rounded bg-rose-100 border border-rose-500/40 px-2 py-0.5 text-[9px] font-semibold text-rose-800">
                         <XCircle className="h-3 w-3" /> Inactive
                       </span>
                     )}
@@ -127,7 +127,7 @@ export default function ReviewersRosterPage() {
                     {r.topics.map((t, idx) => (
                       <span
                         key={idx}
-                        className="rounded bg-purple-500/10 border border-purple-500/30 px-2 py-0.5 text-[10px] font-medium text-purple-300"
+                        className="rounded bg-purple-500/10 border border-purple-500/30 px-2 py-0.5 text-[10px] font-medium text-purple-800"
                       >
                         {t}
                       </span>

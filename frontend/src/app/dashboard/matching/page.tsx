@@ -95,7 +95,7 @@ export default function MatchingCockpitPage() {
   return (
     <div className="space-y-6 select-none text-ink-black">
       {/* Header */}
-      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
+      <div className="bg-white shadow-2xl rounded-2xl p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
         <div>
           <div className="flex items-center gap-3">
             <h1
@@ -130,13 +130,13 @@ export default function MatchingCockpitPage() {
               disabled={commitMutation.isPending || simulationResult.achievedFlow === 0}
               className="btn-3d rounded-xl px-5 py-2.5 text-xs font-semibold text-ink-black flex items-center gap-2 bg-emerald-600/30 border-emerald-500/50 hover:bg-emerald-600/50 disabled:opacity-40"
             >
-              <CheckCheck className="h-4 w-4 text-emerald-400" />
+              <CheckCheck className="h-4 w-4 text-emerald-700" />
               <span>{commitMutation.isPending ? "Committing..." : "Commit Matches"}</span>
             </button>
           )}
 
           {commitSuccess && (
-            <div className="flex items-center gap-2 rounded-xl bg-emerald-500/20 border border-emerald-500/40 px-3.5 py-2 text-xs font-semibold text-emerald-300">
+            <div className="flex items-center gap-2 rounded-xl bg-emerald-100 border border-emerald-500/40 px-3.5 py-2 text-xs font-semibold text-emerald-800">
               <CheckCircle className="h-4 w-4" />
               <span>Committed to DB</span>
             </div>
@@ -148,13 +148,13 @@ export default function MatchingCockpitPage() {
       <Card3D glowColor="purple" className="p-5">
         <div className="flex items-center justify-between mb-4 pb-3 border-b border-ink-black/10">
           <div className="flex items-center gap-2">
-            <Sliders className="h-4 w-4 text-purple-300" />
+            <Sliders className="h-4 w-4 text-purple-800" />
             <h2 className="text-xs font-bold uppercase tracking-wider text-ink-black">
               Flow Model Constraint Controls
             </h2>
           </div>
           <span className="text-[11px] text-muted-foreground">
-            Algorithm: <strong className="text-purple-300 font-mono">{algorithm}</strong>
+            Algorithm: <strong className="text-purple-800 font-mono">{algorithm}</strong>
           </span>
         </div>
 
@@ -165,7 +165,7 @@ export default function MatchingCockpitPage() {
             <select
               value={algorithm}
               onChange={(e) => setAlgorithm(e.target.value as AlgorithmType)}
-              className="w-full rounded-xl border border-ink-black/10 bg-black/80 py-2.5 px-3 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none backdrop-blur-md"
+              className="w-full rounded-xl border border-ink-black/10 bg-white shadow-inner py-2.5 px-3 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none backdrop-blur-md"
             >
               <option value="DINIC">Dinic&apos;s Algorithm (Layered BFS/DFS)</option>
               <option value="EDMONDS_KARP">Edmonds-Karp (Shortest BFS)</option>
@@ -194,7 +194,7 @@ export default function MatchingCockpitPage() {
           <div className="space-y-1.5">
             <div className="flex justify-between">
               <label className="font-semibold text-muted-foreground">Reviewer Max Capacity</label>
-              <span className="font-mono font-bold text-purple-300">{reviewerCapacity} papers</span>
+              <span className="font-mono font-bold text-purple-800">{reviewerCapacity} papers</span>
             </div>
             <input
               type="range"
@@ -243,7 +243,7 @@ export default function MatchingCockpitPage() {
               Requirement Coverage
             </p>
             <div className="mt-1 flex items-baseline gap-2">
-              <span className="text-2xl font-bold font-mono text-emerald-300">
+              <span className="text-2xl font-bold font-mono text-emerald-800">
                 {(simulationResult.coveragePercentage ?? 100).toFixed(1)}%
               </span>
               <span className="text-xs text-muted-foreground">Completed</span>
@@ -255,7 +255,7 @@ export default function MatchingCockpitPage() {
               Execution Timing
             </p>
             <div className="mt-1 flex items-baseline gap-2">
-              <span className="text-2xl font-bold font-mono text-purple-300">
+              <span className="text-2xl font-bold font-mono text-purple-800">
                 {formatMs(simulationResult.durationMs)}
               </span>
               <span className="text-xs text-muted-foreground">
@@ -327,11 +327,11 @@ export default function MatchingCockpitPage() {
                     <td className="py-3 font-sans text-muted-foreground">
                       {assignment.reviewerAffiliation || "Independent"}
                     </td>
-                    <td className="py-3 text-emerald-400 font-bold">
+                    <td className="py-3 text-emerald-700 font-bold">
                       {((assignment.compatibilityScore ?? 0.9) * 100).toFixed(0)}%
                     </td>
                     <td className="py-3">
-                      <span className="rounded bg-emerald-500/20 border border-emerald-500/30 px-1.5 py-0.5 text-[9px] font-bold text-emerald-300">
+                      <span className="rounded bg-emerald-100 border border-emerald-500/30 px-1.5 py-0.5 text-[9px] font-bold text-emerald-800">
                         CLEARED
                       </span>
                     </td>

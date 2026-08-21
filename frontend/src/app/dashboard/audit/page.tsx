@@ -27,7 +27,7 @@ export default function AuditLogsPage() {
   return (
     <div className="space-y-6 select-none text-ink-black">
       {/* Header */}
-      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
+      <div className="bg-white shadow-2xl rounded-2xl p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
         <div>
           <h1
             className="text-3xl tracking-tight text-ink-black"
@@ -62,7 +62,7 @@ export default function AuditLogsPage() {
       </div>
 
       {/* Audit Log Table */}
-      <div className="glass-panel overflow-hidden border border-ink-black/10">
+      <div className="bg-white shadow-2xl rounded-2xl overflow-hidden border border-ink-black/10">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>

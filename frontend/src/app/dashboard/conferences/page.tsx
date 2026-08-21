@@ -58,7 +58,7 @@ export default function ConferencesPage() {
   return (
     <div className="space-y-6 select-none text-ink-black">
       {/* Header */}
-      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
+      <div className="bg-white shadow-2xl rounded-2xl p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
         <div>
           <h1
             className="text-3xl tracking-tight text-ink-black"
@@ -97,7 +97,7 @@ export default function ConferencesPage() {
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="font-mono font-bold text-base text-ink-black">{c.code}</span>
-                    <span className="rounded bg-emerald-500/20 border border-emerald-500/40 px-2 py-0.5 text-[9px] font-bold text-emerald-300">
+                    <span className="rounded bg-emerald-100 border border-emerald-500/40 px-2 py-0.5 text-[9px] font-bold text-emerald-800">
                       {c.status}
                     </span>
                   </div>
@@ -126,7 +126,7 @@ export default function ConferencesPage() {
                   <span>{c.manuscriptCount} Manuscripts</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Users className="h-3.5 w-3.5 text-purple-300" />
+                  <Users className="h-3.5 w-3.5 text-purple-800" />
                   <span>{c.reviewerCount} Reviewers</span>
                 </div>
               </div>
@@ -141,7 +141,7 @@ export default function ConferencesPage() {
 
       {/* Create Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white shadow-inner p-4 backdrop-blur-md">
           <div className="w-full max-w-lg rounded-2xl border border-ink-black/10 bg-black/95 p-6 shadow-2xl space-y-4 text-ink-black">
             <div className="flex items-center justify-between border-b border-ink-black/10 pb-3">
               <h2 className="text-sm font-bold text-ink-black">Initialize New Conference Cycle</h2>

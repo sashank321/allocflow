@@ -15,7 +15,7 @@ export function BackendStatusPill() {
     const startTime = performance.now();
     try {
       // Test basic endpoint
-      await apiClient.get("/conferences", { timeout: 3000 });
+      await apiClient.get("/conferences", { timeout: 15000 });
       const elapsed = Math.round(performance.now() - startTime);
       setLatencyMs(elapsed);
       setStatus("connected");

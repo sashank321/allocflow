@@ -143,7 +143,7 @@ export default function ManuscriptsPage() {
       </div>
 
       {/* Manuscripts Table */}
-      <div className="glass-panel overflow-hidden border border-ink-black/10 rounded-xl bg-card shadow-sm">
+      <div className="bg-white shadow-2xl rounded-2xl overflow-hidden border border-ink-black/10 rounded-xl bg-card shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
@@ -221,9 +221,9 @@ export default function ManuscriptsPage() {
                           m.status === "SUBMITTED"
                             ? "bg-white shadow-md text-ink-black border-ink-black/20"
                             : m.status === "UNDER_REVIEW"
-                            ? "bg-purple-500/20 text-purple-300 border-purple-500/40"
+                            ? "bg-purple-100 text-purple-800 border-purple-500/40"
                             : m.status === "ACCEPTED"
-                            ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
+                            ? "bg-emerald-100 text-emerald-800 border-emerald-500/40"
                             : "bg-ink-black/5 text-muted-foreground border-ink-black/10"
                         }`}
                       >

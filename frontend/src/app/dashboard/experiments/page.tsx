@@ -158,7 +158,7 @@ export default function ScalabilityExperimentsPage() {
       {/* Sweep Configuration */}
       <Card3D glowColor="purple" className="p-5 space-y-4">
         <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-          <FlaskConical className="h-4 w-4 text-purple-400" />
+          <FlaskConical className="h-4 w-4 text-purple-700" />
           <span>Configurable Sweep Range &amp; Repetition Parameters</span>
         </div>
 
@@ -169,7 +169,7 @@ export default function ScalabilityExperimentsPage() {
               type="number"
               value={startN}
               onChange={(e) => setStartN(Number(e.target.value))}
-              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/80 p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-white shadow-inner p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -179,7 +179,7 @@ export default function ScalabilityExperimentsPage() {
               type="number"
               value={endN}
               onChange={(e) => setEndN(Number(e.target.value))}
-              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/80 p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-white shadow-inner p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -189,7 +189,7 @@ export default function ScalabilityExperimentsPage() {
               type="number"
               value={step}
               onChange={(e) => setStep(Number(e.target.value))}
-              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/80 p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-white shadow-inner p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -200,7 +200,7 @@ export default function ScalabilityExperimentsPage() {
               step="0.05"
               value={ratio}
               onChange={(e) => setRatio(Number(e.target.value))}
-              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/80 p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-white shadow-inner p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -210,7 +210,7 @@ export default function ScalabilityExperimentsPage() {
               type="number"
               value={warmups}
               onChange={(e) => setWarmups(Number(e.target.value))}
-              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/80 p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-white shadow-inner p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -220,7 +220,7 @@ export default function ScalabilityExperimentsPage() {
               type="number"
               value={trials}
               onChange={(e) => setTrials(Number(e.target.value))}
-              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/80 p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-white shadow-inner p-2 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -230,7 +230,7 @@ export default function ScalabilityExperimentsPage() {
               type="number"
               value={seed}
               onChange={(e) => setSeed(Number(e.target.value))}
-              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/80 p-2 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
+              className="mt-1 w-full rounded-xl border border-ink-black/10 bg-white shadow-inner p-2 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
         </div>

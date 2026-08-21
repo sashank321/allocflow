@@ -82,7 +82,7 @@ export default function AlgorithmComparisonPage() {
   return (
     <div className="space-y-6 select-none text-ink-black">
       {/* Header */}
-      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
+      <div className="bg-white shadow-2xl rounded-2xl p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
         <div>
           <div className="flex items-center gap-3">
             <h1
@@ -91,7 +91,7 @@ export default function AlgorithmComparisonPage() {
             >
               Tri-Algorithm Max-Flow Comparison
             </h1>
-            <span className="rounded-full bg-purple-500/20 border border-purple-500/40 px-3 py-0.5 text-[11px] font-bold text-purple-300 shadow-[0_0_15px_rgba(168,85,247,0.25)]">
+            <span className="rounded-full bg-purple-100 border border-purple-500/40 px-3 py-0.5 text-[11px] font-bold text-purple-800 shadow-[0_0_15px_rgba(168,85,247,0.25)]">
               Rigorous Research Protocol
             </span>
           </div>
@@ -138,7 +138,7 @@ export default function AlgorithmComparisonPage() {
               max="200"
               value={manuscripts}
               onChange={(e) => setManuscripts(parseInt(e.target.value) || 30)}
-              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-black/80 py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-white shadow-inner py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -150,7 +150,7 @@ export default function AlgorithmComparisonPage() {
               max="100"
               value={reviewers}
               onChange={(e) => setReviewers(parseInt(e.target.value) || 15)}
-              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-black/80 py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-white shadow-inner py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -162,7 +162,7 @@ export default function AlgorithmComparisonPage() {
               max="5"
               value={reviewsPerPaper}
               onChange={(e) => setReviewsPerPaper(parseInt(e.target.value) || 2)}
-              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-black/80 py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-white shadow-inner py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -174,7 +174,7 @@ export default function AlgorithmComparisonPage() {
               max="10"
               value={capacity}
               onChange={(e) => setCapacity(parseInt(e.target.value) || 4)}
-              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-black/80 py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-white shadow-inner py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -186,7 +186,7 @@ export default function AlgorithmComparisonPage() {
               max="10"
               value={warmups}
               onChange={(e) => setWarmups(parseInt(e.target.value) || 3)}
-              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-black/80 py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-white shadow-inner py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
 
@@ -198,7 +198,7 @@ export default function AlgorithmComparisonPage() {
               max="50"
               value={trials}
               onChange={(e) => setTrials(parseInt(e.target.value) || 10)}
-              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-black/80 py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-ink-black/10 bg-white shadow-inner py-2 px-3 text-xs font-mono text-ink-black focus:border-ink-black/30 focus:outline-none"
             />
           </div>
         </div>
@@ -207,7 +207,7 @@ export default function AlgorithmComparisonPage() {
       {/* MATHEMATICAL INVARIANT BADGE */}
       {benchmarkResult && (
         <div
-          className={`glass-panel p-5 flex items-center justify-between border ${
+          className={`bg-white shadow-2xl rounded-2xl p-5 flex items-center justify-between border ${
             benchmarkResult.invariantSatisfied
               ? "border-emerald-500/40 bg-emerald-950/20"
               : "border-rose-500/40 bg-rose-950/20"
@@ -215,11 +215,11 @@ export default function AlgorithmComparisonPage() {
         >
           <div className="flex items-center gap-3">
             {benchmarkResult.invariantSatisfied ? (
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 border border-emerald-500/40 text-emerald-800 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
                 <CheckCircle2 className="h-6 w-6" />
               </div>
             ) : (
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-500/20 border border-rose-500/40 text-rose-300">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-100 border border-rose-500/40 text-rose-800">
                 <AlertCircle className="h-6 w-6" />
               </div>
             )}
@@ -295,19 +295,19 @@ export default function AlgorithmComparisonPage() {
 
                   <div className="flex justify-between items-baseline">
                     <span className="text-muted-foreground">Augmenting Iterations:</span>
-                    <span className="font-mono font-semibold text-purple-300">{algo.augmentations}</span>
+                    <span className="font-mono font-semibold text-purple-800">{algo.augmentations}</span>
                   </div>
 
                   {algo.phases > 0 && (
                     <div className="flex justify-between items-baseline">
                       <span className="text-muted-foreground">Layered BFS Phases:</span>
-                      <span className="font-mono font-semibold text-emerald-300">{algo.phases}</span>
+                      <span className="font-mono font-semibold text-emerald-800">{algo.phases}</span>
                     </div>
                   )}
 
                   <div className="flex justify-between items-baseline">
                     <span className="text-muted-foreground">Validity Check:</span>
-                    <span className="rounded bg-emerald-500/20 border border-emerald-500/30 px-1.5 py-0.5 text-[10px] font-bold text-emerald-300">
+                    <span className="rounded bg-emerald-100 border border-emerald-500/30 px-1.5 py-0.5 text-[10px] font-bold text-emerald-800">
                       {algo.validityStatus}
                     </span>
                   </div>

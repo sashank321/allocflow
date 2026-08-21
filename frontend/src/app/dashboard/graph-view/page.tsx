@@ -50,7 +50,7 @@ export default function GraphViewPage() {
   return (
     <div className="space-y-6 select-none text-ink-black">
       {/* Header */}
-      <div className="glass-panel p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
+      <div className="bg-white shadow-2xl rounded-2xl p-6 flex flex-wrap items-center justify-between gap-4 border border-ink-black/10">
         <div>
           <div className="flex items-center gap-3">
             <h1
@@ -72,7 +72,7 @@ export default function GraphViewPage() {
           <select
             value={algorithm}
             onChange={(e) => setAlgorithm(e.target.value as AlgorithmType)}
-            className="rounded-xl border border-ink-black/10 bg-black/80 px-3 py-2 text-xs text-ink-black focus:outline-none"
+            className="rounded-xl border border-ink-black/10 bg-white shadow-inner px-3 py-2 text-xs text-ink-black focus:outline-none"
           >
             <option value="DINIC">Dinic Algorithm</option>
             <option value="EDMONDS_KARP">Edmonds-Karp Algorithm</option>
