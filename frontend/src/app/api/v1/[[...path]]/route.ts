@@ -638,11 +638,14 @@ export async function POST(req: NextRequest, { params }: { params: { path?: stri
     
     return NextResponse.json({
       token: "jwt-allocflow-token-live",
-      type: "Bearer",
-      userId: "u-mock",
-      email: body.email || "admin@allocflow.io",
-      fullName: fullName,
-      role: role,
+      tokenType: "Bearer",
+      expiresIn: 3600,
+      user: {
+        id: "u-mock",
+        email: body.email || "admin@allocflow.io",
+        fullName: fullName,
+        role: role,
+      }
     });
   }
 
