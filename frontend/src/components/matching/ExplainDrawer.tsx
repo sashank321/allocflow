@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   X,
   CheckCircle2,
@@ -23,10 +24,11 @@ interface ExplainDrawerProps {
 }
 
 export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerProps) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   if (!isOpen || !explanation) return null;
-
-  return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/20 backdrop-blur-sm transition-opacity">
+  const content = (
+    <div className="fixed inset-0 z-[100] flex justify-end bg-black/20 backdrop-blur-sm transition-opacity">
       <div className="flex h-full w-full max-w-lg flex-col border-l border-ink-black/10 bg-white p-6 shadow-2xl animate-in slide-in-from-right duration-300 text-ink-black">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-ink-black/10 pb-4">
@@ -223,4 +225,5 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
       </div>
     </div>
   );
+  return mounted ? createPortal(content, document.body) : null;
 }

@@ -16,25 +16,28 @@ import {
   ChevronRight,
 } from "lucide-react";
 
+import { useAuth } from "@/lib/auth";
 export function Sidebar() {
+  const { user } = useAuth();
+  const isAdmin = user?.role === "SUPER_ADMIN" || user?.role === "CONFERENCE_ADMIN";
+  const isSuper = user?.role === "SUPER_ADMIN";
   const pathname = usePathname();
 
   const operationsNav = [
     { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
-    { label: "Conferences", href: "/dashboard/conferences", icon: Building2 },
+    ...(isAdmin ? [{ label: "Conferences", href: "/dashboard/conferences", icon: Building2 }] : []),
     { label: "Manuscripts", href: "/dashboard/manuscripts", icon: FileText },
-    { label: "Reviewers", href: "/dashboard/reviewers", icon: Users },
-    { label: "Audit Logs", href: "/dashboard/audit", icon: ShieldAlert },
+    ...(isAdmin ? [{ label: "Reviewers", href: "/dashboard/reviewers", icon: Users }] : []),
+    ...(isAdmin ? [{ label: "Audit Logs", href: "/dashboard/audit", icon: ShieldAlert }] : []),
   ];
 
-  const researchNav = [
+  const researchNav = isAdmin ? [
     { label: "Matching Cockpit", href: "/dashboard/matching", icon: GitMerge, badge: "Max-Flow" },
     { label: "Algorithm Compare", href: "/dashboard/comparison", icon: Scale, badge: "Tri-Algo" },
-    { label: "Graph Visualizer", href: "/dashboard/graph-view", icon: Network, badge: "S→P→R→T" },
+    { label: "Graph Visualizer", href: "/dashboard/graph-view", icon: Network, badge: "Graph" },
     { label: "Scalability Lab", href: "/dashboard/experiments", icon: FlaskConical, badge: "Sweeps" },
-  ];
-
-  return (
+  ] : [];
+return (
     <aside className="w-64 border-r border-ink-black/10 bg-beige-bg/80 backdrop-blur-md flex flex-col justify-between p-4 h-[calc(100vh-4rem)] sticky top-16 select-none font-sans text-ink-black">
       <div className="space-y-8 mt-2">
         {/* OPERATIONS SECTION */}

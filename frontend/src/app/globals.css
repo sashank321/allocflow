@@ -310,3 +310,23 @@ h1, h2, h3, .font-heading {
     display: flex !important;
   }
 }
+
+/* Customizations for Readability and Styling */
+
+/* Hide side scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Transparent Scrolling Nav */
+.site-header {
+  background-color: rgba(244, 241, 230, 0.8) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  border-bottom: 1px solid rgba(0,0,0,0.03) !important;
+}
+

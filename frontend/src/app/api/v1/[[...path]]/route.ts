@@ -18,7 +18,7 @@ const mockConference = {
   createdAt: "2026-08-18T17:15:28.285836Z",
 };
 
-const mockManuscripts = [
+let mockManuscripts = [
   {
     id: "m-1",
     paperCode: "ICDCS-2026-001",
@@ -235,7 +235,7 @@ const mockAuditLogs = [
 ];
 
 // Helper to try proxying to external backend if configured
-async function tryProxy(req: NextRequest, pathStr: string) {
+async function tryProxy(req: NextRequest, pathStr: string, bodyText: string | null = null) {
   const backendBase =
     process.env.BACKEND_INTERNAL_URL ||
     (process.env.NODE_ENV === "development" ? "http://localhost:8080" : null);
@@ -247,10 +247,7 @@ async function tryProxy(req: NextRequest, pathStr: string) {
     const headers = new Headers(req.headers);
     headers.delete("host");
 
-    let body: any = null;
-    if (req.method !== "GET" && req.method !== "HEAD") {
-      body = await req.text();
-    }
+    let body: any = bodyText;
 
     const res = await fetch(targetUrl, {
       method: req.method,
@@ -378,11 +375,22 @@ export async function POST(req: NextRequest, { params }: { params: { path?: stri
   const path = params.path || [];
   const pathStr = path.join("/");
 
+  const bodyText = await req.text().catch(() => "");
+  let body: any = {};
+  try {
+    body = bodyText ? JSON.parse(bodyText) : {};
+  } catch (e) {}
+
   // Try proxy first
-  const proxied = await tryProxy(req, pathStr);
+  const proxied = await tryProxy(req, pathStr, bodyText);
   if (proxied) return proxied;
 
-  const body = await req.json().catch(() => ({}));
+  if (pathStr === "manuscripts") {
+    const newDoc = { id: "m-" + Date.now(), ...body, status: "SUBMITTED" };
+    // @ts-ignore
+    mockManuscripts.push(newDoc);
+    return NextResponse.json(newDoc);
+  }
 
   if (pathStr === "matching/simulate") {
     const algorithm = body.algorithm || "DINIC";
@@ -620,7 +628,7 @@ export async function POST(req: NextRequest, { params }: { params: { path?: stri
     let parsedBody = { startN: 10, endN: 200, step: 25, ratio: 0.4 };
     try {
       if (body) {
-        parsedBody = typeof body === "string" ? JSON.parse(body) : body;
+        parsedBody = typeof body === "string" ? JSON.parse(body) : body; console.log("LOGIN BODY:", body, "PARSED:", parsedBody);
       }
     } catch(e) {}
 
@@ -668,7 +676,7 @@ export async function POST(req: NextRequest, { params }: { params: { path?: stri
   if (pathStr === "auth/login" || pathStr === "auth/register") {
     let parsedBody = { email: "" };
     try {
-      parsedBody = typeof body === "string" ? JSON.parse(body) : body;
+      parsedBody = typeof body === "string" ? JSON.parse(body) : body; console.log("LOGIN BODY:", body, "PARSED:", parsedBody);
     } catch(e) {}
     
     let role = "SUPER_ADMIN";
@@ -699,4 +707,27 @@ export async function POST(req: NextRequest, { params }: { params: { path?: stri
   }
 
   return NextResponse.json({ success: true });
+}
+
+export async function PATCH(req: NextRequest, { params }: { params: { path?: string[] } }) {
+  const path = params.path || [];
+  const pathStr = path.join("/");
+
+  const bodyText = await req.text().catch(() => "");
+  let body: any = {};
+  try {
+    body = bodyText ? JSON.parse(bodyText) : {};
+  } catch (e) {}
+
+  const proxied = await tryProxy(req, pathStr, bodyText);
+  if (proxied) return proxied;
+
+  if (pathStr.startsWith("manuscripts/") && pathStr.endsWith("/status")) {
+    const id = pathStr.split("/")[1];
+    const ms = mockManuscripts.find(m => m.id === id);
+    if (ms) ms.status = body.status;
+    return NextResponse.json({ success: true, message: "Manuscript updated successfully", data: ms });
+  }
+
+  return NextResponse.json({ error: "Not Found" }, { status: 404 });
 }

@@ -42,7 +42,7 @@ export default function LoginPage() {
         loop
         muted
         playsInline
-        className="absolute inset-0 h-full w-full object-cover z-0 opacity-35 pointer-events-none"
+        className="absolute inset-0 h-full w-full object-cover z-0 opacity-100 pointer-events-none"
       >
         <source
           src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4"
@@ -51,18 +51,19 @@ export default function LoginPage() {
       </video>
 
       {/* Cinematic Gradient Overlay */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-beige-bg/80 via-beige-bg/60 to-beige-bg/95 pointer-events-none" />
+      
 
-      <div className="relative z-10 w-full max-w-md space-y-6">
+      <div className="relative z-10 w-full max-w-md space-y-6 bg-white/10 backdrop-blur-xl p-8 rounded-3xl border border-white/20 shadow-2xl">
         {/* Header */}
         <div className="flex flex-col items-center text-center space-y-2">
-          <Link href="/" className="group flex items-baseline gap-1 text-ink-black">
-            <span
-              className="text-4xl tracking-tight text-ink-black transition-opacity group-hover:opacity-90"
-              style={{ fontFamily: "'Instrument Serif', serif" }}
-            >
-              AllocFlow
-            </span>
+          <Link href="/" className="group flex items-center gap-1 text-ink-black">
+              <svg className="h-8 w-8 text-accent-orange transition-transform duration-300 group-hover:scale-110 mr-2" viewBox="0 0 32 32" fill="none"><circle cx="6" cy="16" r="4" fill="#E57D25" /><circle cx="26" cy="16" r="4" fill="#E57D25" /><path d="M6 16 C 12 8, 20 24, 26 16" stroke="#E57D25" strokeWidth="2" strokeLinecap="round" /></svg>
+              <span
+                className="text-4xl tracking-tight text-ink-black transition-opacity group-hover:opacity-90"
+                style={{ fontFamily: "'Instrument Serif', serif" }}
+              >
+                AllocFlow
+              </span>
             <sup className="text-xs text-muted-foreground">®</sup>
           </Link>
           <p className="text-xs text-muted-foreground">
