@@ -26,36 +26,36 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
   if (!isOpen || !explanation) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/80 backdrop-blur-md transition-opacity">
-      <div className="flex h-full w-full max-w-lg flex-col border-l border-white/10 bg-black/95 p-6 shadow-2xl backdrop-blur-2xl animate-in slide-in-from-right duration-300 text-white">
+    <div className="fixed inset-0 z-50 flex justify-end bg-black/20 backdrop-blur-sm transition-opacity">
+      <div className="flex h-full w-full max-w-lg flex-col border-l border-ink-black/10 bg-white p-6 shadow-2xl animate-in slide-in-from-right duration-300 text-ink-black">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-4">
+        <div className="flex items-center justify-between border-b border-ink-black/10 pb-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 border border-white/20 text-white shadow-md">
-              <Sparkles className="h-5 w-5 text-white" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-ink-black/5 border border-ink-black/10 text-ink-black shadow-sm">
+              <Sparkles className="h-5 w-5 text-ink-black" />
             </div>
             <div>
-              <h2 className="text-base font-bold tracking-tight text-white">Assignment Explanation</h2>
+              <h2 className="text-base font-bold tracking-tight text-ink-black">Assignment Explanation</h2>
               <p className="text-xs text-muted-foreground">Deterministic Bipartite Matching Proof</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="btn-3d rounded-lg p-1.5 text-muted-foreground hover:text-white transition-colors"
+            className="rounded-lg p-1.5 text-muted-foreground hover:bg-ink-black/5 hover:text-ink-black transition-colors"
           >
             <X className="h-4 w-4" />
           </button>
         </div>
 
         {/* Content Body */}
-        <div className="flex-1 overflow-y-auto py-5 space-y-4">
+        <div className="flex-1 overflow-y-auto py-5 space-y-4 font-sans">
           {/* Plain English Summary Pill */}
-          <div className="glass-panel p-4 rounded-xl border border-emerald-500/30 bg-emerald-950/20 text-xs">
-            <div className="flex items-center gap-2 font-bold text-emerald-300">
-              <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+          <div className="p-4 rounded-xl border border-emerald-500/30 bg-emerald-50 text-xs shadow-sm">
+            <div className="flex items-center gap-2 font-bold text-emerald-800">
+              <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
               <span>Valid Match Verified</span>
             </div>
-            <p className="mt-1.5 text-[11px] leading-relaxed text-emerald-200/90">
+            <p className="mt-1.5 text-[11px] leading-relaxed text-emerald-900/90 font-medium">
               {explanation.explanationSummary}
             </p>
           </div>
@@ -63,32 +63,32 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
           {/* Manuscript & Reviewer Cards */}
           <div className="grid grid-cols-2 gap-3">
             {/* Manuscript Card */}
-            <div className="glass-panel p-3.5 space-y-1.5 rounded-xl border border-white/10">
-              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-white">
-                <FileText className="h-3.5 w-3.5 text-white/80" />
+            <div className="p-3.5 space-y-1.5 rounded-xl border border-ink-black/10 bg-white shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-ink-black">
+                <FileText className="h-3.5 w-3.5 text-muted-foreground" />
                 <span>Manuscript</span>
               </div>
-              <p className="font-bold text-xs text-white line-clamp-2">{explanation.manuscriptTitle}</p>
+              <p className="font-bold text-xs text-ink-black line-clamp-2">{explanation.manuscriptTitle}</p>
               {explanation.manuscriptTrack && (
-                <span className="inline-block rounded-md bg-white/10 border border-white/20 px-2 py-0.5 text-[9px] font-medium text-white/90">
+                <span className="inline-block rounded-md bg-ink-black/5 border border-ink-black/10 px-2 py-0.5 text-[9px] font-medium text-ink-black">
                   {explanation.manuscriptTrack}
                 </span>
               )}
             </div>
 
             {/* Reviewer Card */}
-            <div className="glass-panel p-3.5 space-y-1.5 rounded-xl border border-white/10">
-              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-purple-300">
+            <div className="p-3.5 space-y-1.5 rounded-xl border border-ink-black/10 bg-white shadow-sm hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-1.5 text-[11px] font-semibold text-purple-700">
                 <User className="h-3.5 w-3.5" />
                 <span>Assigned Reviewer</span>
               </div>
-              <p className="font-bold text-xs text-white">{explanation.reviewerName}</p>
+              <p className="font-bold text-xs text-ink-black">{explanation.reviewerName}</p>
               <p className="text-[11px] text-muted-foreground">{explanation.reviewerAffiliation || "Independent"}</p>
             </div>
           </div>
 
           {/* Match Criteria & Overlaps */}
-          <div className="glass-panel p-4 space-y-3 rounded-xl border border-white/10">
+          <div className="p-4 space-y-3 rounded-xl border border-ink-black/10 bg-white shadow-sm">
             <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
               Explainable Compatibility Criteria
             </h3>
@@ -96,10 +96,10 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
             {/* Topic Overlap */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
-                <span className="flex items-center gap-1.5 text-muted-foreground">
-                  <Tag className="h-3.5 w-3.5 text-white/80" /> Topic Overlap:
+                <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
+                  <Tag className="h-3.5 w-3.5 text-ink-black/70" /> Topic Overlap:
                 </span>
-                <span className="font-semibold text-white">
+                <span className="font-bold text-ink-black">
                   {explanation.topicOverlapCount} matches
                 </span>
               </div>
@@ -108,24 +108,24 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
                   explanation.matchingTopics.map((topic, i) => (
                     <span
                       key={i}
-                      className="rounded-md bg-white/10 border border-white/20 px-2 py-0.5 text-[10px] font-medium text-white"
+                      className="rounded-md bg-ink-black/5 border border-ink-black/10 px-2 py-0.5 text-[10px] font-semibold text-ink-black"
                     >
                       {topic}
                     </span>
                   ))
                 ) : (
-                  <span className="text-[10px] text-muted-foreground italic">General track alignment</span>
+                  <span className="text-[10px] text-muted-foreground italic font-medium">General track alignment</span>
                 )}
               </div>
             </div>
 
             {/* Keyword Matches */}
-            <div className="space-y-1.5 pt-2.5 border-t border-white/10">
+            <div className="space-y-1.5 pt-2.5 border-t border-ink-black/10">
               <div className="flex items-center justify-between text-xs">
-                <span className="flex items-center gap-1.5 text-muted-foreground">
-                  <Hash className="h-3.5 w-3.5 text-purple-400" /> Keyword Matches:
+                <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
+                  <Hash className="h-3.5 w-3.5 text-purple-600" /> Keyword Matches:
                 </span>
-                <span className="font-semibold text-white">
+                <span className="font-bold text-ink-black">
                   {explanation.keywordOverlapCount} matches
                 </span>
               </div>
@@ -134,91 +134,91 @@ export function ExplainDrawer({ explanation, isOpen, onClose }: ExplainDrawerPro
                   explanation.matchingKeywords.map((kw, i) => (
                     <span
                       key={i}
-                      className="rounded-md bg-purple-500/10 border border-purple-500/30 px-2 py-0.5 text-[10px] font-medium text-purple-300"
+                      className="rounded-md bg-purple-100 border border-purple-200 px-2 py-0.5 text-[10px] font-semibold text-purple-800"
                     >
                       #{kw}
                     </span>
                   ))
                 ) : (
-                  <span className="text-[10px] text-muted-foreground italic">Domain broad match</span>
+                  <span className="text-[10px] text-muted-foreground italic font-medium">Domain broad match</span>
                 )}
               </div>
             </div>
 
             {/* Compatibility Score */}
-            <div className="flex items-center justify-between pt-2.5 border-t border-white/10 text-xs">
-              <span className="text-muted-foreground">Compatibility Score:</span>
-              <span className="font-mono font-bold text-emerald-400 text-sm">
+            <div className="flex items-center justify-between pt-2.5 border-t border-ink-black/10 text-xs">
+              <span className="text-muted-foreground font-medium">Compatibility Score:</span>
+              <span className="font-mono font-bold text-emerald-600 text-sm">
                 {((explanation.compatibilityScore ?? 0.9) * 100).toFixed(0)}%
               </span>
             </div>
           </div>
 
           {/* Reviewer Capacity & COI Verification */}
-          <div className="glass-panel p-4 space-y-3 rounded-xl border border-white/10">
+          <div className="p-4 space-y-3 rounded-xl border border-ink-black/10 bg-white shadow-sm">
             <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
               Constraint &amp; Conflict Verification
             </h3>
 
             <div className="space-y-2 text-xs">
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Reviewer Capacity:</span>
-                <span className="font-medium text-white">
+                <span className="text-muted-foreground font-medium">Reviewer Capacity:</span>
+                <span className="font-bold text-ink-black">
                   {explanation.reviewerWorkloadAssigned} / {explanation.reviewerMaxCapacity} slots used
                 </span>
               </div>
-              <div className="h-2 w-full rounded-full bg-white/10 overflow-hidden">
+              <div className="h-2 w-full rounded-full bg-ink-black/10 overflow-hidden shadow-inner">
                 <div
-                  className="h-full bg-gradient-to-r from-white to-emerald-400 rounded-full transition-all"
+                  className="h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full transition-all"
                   style={{
-                    width: `${Math.min(
+                    width: ${Math.min(
                       100,
                       (explanation.reviewerWorkloadAssigned / (explanation.reviewerMaxCapacity || 1)) * 100
-                    )}%`,
+                    )}%,
                   }}
                 />
               </div>
 
-              <div className="pt-2 border-t border-white/10 flex items-start gap-2 text-[11px] text-muted-foreground">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+              <div className="pt-2 border-t border-ink-black/10 flex items-start gap-2 text-[11px] text-muted-foreground font-medium">
+                <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
                 <span>{explanation.conflictVerificationDetails}</span>
               </div>
             </div>
           </div>
 
           {/* Algorithmic Provenance */}
-          <div className="glass-panel p-4 space-y-2.5 text-xs rounded-xl border border-white/10 bg-white/[0.02]">
+          <div className="p-4 space-y-2.5 text-xs rounded-xl border border-ink-black/10 bg-beige-bg/50 shadow-sm">
             <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
               Algorithmic Execution Provenance
             </h3>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Algorithm:</span>
-              <span className="font-semibold text-purple-300">{explanation.algorithmName}</span>
+              <span className="text-muted-foreground font-medium">Algorithm:</span>
+              <span className="font-bold text-purple-700">{explanation.algorithmName}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Flow Pushed:</span>
-              <span className="font-mono font-bold text-white">{explanation.flow} unit</span>
+              <span className="text-muted-foreground font-medium">Flow Pushed:</span>
+              <span className="font-mono font-bold text-ink-black">{explanation.flow} unit</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Run ID:</span>
-              <span className="font-mono text-[10px] text-muted-foreground truncate max-w-[200px]">
+              <span className="text-muted-foreground font-medium">Run ID:</span>
+              <span className="font-mono text-[10px] text-muted-foreground truncate max-w-[200px] font-semibold">
                 {explanation.algorithmRunId}
               </span>
             </div>
-            <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[10px] text-muted-foreground">
-              <span className="flex items-center gap-1">
-                <Fingerprint className="h-3.5 w-3.5 text-white/80" /> Graph Fingerprint:
+            <div className="pt-2 border-t border-ink-black/10 flex items-center justify-between text-[10px] text-muted-foreground">
+              <span className="flex items-center gap-1 font-medium">
+                <Fingerprint className="h-3.5 w-3.5 text-ink-black/70" /> Graph Fingerprint:
               </span>
-              <span className="font-mono truncate max-w-[160px] text-white/80">{explanation.graphFingerprint}</span>
+              <span className="font-mono truncate max-w-[160px] text-ink-black/80 font-semibold">{explanation.graphFingerprint}</span>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="border-t border-white/10 pt-4">
+        <div className="border-t border-ink-black/10 pt-4">
           <button
             onClick={onClose}
-            className="btn-3d w-full rounded-xl py-2.5 text-xs font-semibold text-white"
+            className="w-full rounded-xl bg-ink-black py-2.5 text-xs font-bold text-white hover:bg-ink-black/90 transition-colors shadow-md"
           >
             Close Explanation
           </button>
