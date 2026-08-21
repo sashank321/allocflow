@@ -622,16 +622,21 @@ export async function POST(req: NextRequest, { params }: { params: { path?: stri
   }
 
   if (pathStr === "auth/login" || pathStr === "auth/register") {
+    let parsedBody = { email: "" };
+    try {
+      parsedBody = typeof body === "string" ? JSON.parse(body) : body;
+    } catch(e) {}
+    
     let role = "SUPER_ADMIN";
     let fullName = "System Administrator";
     
-    if (body.email === "chair@icdcs2026.org") {
+    if (parsedBody.email === "chair@icdcs2026.org") {
       role = "CONFERENCE_ADMIN";
       fullName = "Conference Chair";
-    } else if (body.email === "reviewer.chen@stanford.edu") {
+    } else if (parsedBody.email === "reviewer.chen@stanford.edu") {
       role = "REVIEWER";
       fullName = "PC Reviewer";
-    } else if (body.email === "author.vaswani@google.com") {
+    } else if (parsedBody.email === "author.vaswani@google.com") {
       role = "AUTHOR";
       fullName = "Author";
     }
@@ -642,7 +647,7 @@ export async function POST(req: NextRequest, { params }: { params: { path?: stri
       expiresIn: 3600,
       user: {
         id: "u-mock",
-        email: body.email || "admin@allocflow.io",
+        email: parsedBody.email || "admin@allocflow.io",
         fullName: fullName,
         role: role,
       }
