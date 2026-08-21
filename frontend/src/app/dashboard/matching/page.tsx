@@ -104,7 +104,7 @@ export default function MatchingCockpitPage() {
             >
               Matching Engine Cockpit
             </h1>
-            <span className="rounded-full bg-ink-black/10 border border-ink-black/20 px-3 py-0.5 text-[11px] font-bold text-ink-black shadow-[0_0_15px_rgba(255,255,255,0.15)]">
+            <span className="rounded-full bg-white shadow-md border border-ink-black/20 px-3 py-0.5 text-[11px] font-bold text-ink-black shadow-[0_0_15px_rgba(255,255,255,0.15)]">
               Deterministic Maximum Flow
             </span>
           </div>
@@ -217,7 +217,7 @@ export default function MatchingCockpitPage() {
               type="checkbox"
               checked={excludeConflicts}
               onChange={(e) => setExcludeConflicts(e.target.checked)}
-              className="h-4 w-4 rounded border-ink-black/20 bg-ink-black/10 text-ink-black focus:ring-0"
+              className="h-4 w-4 rounded border-ink-black/20 bg-white shadow-md text-ink-black focus:ring-0"
             />
           </div>
         </div>

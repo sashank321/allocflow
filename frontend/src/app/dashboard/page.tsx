@@ -79,7 +79,7 @@ export default function DashboardOverviewPage() {
   return (
     <div className="space-y-6 select-none text-ink-black pb-12">
       {/* Header Banner */}
-      <div className="border border-ink-black/10 bg-black/5 p-6 flex flex-wrap items-end justify-between gap-6 backdrop-blur-sm">
+      <div className="border border-ink-black/10 bg-white shadow-2xl rounded-2xl p-6 flex flex-wrap items-end justify-between gap-6 backdrop-blur-sm">
         <div>
           <div className="mb-2 flex items-center gap-3 font-space text-[10px] text-muted tracking-widest uppercase">
             <span>[ SYSTEM OVERVIEW ]</span>
@@ -121,7 +121,7 @@ export default function DashboardOverviewPage() {
       {/* TERMINAL KPI STATS GRID */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Total Manuscripts */}
-        <div className="border border-ink-black/10 bg-black/5 p-5 relative overflow-hidden group hover:border-black/40 transition-colors">
+        <div className="p-5 relative overflow-hidden group hover:opacity-90 transition-opacity rounded-2xl" style={{backgroundColor:"#C1847B", boxShadow:"0 25px 50px -12px rgba(0,0,0,0.25)", color:"#0F0F0F"}}>
           <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
             <FileText className="h-20 w-20" />
           </div>
@@ -144,7 +144,7 @@ export default function DashboardOverviewPage() {
         </div>
 
         {/* Reviewer Roster */}
-        <div className="border border-ink-black/10 bg-black/5 p-5 relative overflow-hidden group hover:border-accent-blue/40 transition-colors">
+        <div className="p-5 relative overflow-hidden group hover:opacity-90 transition-opacity rounded-2xl" style={{backgroundColor:"#5D6D7E", boxShadow:"0 25px 50px -12px rgba(0,0,0,0.25)", color:"#0F0F0F"}}>
           <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
             <Users className="h-20 w-20 text-accent-blue" />
           </div>
@@ -167,7 +167,7 @@ export default function DashboardOverviewPage() {
         </div>
 
         {/* Allocated Pairs */}
-        <div className="border border-ink-black/10 bg-black/5 p-5 relative overflow-hidden group hover:border-[#5B7553]/40 transition-colors">
+        <div className="p-5 relative overflow-hidden group hover:opacity-90 transition-opacity rounded-2xl" style={{backgroundColor:"#7A9478", boxShadow:"0 25px 50px -12px rgba(0,0,0,0.25)", color:"#0F0F0F"}}>
           <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
             <GitMerge className="h-20 w-20 text-[#5B7553]" />
           </div>
@@ -190,7 +190,7 @@ export default function DashboardOverviewPage() {
         </div>
 
         {/* COI Safeguards */}
-        <div className="border border-ink-black/10 bg-black/5 p-5 relative overflow-hidden group hover:border-accent-orange/40 transition-colors">
+        <div className="p-5 relative overflow-hidden group hover:opacity-90 transition-opacity rounded-2xl" style={{backgroundColor:"#8B8589", boxShadow:"0 25px 50px -12px rgba(0,0,0,0.25)", color:"#0F0F0F"}}>
           <div className="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
             <ShieldCheck className="h-20 w-20 text-accent-orange" />
           </div>
@@ -217,10 +217,10 @@ export default function DashboardOverviewPage() {
       {/* 3D CHARTS SECTION */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Workload Saturation Bar Chart */}
-        <div className="border border-ink-black/10 bg-black/5 p-6 lg:col-span-2 flex flex-col">
+        <div className="border border-ink-black/10 bg-white shadow-2xl rounded-2xl p-6 lg:col-span-2 flex flex-col">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-xl font-heading text-ink-black">Reviewer Saturation Array</h2>
+              <h2 className="text-xl font-heading text-accent-blue">Reviewer Saturation Array</h2>
               <p className="text-[10px] font-space text-muted uppercase tracking-widest mt-1">Allocated load vs Hard Capacity limit</p>
             </div>
             <span className="border border-ink-black/10 px-2 py-1 text-[9px] font-space font-bold text-muted uppercase">
@@ -264,9 +264,9 @@ export default function DashboardOverviewPage() {
         </div>
 
         {/* Pipeline Distribution Pie */}
-        <div className="border border-ink-black/10 bg-black/5 p-6 flex flex-col">
+        <div className="border border-ink-black/10 bg-white shadow-2xl rounded-2xl p-6 flex flex-col">
           <div className="mb-6">
-            <h2 className="text-xl font-heading text-ink-black">Manuscript Topology</h2>
+            <h2 className="text-xl font-heading text-accent-blue">Manuscript Topology</h2>
             <p className="text-[10px] font-space text-muted uppercase tracking-widest mt-1">Current state distribution</p>
           </div>
 
@@ -324,20 +324,20 @@ export default function DashboardOverviewPage() {
       </div>
 
       {/* RECENT AUDIT TRAIL */}
-      <div className="border border-ink-black/10 bg-black/5 p-6">
+      <div className="border border-ink-black/10 bg-white shadow-2xl rounded-2xl p-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <div className="border border-ink-black/10 bg-black/5 p-1.5">
+            <div className="border border-ink-black/10 bg-white shadow-2xl rounded-2xl p-1.5">
               <Clock className="h-4 w-4 text-muted" />
             </div>
             <div>
-              <h2 className="text-xl font-heading text-ink-black">System Audit Log</h2>
+              <h2 className="text-xl font-heading text-accent-blue">System Audit Log</h2>
               <p className="text-[10px] font-space text-muted uppercase tracking-widest mt-0.5">Cryptographic Action Trail</p>
             </div>
           </div>
           <Link
             href="/dashboard/audit"
-            className="group flex items-center gap-1 border border-ink-black/10 px-3 py-1.5 text-[10px] font-space uppercase tracking-widest text-muted hover:bg-black/10 hover:text-ink-black transition-colors"
+            className="group flex items-center gap-1 border border-ink-black/10 px-3 py-1.5 text-[10px] font-space uppercase tracking-widest text-muted hover:bg-white shadow-md hover:text-ink-black transition-colors"
           >
             <span>View Full Log</span>
             <ArrowUpRight className="h-3.5 w-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
@@ -363,7 +363,7 @@ export default function DashboardOverviewPage() {
                   </td>
                   <td className="py-3 text-[11px] font-space text-ink-black">{log.actorEmail}</td>
                   <td className="py-3">
-                    <span className="border border-black/10 bg-black/5 px-1.5 py-0.5 text-[9px] font-mono text-ink-black uppercase">
+                    <span className="border border-black/10 bg-white shadow-2xl rounded-2xl px-1.5 py-0.5 text-[9px] font-mono text-ink-black uppercase">
                       {log.action}
                     </span>
                   </td>

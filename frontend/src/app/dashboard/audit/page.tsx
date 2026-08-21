@@ -57,7 +57,7 @@ export default function AuditLogsPage() {
           placeholder="Filter by actor, action, or details..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full rounded-xl border border-ink-black/10 bg-black/5 py-2.5 pl-9 pr-4 text-xs text-ink-black placeholder:text-muted-foreground focus:border-ink-black/30 focus:outline-none"
+          className="w-full rounded-xl border border-ink-black/10 bg-white shadow-2xl rounded-2xl py-2.5 pl-9 pr-4 text-xs text-ink-black placeholder:text-muted-foreground focus:border-ink-black/30 focus:outline-none"
         />
       </div>
 
@@ -66,7 +66,7 @@ export default function AuditLogsPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-ink-black/10 bg-ink-black/[0.02] text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              <tr className="border-b border-ink-black/10 bg-white shadow-xl text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                 <th className="py-3 px-4">Timestamp (UTC)</th>
                 <th className="py-3 px-4">Actor</th>
                 <th className="py-3 px-4">Action</th>
@@ -84,7 +84,7 @@ export default function AuditLogsPage() {
                 </tr>
               ) : filteredLogs.length > 0 ? (
                 filteredLogs.map((log) => (
-                  <tr key={log.id} className="hover:bg-ink-black/[0.03] transition-colors">
+                  <tr key={log.id} className="hover:bg-white shadow-xl transition-colors">
                     <td className="py-3 px-4 text-muted-foreground text-[11px]">
                       {new Date(log.timestamp).toISOString().replace("T", " ").substring(0, 19)}
                     </td>
@@ -92,7 +92,7 @@ export default function AuditLogsPage() {
                       {log.actorEmail || "ANONYMOUS"}
                     </td>
                     <td className="py-3 px-4">
-                      <span className="rounded-md bg-ink-black/10 border border-ink-black/15 px-2 py-0.5 text-[10px] font-bold text-ink-black">
+                      <span className="rounded-md bg-white shadow-md border border-ink-black/15 px-2 py-0.5 text-[10px] font-bold text-ink-black">
                         {log.action}
                       </span>
                     </td>

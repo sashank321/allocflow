@@ -163,7 +163,7 @@ export default function ConferencesPage() {
                     placeholder="e.g. SIGCOMM-2026"
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/5 p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none font-mono"
+                    className="mt-1 w-full rounded-xl border border-ink-black/10 bg-white shadow-2xl rounded-2xl p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none font-mono"
                   />
                 </div>
                 <div>
@@ -173,7 +173,7 @@ export default function ConferencesPage() {
                     placeholder="e.g. SIGCOMM '26"
                     value={acronym}
                     onChange={(e) => setAcronym(e.target.value)}
-                    className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/5 p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
+                    className="mt-1 w-full rounded-xl border border-ink-black/10 bg-white shadow-2xl rounded-2xl p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
                   />
                 </div>
               </div>
@@ -186,7 +186,7 @@ export default function ConferencesPage() {
                   placeholder="e.g. ACM SIGCOMM 2026 Conference on Applications, Technologies..."
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/5 p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-ink-black/10 bg-white shadow-2xl rounded-2xl p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
                 />
               </div>
 
@@ -197,7 +197,7 @@ export default function ConferencesPage() {
                   placeholder="Describe track focus, review methodology, and topics..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/5 p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
+                  className="mt-1 w-full rounded-xl border border-ink-black/10 bg-white shadow-2xl rounded-2xl p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none"
                 />
               </div>
 
@@ -210,7 +210,7 @@ export default function ConferencesPage() {
                     max="5"
                     value={requiredReviews}
                     onChange={(e) => setRequiredReviews(parseInt(e.target.value))}
-                    className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/5 p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none font-mono"
+                    className="mt-1 w-full rounded-xl border border-ink-black/10 bg-white shadow-2xl rounded-2xl p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none font-mono"
                   />
                 </div>
                 <div>
@@ -221,7 +221,7 @@ export default function ConferencesPage() {
                     max="10"
                     value={defaultCapacity}
                     onChange={(e) => setDefaultCapacity(parseInt(e.target.value))}
-                    className="mt-1 w-full rounded-xl border border-ink-black/10 bg-black/5 p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none font-mono"
+                    className="mt-1 w-full rounded-xl border border-ink-black/10 bg-white shadow-2xl rounded-2xl p-2.5 text-xs text-ink-black focus:border-ink-black/30 focus:outline-none font-mono"
                   />
                 </div>
               </div>

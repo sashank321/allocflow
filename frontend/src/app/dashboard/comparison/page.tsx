@@ -238,7 +238,7 @@ export default function AlgorithmComparisonPage() {
             </div>
           </div>
 
-          <div className="hidden sm:flex items-center gap-2 font-mono text-xs text-muted-foreground bg-black/5 px-3 py-1.5 rounded-xl border border-ink-black/10">
+          <div className="hidden sm:flex items-center gap-2 font-mono text-xs text-muted-foreground bg-white shadow-2xl rounded-2xl px-3 py-1.5 rounded-xl border border-ink-black/10">
             <Fingerprint className="h-4 w-4 text-ink-black/80" />
             <span>Fingerprint: {benchmarkResult.graphFingerprint ? benchmarkResult.graphFingerprint.substring(0, 16) : ""}…</span>
           </div>
@@ -269,7 +269,7 @@ export default function AlgorithmComparisonPage() {
                         : "O(V² · E) Layered BFS/DFS"}
                     </p>
                   </div>
-                  <span className="rounded-full bg-ink-black/10 border border-ink-black/10 px-2.5 py-0.5 text-[10px] font-mono text-ink-black">
+                  <span className="rounded-full bg-white shadow-md border border-ink-black/10 px-2.5 py-0.5 text-[10px] font-mono text-ink-black">
                     Rank #{index + 1}
                   </span>
                 </div>
@@ -314,7 +314,7 @@ export default function AlgorithmComparisonPage() {
                 </div>
 
                 {/* Graph Specs */}
-                <div className="rounded-xl border border-ink-black/10 bg-black/5 p-3 text-[11px] font-mono text-muted-foreground space-y-1">
+                <div className="rounded-xl border border-ink-black/10 bg-white shadow-2xl rounded-2xl p-3 text-[11px] font-mono text-muted-foreground space-y-1">
                   <div>Vertices: {benchmarkResult.vertexCount}</div>
                   <div>Edges: {benchmarkResult.edgeCount}</div>
                   <div>Trials: {algo.measuredTrials} runs (Sequential isolated)</div>

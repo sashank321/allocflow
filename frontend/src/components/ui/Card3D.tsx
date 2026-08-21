@@ -16,30 +16,37 @@ export function Card3D({
   children,
   className = "",
   glowColor = "none",
-  borderRadius = 16,
-  backgroundOpacity = 0.5,
-  saturation = 1.1,
   ...props
 }: Card3DProps) {
-  // Pure optical glass surface with zero hover tilt, zero neon slop, authentic refraction
+  // Map glow colors to the exact feature section pastel palette
+  const getBackgroundColor = () => {
+    switch (glowColor) {
+      case "amber": return "#C1847B"; // Pinkish
+      case "white": return "#5D6D7E"; // Steel blue
+      case "emerald": return "#7A9478"; // Sage green
+      case "purple": return "#8B8589"; // Purple-gray
+      default: return "#FFFFFF"; // Clean white fallback
+    }
+  };
+
+  const bgColor = getBackgroundColor();
+  
   return (
-    <GlassSurface
-      borderRadius={borderRadius}
-      backgroundOpacity={backgroundOpacity}
-      saturation={saturation}
-      borderWidth={0.06}
-      brightness={30}
-      opacity={0.88}
-      blur={10}
-      displace={0.4}
-      distortionScale={-120}
-      className={`glass-panel border border-white/10 ${className}`}
-      style={{ width: "100%", height: "auto" }}
+    <div 
+      className={`relative overflow-hidden transition-all duration-300 ${className}`}
+      style={{
+        backgroundColor: bgColor,
+        boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)",
+        border: "1px solid rgba(0,0,0,0.1)",
+        color: "#0F0F0F",
+        borderRadius: "16px"
+      }}
+      {...props}
     >
-      <div className="w-full h-full" {...props}>
+      <div className="w-full h-full relative z-10">
         {children}
       </div>
-    </GlassSurface>
+    </div>
   );
 }
 

@@ -120,7 +120,7 @@ export default function ManuscriptsPage() {
             placeholder="Search by title, author, topic..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border border-ink-black/10 bg-black/5 py-2.5 pl-9 pr-4 text-xs text-ink-black placeholder:text-muted-foreground focus:border-ink-black/30 focus:outline-none"
+            className="w-full rounded-xl border border-ink-black/10 bg-white shadow-2xl rounded-2xl py-2.5 pl-9 pr-4 text-xs text-ink-black placeholder:text-muted-foreground focus:border-ink-black/30 focus:outline-none"
           />
         </div>
 
@@ -130,7 +130,7 @@ export default function ManuscriptsPage() {
           <select
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
-            className="rounded-xl border border-ink-black/10 bg-black/5 px-3 py-2 text-xs text-ink-black focus:outline-none"
+            className="rounded-xl border border-ink-black/10 bg-white shadow-2xl rounded-2xl px-3 py-2 text-xs text-ink-black focus:outline-none"
           >
             <option value="ALL">All Statuses</option>
             <option value="SUBMITTED">SUBMITTED</option>
@@ -147,7 +147,7 @@ export default function ManuscriptsPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-ink-black/10 bg-ink-black/[0.02] text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+              <tr className="border-b border-ink-black/10 bg-white shadow-xl text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
                 <th className="py-3 px-4">Title &amp; Track</th>
                 <th className="py-3 px-4">Author &amp; Affiliation</th>
                 <th className="py-3 px-4">Topics &amp; Keywords</th>
@@ -165,14 +165,14 @@ export default function ManuscriptsPage() {
                 </tr>
               ) : filteredManuscripts.length > 0 ? (
                 filteredManuscripts.map((m) => (
-                  <tr key={m.id} className="hover:bg-ink-black/[0.03] transition-colors">
+                  <tr key={m.id} className="hover:bg-white shadow-xl transition-colors">
                     <td className="py-3 px-4 max-w-xs">
                       <p className="font-bold text-ink-black line-clamp-1">{m.title}</p>
                       <p className="text-[11px] text-muted-foreground line-clamp-1 mt-0.5">
                         {m.abstractText || "No abstract provided"}
                       </p>
                       {m.trackName && (
-                        <span className="inline-block rounded bg-ink-black/10 border border-ink-black/15 px-1.5 py-0.5 text-[9px] font-medium text-ink-black/90 mt-1">
+                        <span className="inline-block rounded bg-white shadow-md border border-ink-black/15 px-1.5 py-0.5 text-[9px] font-medium text-ink-black/90 mt-1">
                           {m.trackName}
                         </span>
                       )}
@@ -193,7 +193,7 @@ export default function ManuscriptsPage() {
                         {m.topics.map((t, idx) => (
                           <span
                             key={idx}
-                            className="rounded bg-ink-black/10 border border-ink-black/15 px-1.5 py-0.5 text-[10px] font-medium text-ink-black/90"
+                            className="rounded bg-white shadow-md border border-ink-black/15 px-1.5 py-0.5 text-[10px] font-medium text-ink-black/90"
                           >
                             {t}
                           </span>
@@ -219,7 +219,7 @@ export default function ManuscriptsPage() {
                       <span
                         className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-semibold border ${
                           m.status === "SUBMITTED"
-                            ? "bg-ink-black/10 text-ink-black border-ink-black/20"
+                            ? "bg-white shadow-md text-ink-black border-ink-black/20"
                             : m.status === "UNDER_REVIEW"
                             ? "bg-purple-500/20 text-purple-300 border-purple-500/40"
                             : m.status === "ACCEPTED"
@@ -262,7 +262,7 @@ export default function ManuscriptsPage() {
 
       {/* Submit Manuscript Modal */}
       {isSubmitModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/5 backdrop-blur-sm p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white shadow-2xl rounded-2xl backdrop-blur-sm p-4">
           <div className="w-full max-w-lg rounded-xl border bg-card p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between border-b pb-3">
               <div className="flex items-center gap-2">

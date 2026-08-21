@@ -59,7 +59,7 @@ export default function GraphViewPage() {
             >
               Bipartite Flow Network Visualizer
             </h1>
-            <span className="rounded-full bg-ink-black/10 border border-ink-black/20 px-3 py-0.5 text-[11px] font-bold text-ink-black shadow-[0_0_15px_rgba(255,255,255,0.15)]">
+            <span className="rounded-full bg-white shadow-md border border-ink-black/20 px-3 py-0.5 text-[11px] font-bold text-ink-black shadow-[0_0_15px_rgba(255,255,255,0.15)]">
               Interactive S → P → R → T
             </span>
           </div>

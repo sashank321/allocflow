@@ -19,7 +19,7 @@ export default function DashboardLayout({
         className="fixed inset-0 pointer-events-none z-0 opacity-20"
         style={{
           backgroundSize: "40px 40px",
-          backgroundImage: "linear-gradient(to right, rgba(15,15,15,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(15,15,15,0.1) 1px, transparent 1px)"
+          backgroundImage: "linear-gradient(to right, rgba(15,15,15,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(15,15,15,0.03) 1px, transparent 1px)"
         }}
       >
         {/* Subtle radial gradient to simulate screen glow in center */}

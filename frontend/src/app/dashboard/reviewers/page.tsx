@@ -55,7 +55,7 @@ export default function ReviewersRosterPage() {
           placeholder="Search by reviewer name, email, topic..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full rounded-xl border border-ink-black/10 bg-black/5 py-2.5 pl-9 pr-4 text-xs text-ink-black placeholder:text-muted-foreground focus:border-ink-black/30 focus:outline-none"
+          className="w-full rounded-xl border border-ink-black/10 bg-white shadow-2xl rounded-2xl py-2.5 pl-9 pr-4 text-xs text-ink-black placeholder:text-muted-foreground focus:border-ink-black/30 focus:outline-none"
         />
       </div>
 
@@ -104,7 +104,7 @@ export default function ReviewersRosterPage() {
                       {r.currentWorkload} / {r.maxCapacity} slots ({utilizationPct.toFixed(0)}%)
                     </span>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-ink-black/10 overflow-hidden">
+                  <div className="h-2 w-full rounded-full bg-white shadow-md overflow-hidden">
                     <div
                       className={`h-full rounded-full transition-all ${
                         utilizationPct >= 100
