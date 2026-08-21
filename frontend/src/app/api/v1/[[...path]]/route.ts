@@ -101,6 +101,17 @@ const mockManuscripts = [
 
 const mockReviewers = [
   {
+    id: "r-9",
+    userName: "Dr. Anitha Patil",
+    userEmail: "anitha.patil@klu.ac.in",
+    affiliation: "KL University",
+    maxCapacity: 4,
+    currentWorkload: 1,
+    active: true,
+    available: true,
+    topics: ["Network Flow", "Distributed Systems", "Graph Algorithms"],
+  },
+  {
     id: "r-1",
     userName: "Dr. Sarah Jenkins",
     userEmail: "s.jenkins@stanford.edu",
@@ -282,7 +293,7 @@ export async function GET(req: NextRequest, { params }: { params: { path?: strin
       activeConferenceName: mockConference.name,
       activeConferenceCode: mockConference.code,
       totalManuscripts: 6,
-      totalReviewers: 8,
+      totalReviewers: 9,
       totalRequiredReviews: 12,
       totalReviewerCapacity: 32,
       totalAssignments: 12,
@@ -295,6 +306,7 @@ export async function GET(req: NextRequest, { params }: { params: { path?: strin
         "Prof. Leslie Lamport": 2,
         "Dr. Barbara Liskov": 2,
         "Prof. Shafi Goldwasser": 2,
+        "Dr. Anitha Patil": 1,
       },
       manuscriptsByStatus: {
         UNDER_REVIEW: 6,
@@ -605,9 +617,22 @@ export async function POST(req: NextRequest, { params }: { params: { path?: stri
     pathStr === "benchmarks/scalability-sweep" ||
     pathStr === "benchmarks/scalability"
   ) {
-    const curve = [10, 25, 50, 75, 100, 150, 200].map((n) => {
-      const m = Math.floor(n * 0.4);
-      return {
+    let parsedBody = { startN: 10, endN: 200, step: 25, ratio: 0.4 };
+    try {
+      if (body) {
+        parsedBody = typeof body === "string" ? JSON.parse(body) : body;
+      }
+    } catch(e) {}
+
+    const startN = Number(parsedBody.startN) || 10;
+    const endN = Number(parsedBody.endN) || 200;
+    const step = Number(parsedBody.step) || 25;
+    const ratio = Number(parsedBody.ratio) || 0.4;
+
+    const curve = [];
+    for (let n = startN; n <= endN; n += step) {
+      const m = Math.floor(n * ratio);
+      curve.push({
         manuscriptCount: n,
         reviewerCount: m,
         totalVertices: n + m + 2,
@@ -620,13 +645,22 @@ export async function POST(req: NextRequest, { params }: { params: { path?: stri
         edmondsKarpAugmentations: Math.floor(n * 3.2),
         fordFulkersonAugmentations: Math.floor(n * 4.5),
         invariantVerified: true,
-      };
-    });
+      });
+    }
+
+    // Ensure we at least have one point if step is weird
+    if (curve.length === 0) {
+      curve.push({
+        manuscriptCount: startN, reviewerCount: Math.floor(startN * ratio), totalVertices: startN + Math.floor(startN * ratio) + 2, totalEdges: startN * 3 + Math.floor(startN * ratio) * 2, maxFlow: startN * 2,
+        dinicMedianMs: "0.01", edmondsKarpMedianMs: "0.02", fordFulkersonMedianMs: "0.03",
+        dinicAugmentations: 10, edmondsKarpAugmentations: 20, fordFulkersonAugmentations: 30, invariantVerified: true
+      });
+    }
 
     return NextResponse.json({
-      startN: 10,
-      endN: 200,
-      step: 25,
+      startN,
+      endN,
+      step,
       points: curve,
     });
   }
